@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "init-customer": {
+      "factory": "./init-customer/index",
+      "schema": "./init-customer/schema.json",
+      "description": "Initialize a new customer project with services and tests"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+🚀 Starting Prerender process...
+
+🌐 Crawling 7 routes from http://localhost:4302...
+
+  📄 Rendering /...
+    🌐 Navigating to http://localhost:4302/...
+    ⚠️ [Network Failed]: http://localhost:4302/ - net::ERR_CONNECTION_REFUSED
+  ❌ Fatal error rendering /: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4302/
+Call log:
+[2m  - navigating to "http://localhost:4302/", waiting until "domcontentloaded"[22m
+
+  📄 Rendering /kontakt...
+    🌐 Navigating to http://localhost:4302/kontakt...
+    ⚠️ [Network Failed]: http://localhost:4302/kontakt - net::ERR_CONNECTION_REFUSED
+  ❌ Fatal error rendering /kontakt: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4302/kontakt
+Call log:
+[2m  - navigating to "http://localhost:4302/kontakt", waiting until "domcontentloaded"[22m
+
+  📄 Rendering /impressum...
+    🌐 Navigating to http://localhost:4302/impressum...
+    ⚠️ [Network Failed]: http://localhost:4302/impressum - net::ERR_CONNECTION_REFUSED
+  ❌ Fatal error rendering /impressum: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4302/impressum
+Call log:
+[2m  - navigating to "http://localhost:4302/impressum", waiting until "domcontentloaded"[22m
+
+  📄 Rendering /datenschutz...
+    🌐 Navigating to http://localhost:4302/datenschutz...
+    ⚠️ [Network Failed]: http://localhost:4302/datenschutz - net::ERR_CONNECTION_REFUSED
+  ❌ Fatal error rendering /datenschutz: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4302/datenschutz
+Call log:
+[2m  - navigating to "http://localhost:4302/datenschutz", waiting until "domcontentloaded"[22m
+
+  📄 Rendering /agb...
+    🌐 Navigating to http://localhost:4302/agb...
+    ⚠️ [Network Failed]: http://localhost:4302/agb - net::ERR_CONNECTION_REFUSED
+  ❌ Fatal error rendering /agb: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4302/agb
+Call log:
+[2m  - navigating to "http://localhost:4302/agb", waiting until "domcontentloaded"[22m
+
+  📄 Rendering /home...
+    🌐 Navigating to http://localhost:4302/home...
+    ⚠️ [Network Failed]: http://localhost:4302/home - net::ERR_CONNECTION_REFUSED
+  ❌ Fatal error rendering /home: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4302/home
+Call log:
+[2m  - navigating to "http://localhost:4302/home", waiting until "domcontentloaded"[22m
+
+  📄 Rendering /imprint...
+    🌐 Navigating to http://localhost:4302/imprint...
+    ⚠️ [Network Failed]: http://localhost:4302/imprint - net::ERR_CONNECTION_REFUSED
+  ❌ Fatal error rendering /imprint: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4302/imprint
+Call log:
+[2m  - navigating to "http://localhost:4302/imprint", waiting until "domcontentloaded"[22m
+
+
+✅ Prerendering finished!

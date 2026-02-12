@@ -1,0 +1,49 @@
+name: Midnight Smart Rebuild 🌙
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Midnight every day
+  workflow_dispatch: # Manual trigger for testing
+
+jobs:
+  check-and-rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Check Rebuild Flag
+        id: check_flag
+        run: npx jiti scripts/check-rebuild-flag.ts
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+
+      - name: Full Build & SSG
+        if: steps.check_flag.outputs.should_rebuild == 'true'
+        run: |
+          npx nx build @temp-nx/agency-shell
+          npx nx run @temp-nx/agency-shell:generate-seo
+          npx nx run @temp-nx/agency-shell:prerender
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+
+      - name: Deployment
+        if: steps.check_flag.outputs.should_rebuild == 'true'
+        run: npx nx deploy @temp-nx/agency-shell
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Reset Rebuild Flag
+        if: steps.check_flag.outputs.should_rebuild == 'true'
+        run: npx jiti scripts/reset-rebuild-flag.ts
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}

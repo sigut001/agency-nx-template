@@ -1,0 +1,33 @@
+{
+  "name": "@temp-nx/agency-shell",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/agency-shell/src",
+  "tags": [],
+  "targets": {
+    "validate-config": {
+      "command": "echo 'Stub: Validating config...'"
+    },
+    "generate-seo": {
+      "command": "npx jiti scripts/generate-seo.ts"
+    },
+    "prerender": {
+      "command": "npx jiti scripts/prerender.ts"
+    },
+    "validate-deployed-app": {
+      "command": "echo 'Stub: Validating deployed app...'"
+    },
+    "validate-services": {
+      "command": "npx jiti scripts/validate-services.ts"
+    },
+    "preview": {
+      "command": "vite preview"
+    },
+    "audit-core": {
+      "command": "npx nx lint @temp-nx/agency-shell && npx nx run @temp-nx/agency-shell:generate-seo && npx nx run @temp-nx/agency-shell:prerender && npx nx e2e @temp-nx/agency-shell-e2e --spec src/golden-scan.spec.ts && npx jiti scripts/generate-report.ts"
+    },
+    "audit": {
+      "command": "npx nx lint @temp-nx/agency-shell && npx jiti scripts/ensure-test-user.ts && npx nx run @temp-nx/agency-shell:generate-seo && npx nx run @temp-nx/agency-shell:prerender && npx nx e2e @temp-nx/agency-shell-e2e --spec src/golden-scan.spec.ts && npx nx e2e @temp-nx/agency-shell-e2e --spec src/admin-rbac.spec.ts && npx jiti scripts/cleanup-test-data.ts && npx jiti scripts/generate-report.ts"
+    }
+  }
+}

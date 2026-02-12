@@ -1,0 +1,45 @@
+name: Production Release 🚀
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build & SSG
+        run: |
+          npx nx build @temp-nx/agency-shell
+          npx nx run @temp-nx/agency-shell:generate-seo
+          npx nx run @temp-nx/agency-shell:prerender
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+
+      - name: Semantic Release Audit
+        run: npx jiti scripts/generate-report.ts
+
+      - name: Deployment
+        run: npx nx deploy @temp-nx/agency-shell
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Semantic Versioning & Tagging
+        run: |
+          # Simple semantic versioning based on commit message or default to patch
+          npm version patch -m "chore(release): %s [skip ci]"
+          git push origin main --tags

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "init-customer",
+  "title": "Initialize Customer Project",
+  "description": "Sets up credentials, seeding, and validation for a new client project.",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The name of the project to initialize",
+      "$default": {
+        "key": "project",
+        "provider": "argv"
+      }
+    },
+    "skipValidation": {
+      "type": "boolean",
+      "description": "Skip the service validation step",
+      "default": false
+    }
+  },
+  "required": ["project"]
+}

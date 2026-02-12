@@ -1,0 +1,9 @@
+# Firebase Service Account (NEVER commit this file!)
+firebase-service-account.json
+firebase-service-account-*.json
+
+# Firebase local emulator data
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
