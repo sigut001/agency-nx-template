@@ -28,23 +28,23 @@ jobs:
         working-directory: templates/agency-nx-template
 
       - name: Lint
-        run: npx nx run agency-shell:lint
+        run: npx nx run @temp-nx/company-website:lint
         working-directory: templates/agency-nx-template
 
       - name: Unit Tests
-        run: npx nx run agency-shell:test
+        run: npx nx run @temp-nx/company-website:test
         working-directory: templates/agency-nx-template
 
       - name: Config Validation
-        run: npx nx run agency-shell:validate-config
+        run: npx nx run @temp-nx/company-website:validate-config
         working-directory: templates/agency-nx-template
 
       - name: Production Build
-        run: npx nx run agency-shell:build --configuration=production
+        run: npx nx run @temp-nx/company-website:build --configuration=production
         working-directory: templates/agency-nx-template
 
       - name: Generate SEO Files
-        run: npx nx run agency-shell:generate-seo-files
+        run: npx nx run @temp-nx/company-website:generate-seo
         working-directory: templates/agency-nx-template
 
       # Deployment to Firebase Hosting (Preview)
@@ -58,5 +58,5 @@ jobs:
         working-directory: templates/agency-nx-template
 
       - name: Validate Deployed App
-        run: npx nx run agency-shell:validate-deployed-app --url=https://${{ secrets.FIREBASE_PROJECT_ID }}.web.app
+        run: npx nx run @temp-nx/company-website:validate-deployed-app --url=https://${{ secrets.FIREBASE_PROJECT_ID }}.web.app
         working-directory: templates/agency-nx-template

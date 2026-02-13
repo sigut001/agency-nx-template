@@ -28,16 +28,16 @@ jobs:
       - name: Full Build & SSG
         if: steps.check_flag.outputs.should_rebuild == 'true'
         run: |
-          npx nx build @temp-nx/agency-shell
-          npx nx run @temp-nx/agency-shell:generate-seo
-          npx nx run @temp-nx/agency-shell:prerender
+          npx nx build @temp-nx/company-website
+          npx nx run @temp-nx/company-website:generate-seo
+          npx nx run @temp-nx/company-website:prerender
         env:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
 
       - name: Deployment
         if: steps.check_flag.outputs.should_rebuild == 'true'
-        run: npx nx deploy @temp-nx/agency-shell
+        run: npx nx deploy @temp-nx/company-website
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 

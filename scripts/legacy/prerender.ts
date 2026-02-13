@@ -22,7 +22,7 @@ async function prerender() {
   log('🚀 Starting Prerender process...\n');
 
   const routes = await getRoutes();
-  const distPath = path.resolve(__dirname, '../apps/agency-shell/dist');
+  const distPath = path.resolve(__dirname, '../apps/company-website/dist');
 
   if (!fs.existsSync(distPath)) {
     console.error('❌ Dist folder not found. Please build the project first.');

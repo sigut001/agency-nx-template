@@ -8,7 +8,7 @@ import * as path from 'path';
 
 const REPORT_PATH = path.resolve(__dirname, '../../VALIDATION_REPORT.md');
 const PRERENDER_LOG = path.resolve(__dirname, '../../debug/prerender.log');
-const DIST_PATH = path.resolve(__dirname, '../../apps/agency-shell/dist');
+const DIST_PATH = path.resolve(__dirname, '../../apps/company-website/dist');
 
 async function generateReport() {
   console.log('📊 Generating Unified Quality Report...');

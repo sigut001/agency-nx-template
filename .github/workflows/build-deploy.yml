@@ -33,16 +33,20 @@ jobs:
         run: |
           # Label aus letztem gemergten PR auslesen
           LABELS=$(gh pr list --state merged --limit 1 --json labels --jq '.[0].labels[].name')
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
 
-          if echo "$LABELS" | grep -q "major"; then
+          if echo "$LABELS" | grep -q "major" || [[ "$COMMIT_MSG" == *"#major"* ]]; then
             echo "bump=major" >> $GITHUB_OUTPUT
-            echo "💥 MAJOR version bump (breaking changes)"
-          elif echo "$LABELS" | grep -q "minor"; then
+            echo "💥 MAJOR version bump detected"
+          elif echo "$LABELS" | grep -q "minor" || [[ "$COMMIT_MSG" == *"#minor"* ]]; then
             echo "bump=minor" >> $GITHUB_OUTPUT
-            echo "✨ MINOR version bump (new features)"
+            echo "✨ MINOR version bump detected"
+          elif echo "$LABELS" | grep -q "patch" || [[ "$COMMIT_MSG" == *"#patch"* ]]; then
+            echo "bump=patch" >> $GITHUB_OUTPUT
+            echo "🐛 PATCH version bump detected"
           else
             echo "bump=patch" >> $GITHUB_OUTPUT
-            echo "🐛 PATCH version bump (bugfixes)"
+            echo "ℹ️ No specific label/tag found, defaulting to PATCH"
           fi
         working-directory: templates/agency-nx-template
         env:
@@ -56,28 +60,12 @@ jobs:
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
         working-directory: templates/agency-nx-template
 
-      - name: Production Build
-        run: npx nx run agency-shell:build --configuration=production
-        working-directory: templates/agency-nx-template
-
-      - name: Generate SEO Files
-        run: npx nx run agency-shell:generate-seo-files
-        working-directory: templates/agency-nx-template
-
-      - name: Deploy to Production
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: |
-          echo "Deploying to Firebase Production..."
-          # npx firebase-tools deploy --only hosting --project ${{ secrets.FIREBASE_PROJECT_ID }} --token $FIREBASE_TOKEN
-        working-directory: templates/agency-nx-template
-
       - name: Create Git Tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add package.json
-          git commit -m "chore: bump version to v${{ steps.bump.outputs.new_version }}"
+          git commit -m "chore: bump version to v${{ steps.bump.outputs.new_version }} [skip ci]"
           git tag "v${{ steps.bump.outputs.new_version }}"
           git push origin main --tags
         working-directory: templates/agency-nx-template

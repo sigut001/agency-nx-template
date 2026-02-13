@@ -4,10 +4,10 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/agency-shell-e2e"
+      "path": "./apps/company-website-e2e"
     },
     {
-      "path": "./apps/agency-shell"
+      "path": "./apps/company-website"
     }
   ]
 }

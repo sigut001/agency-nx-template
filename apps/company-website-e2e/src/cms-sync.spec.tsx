@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { APP_ROUTES_CONFIG } from '../../agency-shell/src/app/app.routes.config';
+import { APP_ROUTES_CONFIG } from '../../company-website/src/app/app.routes.config';
 
 test.describe('Route Availability & CMS Sync', () => {
   

@@ -1,0 +1,39 @@
+{
+  "name": "@temp-nx/company-website",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/company-website/src",
+  "tags": [],
+  "targets": {
+    "validate-config": {
+      "command": "echo 'Stub: Validating config...'"
+    },
+    "generate-seo": {
+      "command": "npx tsx scripts/pipeline/02-generate-seo.ts"
+    },
+    "prerender": {
+      "command": "npx tsx scripts/pipeline/03-prerender.ts"
+    },
+    "validate-deployed-app": {
+      "command": "echo 'Stub: Validating deployed app...'"
+    },
+    "validate-services": {
+      "command": "npx tsx scripts/pipeline/01-validate-services.ts"
+    },
+    "preview": {
+      "command": "vite preview"
+    },
+    "audit-core": {
+      "command": "npx nx lint @temp-nx/company-website && npx nx run @temp-nx/company-website:generate-seo && npx nx run @temp-nx/company-website:prerender && npx nx e2e @temp-nx/company-website-e2e --spec src/golden-scan.spec.ts && npx jiti scripts/automation/generate-report.ts"
+    },
+    "generate-report": {
+      "command": "npx jiti scripts/automation/generate-report.ts"
+    },
+    "audit": {
+      "command": "npx nx lint @temp-nx/company-website && npx nx run @temp-nx/company-website:generate-seo && npx nx run @temp-nx/company-website:prerender && npx nx e2e @temp-nx/company-website-e2e --spec src/golden-scan.spec.ts && npx jiti scripts/automation/generate-report.ts"
+    },
+    "quality": {
+      "command": "npx nx lint @temp-nx/company-website && npx jiti scripts/automation/cleanup-test-data.ts && npx nx run @temp-nx/company-website:generate-seo && npx nx run @temp-nx/company-website:prerender && npx nx e2e @temp-nx/company-website-e2e --spec src/golden-scan.spec.ts && npx nx e2e @temp-nx/company-website-e2e --spec src/admin-rbac.spec.ts && npx jiti scripts/automation/cleanup-test-data.ts && npx jiti scripts/automation/generate-report.ts"
+    }
+  }
+}

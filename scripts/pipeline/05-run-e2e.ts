@@ -24,7 +24,7 @@ async function runE2E() {
     // 1. Run Standard CI/CD Tests (Robust)
     // Uses default playwright.config.ts via NX
     console.log('\n--- 1. Running Robust CI/CD Suite ---');
-    execSync('npx nx e2e @temp-nx/agency-shell-e2e', {
+    execSync('npx nx e2e @temp-nx/company-website-e2e', {
       stdio: 'inherit',
       cwd: rootDir,
       env: { ...process.env, BASE_URL: targetUrl }
@@ -33,7 +33,7 @@ async function runE2E() {
     // 2. If Init, Run UI/Manual Tests
     if (isInit) {
       console.log('\n--- 2. Running Initial UI Suite (Admin/Auth) ---');
-      execSync('npx playwright test --config=apps/agency-shell-e2e/playwright.initial.config.ts', {
+      execSync('npx playwright test --config=apps/company-website-e2e/playwright.initial.config.ts', {
         stdio: 'inherit',
         cwd: rootDir,
         env: { ...process.env, BASE_URL: targetUrl }

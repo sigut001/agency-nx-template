@@ -8,20 +8,22 @@ jobs:
   validate-label:
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR Label
+      - name: Check PR Label or Title
         run: |
           LABELS=$(gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name')
+          TITLE=$(gh pr view ${{ github.event.pull_request.number }} --json title --jq '.title')
+          BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body --jq '.body')
 
-          if echo "$LABELS" | grep -qE 'major|minor|patch'; then
-            echo "✅ PR has valid version label"
+          if echo "$LABELS" | grep -qE 'major|minor|patch' || [[ "$TITLE" =~ "#major" || "$TITLE" =~ "#minor" || "$TITLE" =~ "#patch" ]] || [[ "$BODY" =~ "#major" || "$BODY" =~ "#minor" || "$BODY" =~ "#patch" ]]; then
+            echo "✅ PR has valid versioning metadata (Label or #tag in title/body)"
             exit 0
           else
-            echo "❌ PR must have a version label: major, minor, or patch"
+            echo "❌ PR must have a version label (major, minor, patch) OR a #tag in the title/body (e.g., '#minor')"
             echo ""
             echo "Add a label with:"
             echo "  gh pr edit ${{ github.event.pull_request.number }} --add-label \"minor\""
             echo ""
-            echo "Or via GitHub UI: Labels → Select major/minor/patch"
+            echo "Or add '#minor' to your PR title."
             exit 1
           fi
         env:
@@ -41,8 +43,8 @@ jobs:
 
       - name: Build and Audit
         run: |
-          npx nx build @temp-nx/agency-shell
-          npx nx run @temp-nx/agency-shell:audit
+          npx nx build @temp-nx/company-website
+          npx nx run @temp-nx/company-website:audit
         env:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}

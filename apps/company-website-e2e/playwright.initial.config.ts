@@ -28,7 +28,7 @@ export default defineConfig({
   testMatch: ['**/*.spec.{ts,tsx}'], 
   reporter: [['list'], ['json', { outputFile: 'test-output/report-initial.json' }]],
   webServer: {
-    command: 'npx nx run @temp-nx/agency-shell:preview --port 4300',
+    command: 'npx nx run @temp-nx/company-website:preview --port 4300',
     url: 'http://localhost:4300',
     reuseExistingServer: true,
     cwd: workspaceRoot,

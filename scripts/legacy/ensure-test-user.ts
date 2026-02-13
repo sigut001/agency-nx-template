@@ -11,7 +11,7 @@ import * as dotenv from 'dotenv';
 async function ensureUser() {
   const rootDir = path.resolve(__dirname, '..');
   const envPath = path.join(rootDir, '.env');
-  const projectConfigPath = path.join(rootDir, 'apps/agency-shell/project.json');
+  const projectConfigPath = path.join(rootDir, 'apps/company-website/project.json');
 
   // Load Environment Variables
   dotenv.config({ path: envPath });

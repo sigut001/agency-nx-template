@@ -10,8 +10,8 @@ import * as path from 'path';
 
 function validate() {
   const rootDir = path.resolve(__dirname, '../..');
-  const configPath = path.join(rootDir, 'apps/agency-shell/src/app/app.routes.config.ts');
-  const routesPath = path.join(rootDir, 'apps/agency-shell/src/app/routes.tsx');
+  const configPath = path.join(rootDir, 'apps/company-website/src/app/app.routes.config.ts');
+  const routesPath = path.join(rootDir, 'apps/company-website/src/app/routes.tsx');
 
   console.log('🔍 Validating Route Mappings...');
 
@@ -51,7 +51,7 @@ function validate() {
   if (missing.length > 0) {
     console.error('❌ VALIDATION FAILED: The following routes are in config but not explicitly mapped to components in routes.tsx:');
     missing.forEach(m => console.error(`   - ${m}`));
-    console.log('\nPlease update `apps/agency-shell/src/app/routes.tsx` to handle these routes.');
+    console.log('\nPlease update `apps/company-website/src/app/routes.tsx` to handle these routes.');
     process.exit(1);
   }
 

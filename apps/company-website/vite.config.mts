@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(() => ({
   root: import.meta.dirname,
-  cacheDir: '../../node_modules/.vite/apps/agency-shell',
+  cacheDir: '../../node_modules/.vite/apps/company-website',
   envDir: '../../',
   server: {
     port: 4200,
@@ -28,7 +28,7 @@ export default defineConfig(() => ({
     },
   },
   test: {
-    name: '@temp-nx/agency-shell',
+    name: '@temp-nx/company-website',
     watch: false,
     globals: true,
     environment: 'jsdom',

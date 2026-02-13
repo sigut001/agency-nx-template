@@ -67,7 +67,7 @@ async function generate() {
   }
 
   const projectUrl = env.VITE_PROJECT_URL || 'https://deine-agentur.de';
-  const distPath = path.resolve(__dirname, '../apps/agency-shell/dist');
+  const distPath = path.resolve(__dirname, '../apps/company-website/dist');
 
   // 3. Generate sitemap.xml
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -85,7 +85,7 @@ Allow: /
 Sitemap: ${projectUrl}/sitemap.xml`;
 
   // Write files
-  const publicPath = path.resolve(__dirname, '../apps/agency-shell/public');
+  const publicPath = path.resolve(__dirname, '../apps/company-website/public');
   fs.writeFileSync(path.join(publicPath, 'sitemap.xml'), sitemap);
   fs.writeFileSync(path.join(publicPath, 'robots.txt'), robots);
   

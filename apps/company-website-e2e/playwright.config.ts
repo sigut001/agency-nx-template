@@ -29,7 +29,7 @@ export default defineConfig({
   reporter: [['list'], ['json', { outputFile: 'test-output/report.json' }]],
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx nx run @temp-nx/agency-shell:preview --port 4302',
+    command: 'npx nx run @temp-nx/company-website:preview --port 4302',
     url: 'http://localhost:4302',
     reuseExistingServer: true,
     cwd: workspaceRoot,

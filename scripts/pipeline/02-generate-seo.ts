@@ -55,7 +55,7 @@ async function generate() {
   const env = process.env as Record<string, string>;
 
   const projectUrl = env.VITE_PROJECT_URL || 'https://deine-agentur.de';
-  const distPath = path.join(rootDir, 'apps/agency-shell/dist');
+  const distPath = path.join(rootDir, 'apps/company-website/dist');
 
   // 3. Generate sitemap.xml
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -73,7 +73,7 @@ Allow: /
 Sitemap: ${projectUrl}/sitemap.xml`;
 
   // Write files
-  const publicPath = path.join(rootDir, 'apps/agency-shell/public');
+  const publicPath = path.join(rootDir, 'apps/company-website/public');
   if (!fs.existsSync(publicPath)) fs.mkdirSync(publicPath, { recursive: true });
   
   fs.writeFileSync(path.join(publicPath, 'sitemap.xml'), sitemap);

@@ -48,14 +48,14 @@ async function main() {
   runStep('02a: Route Mapping Check', 'npx tsx scripts/utils/validate-route-mapping.ts', rootDir);
 
   // 02b. BUILD
-  runStep('02b: Build', 'npx nx build @temp-nx/agency-shell', rootDir);
+  runStep('02b: Build', 'npx nx build @temp-nx/company-website', rootDir);
 
   // 03. SEO
   runStep('03: SEO Generation', 'npx tsx scripts/pipeline/02-generate-seo.ts', rootDir);
 
   // 04. PRERENDER
   console.log('\n--- [PHASE: 04: Prerendering] ---');
-  const previewProcess = spawn('npx', ['nx', 'run', '@temp-nx/agency-shell:preview', '--port', '4300'], {
+  const previewProcess = spawn('npx', ['nx', 'run', '@temp-nx/company-website:preview', '--port', '4300'], {
     cwd: rootDir,
     shell: true,
     stdio: 'ignore'
