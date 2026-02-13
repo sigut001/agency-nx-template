@@ -9,10 +9,24 @@
  * - Tests: Imports this to know which URLs to verify in `cms-sync.spec.ts`.
  */
 
-export const APP_ROUTES_CONFIG = [
-  { path: '/', title: 'Willkommen bei Qubits Digital' },
-  { path: '/kontakt', title: 'Kontakt' },
-  { path: '/impressum', title: 'Impressum' },
-  { path: '/datenschutz', title: 'Datenschutz' },
-  { path: '/agb', title: 'AGB' }
+
+export interface RouteConfig {
+  path: string;
+  title: string;
+  type: 'static' | 'dynamic';
+  collection?: string; // Firestore collection name (for dynamic routes) or specific doc (for static)
+}
+
+export const APP_ROUTES_CONFIG: RouteConfig[] = [
+  // --- Static Pages ---
+  { path: '/', title: 'Willkommen bei Qubits Digital', type: 'static', collection: 'static_pages/home' },
+  { path: '/kontakt', title: 'Kontakt', type: 'static', collection: 'static_pages/contact' },
+  { path: '/impressum', title: 'Impressum', type: 'static', collection: 'static_pages/imprint' },
+  { path: '/datenschutz', title: 'Datenschutz', type: 'static', collection: 'static_pages/privacy' },
+  { path: '/agb', title: 'AGB', type: 'static', collection: 'static_pages/terms' },
+
+  // --- Dynamic Pages ---
+  { path: '/blog/:slug', title: 'Blog', type: 'dynamic', collection: 'dynamic_pages/blog/posts' },
+  { path: '/produkte/:slug', title: 'Produkte', type: 'dynamic', collection: 'dynamic_pages/products/items' }
 ];
+

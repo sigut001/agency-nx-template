@@ -29,13 +29,13 @@ async function main() {
   
   dotenv.config({ path: path.join(rootDir, '.env') });
 
-  console.log('🏁 Starting Modular Pipeline Verification...');
+  console.log('🏁 Starting Modular Pipeline Verification (System State Check)...');
   if (isInit) console.log('🛡️  MODE: Initial Setup (Strict Validation)');
 
-  // 00. RESET / CLEANUP
-  runStep('00: Reset & Cleanup', 'npx tsx scripts/automation/cleanup-test-data.ts', rootDir);
+  // 00. SCHEMA VALIDATION (Check if DB is initialized)
+  runStep('00: Schema Validation', 'npx tsx scripts/utils/validate-firestore-schema.ts', rootDir);
 
-  // 01. ENSURE TEST USER
+  // 01. IAM & CREDENTIALS
   runStep('01: IAM & Credentials', 'npx tsx scripts/pipeline/00-ensure-test-user.ts', rootDir);
 
   // 01. SERVICE VALIDATION
@@ -43,6 +43,7 @@ async function main() {
     ? 'npx tsx scripts/pipeline/01-validate-services.ts --strict' 
     : 'npx tsx scripts/pipeline/01-validate-services.ts';
   runStep('01: Service Validation', validationCmd, rootDir);
+
 
   // 02a. ROUTE VALIDATION
   runStep('02a: Route Mapping Check', 'npx tsx scripts/utils/validate-route-mapping.ts', rootDir);

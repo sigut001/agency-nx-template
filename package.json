@@ -6,6 +6,7 @@
     "init:firebase": "npx jiti scripts/setup/init-firebase.ts",
     "create:owner": "npx jiti scripts/setup/create-owner.ts",
     "deploy:rules": "npx jiti scripts/setup/deploy-firebase-rules.ts",
+    "project:init": "npx jiti scripts/setup/reset-and-seed.ts",
     "seed:cms": "npx jiti scripts/setup/seed-cms.ts",
     "test:pipeline": "npx jiti scripts/test-complete-pipeline.ts",
     "test:initial": "npx jiti scripts/test-complete-pipeline.ts --init",

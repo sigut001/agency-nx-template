@@ -1,4 +1,4 @@
-import { collection, query, where, getDocs, doc, getDoc, addDoc, serverTimestamp, orderBy, limit } from 'firebase/firestore';
+import { collection, query, getDocs, doc, getDoc, addDoc, serverTimestamp, orderBy, limit } from 'firebase/firestore';
 import { getFirebaseDb } from './firebase.service';
 
 export interface PageContent {
@@ -9,46 +9,49 @@ export interface PageContent {
   seo?: {
     title: string;
     description: string;
-    keywords: string;
-    ogImage: string;
+    keywords?: string;
+    ogImage?: string;
+    structuredData?: any;
   };
   [key: string]: any;
 }
 
 export const CMSService = {
-  async getPageBySlug(slug: string): Promise<PageContent | null> {
+  async getPageBySlug(slug: string, collectionName = 'static_pages'): Promise<PageContent | null> {
     try {
       const db = getFirebaseDb();
-      const pageDoc = await getDoc(doc(db, 'pages', slug));
+      // Support nested paths like 'static_pages/home'
+      const pathParts = collectionName.split('/');
+      
+      let ref;
+      if (pathParts.length > 1) {
+         // It's a nested path or specific doc path structure handling
+         // But simplest for now: Just use the collection name provided.
+         // If collectionName is 'static_pages', we look in 'static_pages' collection.
+         ref = doc(db, collectionName, slug);
+      } else {
+         ref = doc(db, collectionName, slug);
+      }
+
+      const pageDoc = await getDoc(ref);
       
       if (pageDoc.exists()) {
         return { id: pageDoc.id, ...pageDoc.data() } as PageContent;
       }
       return null;
     } catch (error) {
-      console.error(`[CMS] Error fetching page "${slug}":`, error);
+      console.error(`[CMS] Error fetching page "${slug}" from "${collectionName}":`, error);
       return null;
     }
   },
 
-  async getNavigation(): Promise<any[]> {
-    try {
-      const db = getFirebaseDb();
-      const navDoc = await getDoc(doc(db, 'config', 'navigation'));
-      if (navDoc.exists()) {
-        return navDoc.data().items || [];
-      }
-      return [];
-    } catch (error) {
-      console.error('Error fetching navigation from CMS:', error);
-      return [];
-    }
-  },
 
-  async saveHistoryEntry(slug: string, data: any): Promise<void> {
+
+
+  async saveHistoryEntry(slug: string, data: any, collectionName = 'static_pages'): Promise<void> {
     try {
       const db = getFirebaseDb();
-      const historyRef = collection(db, 'pages', slug, 'history');
+      const historyRef = collection(db, collectionName, slug, 'history');
       await addDoc(historyRef, {
         ...data,
         createdAt: serverTimestamp()
@@ -58,10 +61,10 @@ export const CMSService = {
     }
   },
 
-  async getHistoryEntries(slug: string): Promise<any[]> {
+  async getHistoryEntries(slug: string, collectionName = 'static_pages'): Promise<any[]> {
     try {
       const db = getFirebaseDb();
-      const historyRef = collection(db, 'pages', slug, 'history');
+      const historyRef = collection(db, collectionName, slug, 'history');
       const q = query(historyRef, orderBy('createdAt', 'desc'), limit(20));
       const querySnapshot = await getDocs(q);
       return querySnapshot.docs.map(doc => ({ 

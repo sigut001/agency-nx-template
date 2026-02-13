@@ -9,8 +9,9 @@ export const Home: React.FC = () => {
   const targetSlug = slug || 'home';
 
   useEffect(() => {
-    CMSService.getPageBySlug(targetSlug).then(setContent);
+    CMSService.getPageBySlug(targetSlug, 'static_pages').then(setContent);
   }, [targetSlug]);
+
 
   return (
     <PageLayout 

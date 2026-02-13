@@ -1,0 +1,15 @@
+🚀 Starting SEO Generation / Route Fetching...
+
+   + Static: /
+   + Static: /kontakt
+   + Static: /impressum
+   + Static: /datenschutz
+   + Static: /agb
+   🔍 Fetching dynamic routes from: dynamic_pages/blog/posts
+   + Dynamic: /blog/firebase-hosting
+   + Dynamic: /blog/nx-monorepo-setup
+   + Dynamic: /blog/seo-guide-2026
+   🔍 Fetching dynamic routes from: dynamic_pages/products/items
+   + Dynamic: /produkte/marketing-analytics
+   + Dynamic: /produkte/process-automation
+   + Dynamic: /produkte/web-development

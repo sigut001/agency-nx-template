@@ -33,16 +33,10 @@ export default async function (tree: Tree, schema: any) {
       }
     }
 
-    // 4. Database Seeding
-    console.log('🌱 Step 4: Seeding Firestore...');
-    try {
-      execSync('npx jiti scripts/setup/seed-cms.ts', {
-        cwd: tree.root,
-        stdio: 'inherit',
-      });
-    } catch (e) {
-      console.warn('⚠️  Database seeding failed.');
-    }
+    // 4. Database Seeding - REMOVED (Moved to Test Pipeline)
+    // Seeding should not happen during project generation, but during initial pipeline verification.
+    console.log('🌱 Step 4: Seeding handled by Test Pipeline (skipped here)...');
+
 
     // 5. E2E Tests
     console.log('🏁 Step 5: Running E2E Tests...');

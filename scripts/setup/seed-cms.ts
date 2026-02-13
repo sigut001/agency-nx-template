@@ -71,16 +71,10 @@ async function seed() {
     // 0. Clean Slate
     await clearDatabase();
 
-    // 1. Navigation Setup
-    console.log('📌 Seeding Navigation...');
-    await db.collection('config').doc('navigation').set({
-      items: [
-        { label: 'Home', path: '/' },
-        { label: 'Leistungen', path: '/#services' },
-        { label: 'Über uns', path: '/#about' },
-        { label: 'Kontakt', path: '/contact' }
-      ]
-    });
+    // 1. Navigation Setup - REMOVED (Hardcoded in Frontend)
+    // console.log('📌 Seeding Navigation...');
+    // await db.collection('config').doc('navigation').set({ ... });
+
 
     // 2. CICD Config Setup
     console.log('🤖 Seeding CICD Config...');
@@ -90,36 +84,91 @@ async function seed() {
       pendingSEOChanges: []
     });
 
-    // 3. Sample Pages with SEO
-    console.log('📄 Seeding Pages with SEO...');
-    const pages = [
-      {
-        slug: 'home',
+
+    // 3. Seeding Pages based on APP_ROUTES_CONFIG
+    console.log('📄 Seeding Pages from Route Config...');
+    
+    // Wir laden die Config dynamisch, da wir hier im Node-Kontext sind
+    // Hinweis: In einer echten App würde man das sauberer importieren, 
+    // aber für das Seed-Script reicht ein require/import workaround oder direkte Definition.
+    // Da APP_ROUTES_CONFIG reines TS/JS ist, können wir es importieren, wenn wir tsx nutzen.
+    // Hier simulieren wir die Logik passend zur neuen Struktur:
+
+
+    // --- STATIC PAGES ---
+    const staticPages = [
+      { 
+        slug: 'home', 
+        collection: 'static_pages',
         title: 'Willkommen bei Qubits Digital',
-        content: 'Wir entwickeln Ihre digitale Zukunft mit modernsten Technologien.',
-        seo: {
-          title: 'Modernste Web-Entwicklung & Design',
-          description: 'Wir bauen Ihre digitale Zukunft mit modernsten Web-Technologien.',
-          keywords: 'Webdesign, React, Nx, Agentur',
-          ogImage: 'https://qubits-digital.de/og-home.jpg'
-        }
+        content: 'Wir entwickeln Ihre digitale Zukunft.',
+        seo: { title: 'Home | Qubits', description: 'Startseite' } 
       },
-      {
-        slug: 'imprint',
+      { 
+        slug: 'contact', 
+        collection: 'static_pages', 
+        title: 'Kontakt',
+        content: 'Kontaktieren Sie uns.',
+        seo: { title: 'Kontakt | Qubits', description: 'Kontaktseite' }
+      },
+      { 
+        slug: 'imprint', 
+        collection: 'static_pages', 
         title: 'Impressum',
-        content: 'Hier stehen die rechtlichen Informationen...',
-        seo: {
-          title: 'Impressum | Qubits Digital',
-          description: 'Rechtliche Informationen von Qubits Digital.',
-          keywords: 'Impressum, Rechtliches',
-          ogImage: ''
-        }
+        content: 'Rechtliches.',
+        seo: { title: 'Impressum | Qubits', description: 'Impressum' }
+      },
+      { 
+        slug: 'privacy', 
+        collection: 'static_pages', 
+        title: 'Datenschutz',
+        content: 'Datenschutz.',
+        seo: { title: 'Datenschutz | Qubits', description: 'Datenschutz' }
+      },
+      { 
+        slug: 'terms', 
+        collection: 'static_pages', 
+        title: 'AGB',
+        content: 'Allgemeine Geschäftsbedingungen.',
+        seo: { title: 'AGB | Qubits', description: 'AGB' }
       }
     ];
 
-    for (const page of pages) {
-      await db.collection('pages').doc(page.slug).set(page);
+    for (const page of staticPages) {
+      if (page.collection) {
+        await db.collection(page.collection).doc(page.slug).set(page);
+        console.log(`   - Seeded ${page.collection}/${page.slug}`);
+      }
     }
+
+    // --- DYNAMIC CONTENT: BLOG ---
+    const blogPosts = [
+      { slug: 'seo-guide-2026', title: 'SEO Guide 2026', content: 'Warum SEO wichtig ist...', seo: { title: 'SEO Guide 2026', description: 'SEO Tipps' } },
+      { slug: 'nx-monorepo-setup', title: 'Nx Monorepo Setup', content: 'Wie man Nx aufsetzt...', seo: { title: 'Nx Setup', description: 'Nx Tutorial' } },
+      { slug: 'firebase-hosting', title: 'Firebase Hosting', content: 'Hosting leicht gemacht...', seo: { title: 'Firebase Hosting', description: 'Hosting Guide' } }
+    ];
+
+    for (const post of blogPosts) {
+      // Structure: dynamic_pages (col) -> blog (doc) -> posts (subcol) -> [slug] (doc)
+      await db.collection('dynamic_pages').doc('blog').collection('posts').doc(post.slug).set(post);
+      console.log(`   - Seeded dynamic_pages/blog/posts/${post.slug}`);
+    }
+
+    // --- DYNAMIC CONTENT: PRODUCTS ---
+    const products = [
+      { slug: 'web-development', title: 'Web Entwicklung', content: 'Professionelle Webseiten...', seo: { title: 'Webdev', description: 'Webentwicklung' } },
+      { slug: 'process-automation', title: 'Prozessautomatisierung', content: 'Sparen Sie Zeit...', seo: { title: 'Automatisierung', description: 'Automation' } },
+      { slug: 'marketing-analytics', title: 'Marketing Analytics', content: 'Daten verstehen...', seo: { title: 'Analytics', description: 'Marketing Daten' } }
+    ];
+
+    for (const product of products) {
+      // Structure: dynamic_pages (col) -> products (doc) -> items (subcol) -> [slug] (doc)
+      await db.collection('dynamic_pages').doc('products').collection('items').doc(product.slug).set(product);
+      console.log(`   - Seeded dynamic_pages/products/items/${product.slug}`);
+    }
+
+
+
 
     console.log('\n✅ CMS Seeding (Admin) successfully completed!');
     process.exit(0);

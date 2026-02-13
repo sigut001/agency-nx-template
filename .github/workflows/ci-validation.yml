@@ -23,6 +23,12 @@ jobs:
         run: npm ci
         working-directory: .
 
+      - name: Validate Firestore Schema
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+        run: npx tsx scripts/utils/validate-firestore-schema.ts
+        working-directory: .
+
       - name: NX Report
         run: npx nx report
         working-directory: .

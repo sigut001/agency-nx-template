@@ -46,7 +46,7 @@ export const AdminEditPage: React.FC = () => {
     setStatus('Speichere...');
     try {
       const db = getFirestore(getFirebaseApp());
-      const pageRef = doc(db, 'pages', slug);
+      const pageRef = doc(db, 'static_pages', slug);
       
       // 1. SAVE TO HISTORY BEFORE UPDATE
       await CMSService.saveHistoryEntry(slug, {

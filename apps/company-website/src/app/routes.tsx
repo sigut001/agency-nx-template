@@ -1,6 +1,8 @@
 import { Home } from './routes/Home';
 import { Contact } from './routes/Contact';
 import { LegalPage } from './routes/LegalPage';
+import { BlogPost } from './routes/BlogPost';
+import { ProductPage } from './routes/ProductPage';
 import { APP_ROUTES_CONFIG } from './app.routes.config';
 
 /**
@@ -21,6 +23,9 @@ export const APP_ROUTES = APP_ROUTES_CONFIG.map(route => ({
   element: 
     route.path === '/' ? <Home /> : 
     route.path === '/kontakt' ? <Contact /> : 
+    route.path === '/blog/:slug' ? <BlogPost /> :
+    route.path === '/produkte/:slug' ? <ProductPage /> :
     <LegalPage title={route.title} />
 }));
+
 
