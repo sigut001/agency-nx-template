@@ -48,7 +48,7 @@ jobs:
             echo "bump=patch" >> $GITHUB_OUTPUT
             echo "ℹ️ No specific label/tag found, defaulting to PATCH"
           fi
-        working-directory: templates/agency-nx-template
+        working-directory: .
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -58,7 +58,7 @@ jobs:
           npm version ${{ steps.version.outputs.bump }} --no-git-tag-version
           NEW_VERSION=$(node -p "require('./package.json').version")
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-        working-directory: templates/agency-nx-template
+        working-directory: .
 
       - name: Create Git Tag
         run: |
@@ -68,7 +68,7 @@ jobs:
           git commit -m "chore: bump version to v${{ steps.bump.outputs.new_version }} [skip ci]"
           git tag "v${{ steps.bump.outputs.new_version }}"
           git push origin main --tags
-        working-directory: templates/agency-nx-template
+        working-directory: .
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
