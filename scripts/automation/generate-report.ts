@@ -6,9 +6,9 @@ import * as path from 'path';
  * Consolidates results from SEO, SSG, E2E, and Service Validation.
  */
 
-const REPORT_PATH = path.resolve(__dirname, '../VALIDATION_REPORT.md');
-const PRERENDER_LOG = path.resolve(__dirname, '../debug/prerender.log');
-const DIST_PATH = path.resolve(__dirname, '../apps/agency-shell/dist');
+const REPORT_PATH = path.resolve(__dirname, '../../VALIDATION_REPORT.md');
+const PRERENDER_LOG = path.resolve(__dirname, '../../debug/prerender.log');
+const DIST_PATH = path.resolve(__dirname, '../../apps/agency-shell/dist');
 
 async function generateReport() {
   console.log('📊 Generating Unified Quality Report...');

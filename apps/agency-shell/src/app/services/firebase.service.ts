@@ -1,7 +1,7 @@
 import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getAnalytics } from 'firebase/analytics';
+import { getFirestore, initializeFirestore } from 'firebase/firestore';
+import { getAnalytics, isSupported, Analytics } from 'firebase/analytics';
 
 // Diese Konfiguration wird später durch echte Werte ersetzt
 const firebaseConfig = {
@@ -15,22 +15,31 @@ const firebaseConfig = {
 };
 
 let app: FirebaseApp;
+let analytics: Analytics;
 
-export const initFirebase = () => {
+export const initFirebase = async () => {
   if (!getApps().length) {
     app = initializeApp(firebaseConfig);
+    
+    // Initialize Analytics if supported
+    if (typeof window !== 'undefined') {
+        const supported = await isSupported();
+        if (supported && firebaseConfig.measurementId) {
+            analytics = getAnalytics(app);
+            console.log('📊 Firebase Analytics initialized.');
+        }
+    }
+    // Initialize Firestore with long-polling to prevent connectivity issues on localhost
+    initializeFirestore(app, {
+        experimentalForceLongPolling: true
+    });
   } else {
     app = getApps()[0];
   }
   return app;
 };
 
-export const getFirebaseApp = () => app || initFirebase();
+export const getFirebaseApp = () => app || initializeApp(firebaseConfig);
 export const getFirebaseAuth = () => getAuth(getFirebaseApp());
 export const getFirebaseDb = () => getFirestore(getFirebaseApp());
-export const getFirebaseAnalytics = () => {
-    if (typeof window !== 'undefined') {
-        return getAnalytics(getFirebaseApp());
-    }
-    return null;
-};
+export const getFirebaseAnalytics = () => analytics;

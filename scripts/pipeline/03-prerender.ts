@@ -1,14 +1,15 @@
 import { chromium } from 'playwright';
 import * as fs from 'fs';
 import * as path from 'path';
-import { getRoutes } from './generate-seo';
+import { getRoutes } from './02-generate-seo';
 
 /**
- * Prerender Script
- * Crawls all routes and saves the rendered HTML for SEO bots.
+ * PIPELINE STEP 03: Prerendering
+ * Responsibility: Crawl routes and save rendered HTML for SEO.
  */
 
-const logFile = path.resolve(__dirname, '../debug/prerender.log');
+const rootDir = path.resolve(__dirname, '../..');
+const logFile = path.resolve(rootDir, 'debug/prerender.log');
 const debugDir = path.dirname(logFile);
 if (!fs.existsSync(debugDir)) fs.mkdirSync(debugDir, { recursive: true });
 
@@ -22,7 +23,7 @@ async function prerender() {
   log('🚀 Starting Prerender process...\n');
 
   const routes = await getRoutes();
-  const distPath = path.resolve(__dirname, '../apps/agency-shell/dist');
+  const distPath = path.resolve(rootDir, 'apps/agency-shell/dist');
 
   if (!fs.existsSync(distPath)) {
     console.error('❌ Dist folder not found. Please build the project first.');
@@ -45,12 +46,12 @@ async function prerender() {
     log(`    ⚠️ [Network Failed]: ${request.url()} - ${request.failure()?.errorText}`);
   });
 
-  // Start a local static server to serve the dist folder
   const port = process.env.VITE_PREVIEW_PORT || '4300';
   const baseUrl = `http://localhost:${port}`; 
 
   log(`🌐 Crawling ${routes.length} routes from ${baseUrl}...\n`);
 
+  let hasFatalError = false;
   for (const route of routes) {
     const url = `${baseUrl}${route}`;
     const targetFile = path.join(distPath, route === '/' ? 'index.html' : `${route}.html`);
@@ -88,11 +89,20 @@ async function prerender() {
       fs.writeFileSync(targetFile, html);
     } catch (e) {
       log(`  ❌ Fatal error rendering ${route}: ${e}`);
+      hasFatalError = true;
     }
   }
 
   await browser.close();
   log('\n✅ Prerendering finished!');
+  
+  if (hasFatalError) {
+    process.exit(1);
+  }
+  process.exit(0);
 }
 
-prerender().catch(console.error);
+prerender().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

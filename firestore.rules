@@ -8,13 +8,17 @@ service cloud.firestore {
     }
     
     function isOwner() {
-      return isAuthenticated() && 
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'owner';
+      return isAuthenticated() && (
+        request.auth.token.role == 'owner' ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'owner'
+      );
     }
     
     function isEditor() {
-      return isAuthenticated() && 
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'editor';
+      return isAuthenticated() && (
+        request.auth.token.role == 'editor' ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'editor'
+      );
     }
     
     function isOwnerOrEditor() {
@@ -75,6 +79,11 @@ service cloud.firestore {
       
       // Prevent deletion of config documents
       allow delete: if false;
+    }
+
+    // Validation Test Collection
+    match /_validation_test/{docId} {
+      allow read, write: if isOwner();
     }
     
     // Deny all other access by default

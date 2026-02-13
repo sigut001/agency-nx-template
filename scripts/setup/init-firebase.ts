@@ -66,7 +66,7 @@ try {
 // 4. Seed Initial Data
 try {
   console.log('🌱 Seeding initial CMS data...');
-  execSync('npx jiti scripts/seed-cms.ts', {
+  execSync('npx jiti scripts/setup/seed-cms.ts', {
     cwd: projectRoot,
     stdio: 'inherit'
   });
@@ -79,7 +79,7 @@ try {
 console.log('👤 Next Steps:');
 console.log('   1. Create first admin account:');
 console.log('      - Go to Firebase Console → Authentication');
-console.log('      - Add user manually OR run: npx jiti scripts/create-owner.ts');
+console.log('      - Add user manually OR run: npx jiti scripts/setup/create-owner.ts');
 console.log('   2. Set user role to "owner" in Firestore:');
 console.log('      - Firestore → users → [uid] → role: "owner"');
 console.log('\n✅ Firebase initialization complete!');

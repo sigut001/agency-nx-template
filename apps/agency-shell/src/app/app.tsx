@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Home } from './routes/Home';
-import { Contact } from './routes/Contact';
-import { LegalPage } from './routes/LegalPage';
 import { NotFound } from './routes/NotFound';
 import { AdminLogin } from './routes/AdminLogin';
 import { AdminDashboard } from './routes/AdminDashboard';
@@ -10,6 +8,7 @@ import { AdminEditPage } from './routes/AdminEditPage';
 import { AdminUsersPage } from './routes/AdminUsersPage';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { initFirebase } from './services/firebase.service';
+import { APP_ROUTES } from './routes';
 
 export function App() {
   useEffect(() => {
@@ -21,13 +20,16 @@ export function App() {
     }
   }, []);
 
+
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/kontakt" element={<Contact />} />
-      <Route path="/impressum" element={<LegalPage title="Impressum" />} />
-      <Route path="/datenschutz" element={<LegalPage title="Datenschutz" />} />
-      <Route path="/agb" element={<LegalPage title="AGB" />} />
+      {APP_ROUTES.map((route) => (
+        <Route 
+          key={route.path} 
+          path={route.path} 
+          element={route.element} 
+        />
+      ))}
       
       {/* Admin Area */}
       <Route path="/admin/login" element={<AdminLogin />} />

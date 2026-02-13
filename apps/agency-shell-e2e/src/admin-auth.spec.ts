@@ -11,14 +11,20 @@ test.describe('Admin Authentication', () => {
   });
 
   test('should redirect to dashboard after successful login', async ({ page }) => {
-    // Note: This requires a valid user in the seeded Firebase project.
-    // We assume VITE_FIREBASE_TEST_USER and VITE_FIREBASE_TEST_PASS are set or handled.
-    await page.goto('/admin/login');
+    const testEmail = process.env.TEST_USER_EMAIL;
+    const testPass = process.env.TEST_USER_PASSWORD;
     
-    // Placeholder login - in a real CI this would use env vars
-    // await page.fill('input[type="email"]', process.env.TEST_USER);
-    // await page.fill('input[type="password"]', process.env.TEST_PASS);
-    // await page.click('button[type="submit"]');
-    // await expect(page).toHaveURL(/.*admin\/dashboard/);
+    if (!testEmail || !testPass) {
+      console.warn('Skipping login test: TEST_USER_EMAIL/PASSWORD not set');
+      return;
+    }
+
+    await page.goto('/admin/login');
+    await page.fill('input[type="email"]', testEmail);
+    await page.fill('input[type="password"]', testPass);
+    await page.click('button[type="submit"]');
+    
+    // Adjust selector based on actual dashboard content
+    await expect(page).toHaveURL(/.*admin\/dashboard/);
   });
 });

@@ -24,7 +24,7 @@ export default async function (tree: Tree, schema: any) {
     if (!schema.skipValidation) {
       console.log('🧪 Step 3: Running Service Validation...');
       try {
-        execSync('npx jiti scripts/validate-services.ts', {
+        execSync('npx tsx scripts/pipeline/01-validate-services.ts', {
           cwd: tree.root,
           stdio: 'inherit',
         });
@@ -36,7 +36,7 @@ export default async function (tree: Tree, schema: any) {
     // 4. Database Seeding
     console.log('🌱 Step 4: Seeding Firestore...');
     try {
-      execSync('npx jiti scripts/seed-cms.ts', {
+      execSync('npx jiti scripts/setup/seed-cms.ts', {
         cwd: tree.root,
         stdio: 'inherit',
       });

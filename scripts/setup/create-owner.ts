@@ -27,7 +27,7 @@ async function createOwner() {
 
   // 1. Load Service Account (PROJECT-SPECIFIC!)
   const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY || 
-                             path.join(__dirname, '../firebase-service-account.json');
+                             path.join(__dirname, '../../firebase-service-account.json');
 
   if (!fs.existsSync(serviceAccountPath)) {
     console.error('❌ Service account key not found!');

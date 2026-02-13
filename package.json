@@ -3,15 +3,17 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "init:firebase": "npx jiti scripts/init-firebase.ts",
-    "create:owner": "npx jiti scripts/create-owner.ts",
-    "deploy:rules": "npx jiti scripts/deploy-firebase-rules.ts",
-    "seed:cms": "npx jiti scripts/seed-cms.ts",
-    "test:pipeline": "npx jiti scripts/test-complete-pipeline.ts"
+    "init:firebase": "npx jiti scripts/setup/init-firebase.ts",
+    "create:owner": "npx jiti scripts/setup/create-owner.ts",
+    "deploy:rules": "npx jiti scripts/setup/deploy-firebase-rules.ts",
+    "seed:cms": "npx jiti scripts/setup/seed-cms.ts",
+    "test:pipeline": "npx jiti scripts/test-complete-pipeline.ts",
+    "test:initial": "npx jiti scripts/test-complete-pipeline.ts --init"
   },
   "private": true,
   "dependencies": {
     "firebase": "^10.8.0",
+    "firebase-admin": "^13.6.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-helmet-async": "^2.0.5",
@@ -49,6 +51,7 @@
     "eslint-plugin-playwright": "^1.6.2",
     "eslint-plugin-react": "7.35.0",
     "eslint-plugin-react-hooks": "5.0.0",
+    "firebase-tools": "^15.5.1",
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
     "nx": "22.5.0",

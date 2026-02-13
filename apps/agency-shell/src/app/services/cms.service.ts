@@ -19,17 +19,14 @@ export const CMSService = {
   async getPageBySlug(slug: string): Promise<PageContent | null> {
     try {
       const db = getFirebaseDb();
-      const pagesRef = collection(db, 'pages');
-      const q = query(pagesRef, where('slug', '==', slug));
-      const querySnapshot = await getDocs(q);
+      const pageDoc = await getDoc(doc(db, 'pages', slug));
       
-      if (!querySnapshot.empty) {
-        const docData = querySnapshot.docs[0];
-        return { id: docData.id, ...docData.data() } as PageContent;
+      if (pageDoc.exists()) {
+        return { id: pageDoc.id, ...pageDoc.data() } as PageContent;
       }
       return null;
     } catch (error) {
-      console.error('Error fetching page from CMS:', error);
+      console.error(`[CMS] Error fetching page "${slug}":`, error);
       return null;
     }
   },

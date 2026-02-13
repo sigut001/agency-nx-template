@@ -10,6 +10,7 @@ export const Header: React.FC = () => {
         </div>
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
+          <li><Link to="/#services">Leistungen</Link></li>
           <li><Link to="/kontakt">Kontakt</Link></li>
         </ul>
       </nav>
