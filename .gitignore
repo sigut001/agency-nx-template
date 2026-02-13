@@ -46,3 +46,6 @@ vitest.config.*.timestamp*
 test-output
 
 .env
+.secrets
+*.log
+debug/

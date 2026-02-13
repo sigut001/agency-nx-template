@@ -13,15 +13,14 @@ describe('App', () => {
     expect(baseElement).toBeTruthy();
   });
 
-  it('should have a greeting as the title', () => {
+  it('should have the footer links in the content', () => {
     const { getAllByText } = render(
       <BrowserRouter>
         <App />
       </BrowserRouter>,
     );
     expect(
-      getAllByText(new RegExp('Welcome @temp-nx/company-website', 'gi')).length >
-        0,
+      getAllByText(new RegExp('Impressum', 'gi')).length > 0,
     ).toBeTruthy();
   });
 });
