@@ -1,4 +1,4 @@
-[32m[1m+  hosting:channel:[22m[39m Channel [1mtest-1770944663[22m has been created on site [1mtest-angular-automation[22m.
+[32m[1m+  hosting:channel:[22m[39m Channel [1mtest-1770946636[22m has been created on site [1mtest-angular-automation[22m.
 
 [1m[37m===[39m Deploying to 'test-angular-automation'...[22m
 
@@ -17,4 +17,4 @@
 [1mProject Console:[22m https://console.firebase.google.com/project/test-angular-automation/overview
 [1mHosting URL:[22m https://test-angular-automation.web.app
 
-[32m[1m+  hosting:channel:[22m[39m Channel URL ([1mtest-angular-automation[22m): https://test-angular-automation--test-1770944663-uzyw1h0d.web.app [expires [1m2026-02-13 03:04:35[22m]
+[32m[1m+  hosting:channel:[22m[39m Channel URL ([1mtest-angular-automation[22m): https://test-angular-automation--test-1770946636-ac1y4n2c.web.app [expires [1m2026-02-13 03:37:29[22m]
