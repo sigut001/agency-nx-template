@@ -5,11 +5,32 @@
   "sourceRoot": "apps/company-website/src",
   "tags": [],
   "targets": {
+    "validate:keys": {
+      "command": "npx tsx scripts/pipeline/00-validate-keys.ts"
+    },
+    "validate:firebase": {
+      "command": "npx tsx scripts/pipeline/01a-validate-firebase.ts"
+    },
+    "validate:brevo": {
+      "command": "npx tsx scripts/pipeline/01b-validate-brevo.ts"
+    },
+    "validate:imagekit": {
+      "command": "npx tsx scripts/pipeline/01c-validate-imagekit.ts"
+    },
+    "validate:recaptcha": {
+      "command": "npx tsx scripts/pipeline/01d-validate-recaptcha.ts"
+    },
+    "sync:seo": {
+      "command": "npx tsx scripts/pipeline/01e-sync-seo-metadata.ts"
+    },
+    "validate": {
+      "command": "npx nx run @temp-nx/company-website:validate:keys ; npx nx run @temp-nx/company-website:validate:firebase ; npx nx run @temp-nx/company-website:validate:brevo ; npx nx run @temp-nx/company-website:validate:imagekit ; npx nx run @temp-nx/company-website:validate:recaptcha"
+    },
     "validate-config": {
       "command": "echo 'Stub: Validating config...'"
     },
-    "generate-seo": {
-      "command": "npx tsx scripts/pipeline/02-generate-seo.ts"
+    "generate-sitemap": {
+      "command": "npx tsx scripts/pipeline/02-generate-sitemap.ts"
     },
     "prerender": {
       "command": "npx tsx scripts/pipeline/03-prerender.ts"
@@ -18,22 +39,172 @@
       "command": "echo 'Stub: Validating deployed app...'"
     },
     "validate-services": {
-      "command": "npx tsx scripts/pipeline/01-validate-services.ts"
+      "command": "npx nx run @temp-nx/company-website:validate"
     },
     "preview": {
       "command": "vite preview"
     },
     "audit-core": {
-      "command": "npx nx lint @temp-nx/company-website && npx nx run @temp-nx/company-website:generate-seo && npx nx run @temp-nx/company-website:prerender && npx nx e2e @temp-nx/company-website-e2e --spec src/golden-scan.spec.ts && npx jiti scripts/automation/generate-report.ts"
+      "command": "npx nx lint @temp-nx/company-website ; npx nx run @temp-nx/company-website:generate-sitemap ; npx nx run @temp-nx/company-website:prerender ; npx nx e2e @temp-nx/company-website-e2e src/golden-scan.spec.ts ; npx jiti scripts/automation/generate-report.ts"
     },
     "generate-report": {
       "command": "npx jiti scripts/automation/generate-report.ts"
     },
     "audit": {
-      "command": "npx nx lint @temp-nx/company-website && npx nx run @temp-nx/company-website:generate-seo && npx nx run @temp-nx/company-website:prerender && npx nx e2e @temp-nx/company-website-e2e --spec src/golden-scan.spec.ts && npx jiti scripts/automation/generate-report.ts"
+      "command": "npx nx lint @temp-nx/company-website ; npx nx run @temp-nx/company-website:generate-sitemap ; npx nx run @temp-nx/company-website:prerender ; npx nx e2e @temp-nx/company-website-e2e src/golden-scan.spec.ts ; npx jiti scripts/automation/generate-report.ts"
     },
     "quality": {
-      "command": "npx nx lint @temp-nx/company-website && npx jiti scripts/automation/cleanup-test-data.ts && npx nx run @temp-nx/company-website:generate-seo && npx nx run @temp-nx/company-website:prerender && npx nx e2e @temp-nx/company-website-e2e --spec src/golden-scan.spec.ts && npx nx e2e @temp-nx/company-website-e2e --spec src/admin-rbac.spec.ts && npx jiti scripts/automation/cleanup-test-data.ts && npx jiti scripts/automation/generate-report.ts"
+      "command": "npx nx lint @temp-nx/company-website ; npx tsx scripts/automation/cleanup-test-data.ts ; npx nx run @temp-nx/company-website:generate-sitemap ; npx nx run @temp-nx/company-website:prerender ; npx nx e2e @temp-nx/company-website-e2e src/golden-scan.spec.ts ; npx nx e2e @temp-nx/company-website-e2e src/admin-rbac.spec.ts ; npx tsx scripts/automation/cleanup-test-data.ts ; npx tsx scripts/automation/generate-report.ts"
+    },
+    "v2:validate:env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/00-validation/00-validation_a1-validate-environment.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "v2:init:validate:services": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:init:sync-secrets:validate"],
+      "options": {
+        "commands": [
+          "npx tsx scripts-new/02-validation/02-validation_a1-validate-brevo-health.ts {args.new-session}",
+          "npx tsx scripts-new/02-validation/02-validation_b1-validate-imagekit-health.ts {args.new-session}",
+          "npx tsx scripts-new/02-validation/02-validation_c1-validate-recaptcha-health.ts {args.new-session}",
+          "npx tsx scripts-new/02-validation/02-validation_d1-validate-analytics-health.ts {args.new-session}",
+          "npx tsx scripts-new/02-validation/02-validation_g1-dynamic-route-and-firestore-schema-integrity-check.ts"
+        ],
+        "parallel": true
+      }
+    },
+    "v2:reset": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:validate:env"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_a1-radical-infrastructure-wipe-firebase-and-github.ts --new-session {args.new-session}",
+        "cache": false
+      }
+    },
+    "v2:reset:validate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:reset"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_b1-validate-radical-wipe.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "v2:init:seeding": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:reset:validate"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_c1-configuration-driven-firestore-seeding-and-admin-setup.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "v2:init:seeding:validate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:init:seeding"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_d1-validate-firebase-seeding.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "v2:init:sync-secrets": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:init:seeding:validate"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_e1-environment-to-github-secret-synchronization.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "v2:init:sync-secrets:validate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:init:sync-secrets"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_f1-validate-github-secrets.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "v2:init:validate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:init:validate:services"],
+      "options": {
+        "command": "npx tsx scripts-new/02-validation/02-validation_e1-report-pipeline-success.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "v2:pipeline": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:init:validate"],
+      "options": {
+        "command": "echo 'V2 Pipeline Action/Validation Cycle Complete' --new-session {args.new-session}",
+        "cache": false
+      }
+    },
+    "v2:prep:sitemap": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx tsx scripts-new/03-preparation/03-preparation_a1-generate-sitemap.ts",
+          "npx tsx scripts-new/03-preparation/03-preparation_a2-validate-sitemap-schema.ts"
+        ],
+        "parallel": false
+      }
+    },
+    "v2:prep:licenses": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/03-preparation/03-preparation_c1-generate-license-report.ts",
+        "cache": false
+      }
+    },
+    "v2:prep:licenses:validate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:prep:licenses"],
+      "options": {
+        "command": "npx tsx scripts-new/03-preparation/03-preparation_c2-validate-license-report.ts",
+        "cache": false
+      }
+    },
+    "v2:prep:prerender": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:prep:sitemap"],
+      "options": {
+        "command": "npx tsx scripts-new/03-preparation/03-preparation_b1-prerender-and-cleanup.ts",
+        "cache": false
+      }
+    },
+    "v2:prep": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:prep:prerender", "v2:prep:licenses:validate"],
+      "options": {
+        "command": "echo 'Phase 03 Preparation Complete'"
+      }
+    },
+    "v2:build:inject": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:prep"],
+      "options": {
+        "commands": [
+          "npx nx build @temp-nx/company-website",
+          "npx tsx scripts-new/04-build-and-test-deploy/04-build-and-test-deploy_a1-inject-artifacts-to-dist.ts"
+        ],
+        "parallel": false
+      }
+    },
+    "v2:test-deploy:validate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:build:inject"],
+      "options": {
+        "command": "npx tsx scripts-new/04-build-and-test-deploy/04-build-and-test-deploy_b1-firebase-test-deploy-and-validate.ts"
+      }
+    },
+    "v2:audit": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["v2:test-deploy:validate"],
+      "options": {
+        "command": "npx tsx scripts-new/05-performance-audit-and-report/05-performance-audit-and-report_a1-run-performance-audit.ts"
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ export const Footer: React.FC = () => {
           <li><Link to="/impressum">Impressum</Link></li>
           <li><Link to="/datenschutz">Datenschutz</Link></li>
           <li><Link to="/agb">AGB</Link></li>
+          <li><Link to="/lizenzen">Lizenzen</Link></li>
         </ul>
       </div>
     </footer>

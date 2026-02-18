@@ -11,11 +11,11 @@ test.describe('Admin CMS Editing Flow', () => {
 
   test('should allow editing a page and verify changes on the public route', async ({ page }) => {
     test.setTimeout(60000); // Allow 60s for slow preview environment
-    const testEmail = process.env.TEST_USER_EMAIL;
-    const testPass = process.env.TEST_USER_PASSWORD;
+    const testEmail = process.env.OWNER_USER_EMAIL;
+    const testPass = process.env.OWNER_USER_PASSWORD;
     
     if (!testEmail || !testPass) {
-      throw new Error('TEST_USER_EMAIL or TEST_USER_PASSWORD not set in environment');
+      throw new Error('OWNER_USER_EMAIL or OWNER_USER_PASSWORD not set in environment');
     }
 
     const testContent = `Automated Test Content ${Date.now()}`;

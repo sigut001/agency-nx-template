@@ -90,16 +90,19 @@ async function validateSchema() {
 
     if (missingCollections.length > 0) {
       console.error(`❌ Missing Collections: ${missingCollections.join(', ')}`);
+      console.error(`   Found: ${existingIds.join(', ') || '(none)'}`);
+      console.error(`   Expected: ${requiredCollections.join(', ')}`);
       hasError = true;
     }
 
     if (missingPages.length > 0) {
-      console.error(`❌ Missing Static Page Docs: ${missingPages.join(', ')}`);
+      console.error(`❌ Missing Static Page Docs in 'static_pages': ${missingPages.join(', ')}`);
       hasError = true;
     }
 
     if (!userExists && existingIds.includes('users')) {
        console.error(`❌ 'users' collection exists but is empty! No test user found.`);
+       console.error(`   Expected at least one document in 'users' collection.`);
        hasError = true;
     }
 

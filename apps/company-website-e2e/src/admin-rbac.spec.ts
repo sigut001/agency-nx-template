@@ -6,8 +6,8 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('Admin: RBAC & SEO Integration', () => {
-  const OWNER_EMAIL = process.env.TEST_USER_EMAIL || 'test-owner@qubits-digital.de';
-  const OWNER_PASS = process.env.TEST_USER_PASSWORD || 'TestPass123!';
+  const OWNER_EMAIL = process.env.OWNER_USER_EMAIL || 'test-owner@qubits-digital.de';
+  const OWNER_PASS = process.env.OWNER_USER_PASSWORD || 'TestPass123!';
   const EDITOR_EMAIL = `test-editor-${Date.now()}@qubits-digital.de`;
   const EDITOR_PASS = 'EditorPass123!';
 

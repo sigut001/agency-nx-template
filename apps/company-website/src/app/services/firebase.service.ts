@@ -1,7 +1,6 @@
 import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, initializeFirestore } from 'firebase/firestore';
-import { getAnalytics, isSupported, Analytics } from 'firebase/analytics';
 
 // Diese Konfiguration wird später durch echte Werte ersetzt
 const firebaseConfig = {
@@ -15,20 +14,24 @@ const firebaseConfig = {
 };
 
 let app: FirebaseApp;
-let analytics: Analytics;
 
 export const initFirebase = async () => {
   if (!getApps().length) {
     app = initializeApp(firebaseConfig);
+    getAuth(app);
     
+    /* 
     // Initialize Analytics if supported
+    // Note: We currently load Analytics via CookieBanner.tsx for GDPR compliance
     if (typeof window !== 'undefined') {
+        const { getAnalytics, isSupported } = await import('firebase/analytics');
         const supported = await isSupported();
         if (supported && firebaseConfig.measurementId) {
-            analytics = getAnalytics(app);
-            console.log('📊 Firebase Analytics initialized.');
+            getAnalytics(app);
         }
     }
+    */
+    
     // Initialize Firestore with long-polling to prevent connectivity issues on localhost
     initializeFirestore(app, {
         experimentalForceLongPolling: true
@@ -42,4 +45,8 @@ export const initFirebase = async () => {
 export const getFirebaseApp = () => app || initializeApp(firebaseConfig);
 export const getFirebaseAuth = () => getAuth(getFirebaseApp());
 export const getFirebaseDb = () => getFirestore(getFirebaseApp());
-export const getFirebaseAnalytics = () => analytics;
+export const getFirebaseAnalytics = () => {
+    // Analytics is currently handled via manual injection in CookieBanner.tsx 
+    // to ensure user consent before any tracking starts.
+    return undefined; 
+};

@@ -18,32 +18,33 @@ export const SEO: React.FC<SEOProps> = ({
   structuredData,
 }) => {
   const siteName = 'Qubits Digital';
-  const fullTitle = title ? `${title} | ${siteName}` : siteName;
+  const fullTitle = title 
+    ? (title.includes(siteName) ? title : `${title} | ${siteName}`) 
+    : siteName;
 
   return (
     <>
-      {/* Basic Metadata - React 19 hoisted */}
-      <title>{fullTitle}</title>
-      {description && <meta name="description" content={description} />}
-      {canonical && <link rel="canonical" href={canonical} />}
+      <title key="title">{fullTitle}</title>
+      {description && <meta name="description" content={description} key="description" />}
+      {canonical && <link rel="canonical" href={canonical} key="canonical" />}
 
-      {/* OpenGraph / Facebook */}
-      <meta property="og:title" content={fullTitle} />
-      {description && <meta property="og:description" content={description} />}
-      <meta property="og:type" content={ogType} />
-      {ogImage && <meta property="og:image" content={ogImage} />}
-      <meta property="og:site_name" content={siteName} />
+      <meta property="og:title" content={fullTitle} key="og:title" />
+      {description && <meta property="og:description" content={description} key="og:description" />}
+      <meta property="og:type" content={ogType} key="og:type" />
+      {ogImage && <meta property="og:image" content={ogImage} key="og:image" />}
+      <meta property="og:site_name" content={siteName} key="og:site_name" />
 
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={fullTitle} />
-      {description && <meta name="twitter:description" content={description} />}
+      <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
+      <meta name="twitter:title" content={fullTitle} key="twitter:title" />
+      {description && <meta name="twitter:description" content={description} key="twitter:description" />}
 
-      {/* Structured Data (JSON-LD) */}
+      {/* JSON-LD: React 19 Safe Injection */}
       {structuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
+        <script
+          key="json-ld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       )}
     </>
   );

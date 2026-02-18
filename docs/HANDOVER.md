@@ -32,7 +32,9 @@ Before the pipeline can run successfully, the following must be enabled manually
 > [!NOTE]
 > These steps currently require manual intervention as they are not supported by the standard Firebase CLI. We have noted this for future automation via Terraform.
 
-### 2. Brevo IP Whitelisting (Initial Setup vs. Ongoing CI)
+### 2. Brevo & Messaging Strategy
+
+Brevo is used for optional email notifications. For a detailed breakdown of the Firestore-first approach vs. email notifications, see [MESSAGING_STRATEGY.md](./MESSAGING_STRATEGY.md).
 
 Brevo has a security feature that restricts API access to "Authorized IPs". The pipeline handles this in two stages:
 

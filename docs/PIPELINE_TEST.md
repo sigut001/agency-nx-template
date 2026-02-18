@@ -34,6 +34,72 @@ npm run test:pipeline
 
 ---
 
+## 🏗️ Pipeline Architecture & Dependencies
+
+The following graph visualizes the automated dependency resolution. By using NX Targets, any high-level command (like `nx e2e`) will automatically trigger all necessary prerequisites in the correct order.
+
+```mermaid
+graph TD
+    subgraph P0 ["Phase 0: Base Validation (Parallel)"]
+        direction LR
+        P1["00: Validate Keys"]
+        P2["00: Schema Validation"]
+        P3["00: Ensure Test User"]
+    end
+
+    subgraph P1_Health ["Phase 1: Service Health (Parallel)"]
+        direction LR
+        V1["01a: Firebase"]
+        V2["01b: Brevo"]
+        V3["01c: ImageKit"]
+        V4["01d: reCAPTCHA"]
+    end
+
+    %% Unified flow from Phase 0 to Phase 1 block
+    P0 --> P1_Health
+
+    V5["01e: SEO Metadata Sync"]
+    V1 --> V5
+
+    subgraph P2 ["Phase 2: Build & Config (Sequential)"]
+        B1["02a: Route Mapping Check"]
+        B2["02b: Production Build"]
+        B1 --> B2
+    end
+
+    %% Convergence before Build Phase
+    P1_Health & V5 --> P2
+
+    subgraph P3 ["Phase 3: Generation & Optimization"]
+        direction LR
+        G1["03: Sitemap & Robots"]
+        G2["06: Prerendering"]
+        G1 & G2 --> G3["06b: HTML Cleanup"]
+    end
+
+    P2 --> P3
+
+    D1["07: Deploy to Firebase Preview"]
+    P3 --> D1
+
+    subgraph P5 ["Phase 5: Automated Verification (Parallel)"]
+        direction LR
+        E1["E2E: Robust Suite"]
+        E2["E2E: Cookie Tests"]
+        E3["E2E: Admin Suite"]
+        E4["09: Lighthouse Audit"]
+    end
+
+    E0["Fetch Dynamic Routes Index"]
+    D1 --> E0
+    E0 --> P5
+
+    R1["10: Unified Reporting"]
+    P5 --> R1
+```
+
+---
+
 ## 📋 What Gets Validated
 
 ### Local Checks

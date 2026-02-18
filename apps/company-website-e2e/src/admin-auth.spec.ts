@@ -11,11 +11,11 @@ test.describe('Admin Authentication', () => {
   });
 
   test('should redirect to dashboard after successful login', async ({ page }) => {
-    const testEmail = process.env.TEST_USER_EMAIL;
-    const testPass = process.env.TEST_USER_PASSWORD;
+    const testEmail = process.env.OWNER_USER_EMAIL;
+    const testPass = process.env.OWNER_USER_PASSWORD;
     
     if (!testEmail || !testPass) {
-      console.warn('Skipping login test: TEST_USER_EMAIL/PASSWORD not set');
+      console.warn('Skipping login test: OWNER_USER_EMAIL/PASSWORD not set');
       return;
     }
 

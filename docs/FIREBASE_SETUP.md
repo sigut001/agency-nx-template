@@ -107,6 +107,12 @@ firebase emulators:start --only firestore
 - **Update**: Nur Owner
 - **Delete**: Verboten
 
+- **Analytics**: Go to _Project Settings > Integrations > Google Analytics_ and click **Enable**. This generates the `measurementId` required for tracking.
+- **Blaze Plan (Optional)**: If email notifications via Brevo are required, the project must be upgraded to the **Blaze Plan** (Pay-as-you-go) to allow outbound requests from Firebase Functions.
+
+> [!NOTE]
+> These steps currently require manual intervention as they are not supported by the standard Firebase CLI. We have noted this for future automation via Terraform. For more details on the messaging logic, see [MESSAGING_STRATEGY.md](./MESSAGING_STRATEGY.md).
+
 ---
 
 ## 🔄 CI/CD Integration

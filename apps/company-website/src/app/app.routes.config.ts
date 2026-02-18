@@ -10,6 +10,9 @@
  */
 
 
+import { SYSTEM_ROUTES } from './app.routes.system';
+import { APP_CONTENT_ROUTES } from './app.routes.app';
+
 export interface RouteConfig {
   path: string;
   title: string;
@@ -18,15 +21,6 @@ export interface RouteConfig {
 }
 
 export const APP_ROUTES_CONFIG: RouteConfig[] = [
-  // --- Static Pages ---
-  { path: '/', title: 'Willkommen bei Qubits Digital', type: 'static', collection: 'static_pages/home' },
-  { path: '/kontakt', title: 'Kontakt', type: 'static', collection: 'static_pages/contact' },
-  { path: '/impressum', title: 'Impressum', type: 'static', collection: 'static_pages/imprint' },
-  { path: '/datenschutz', title: 'Datenschutz', type: 'static', collection: 'static_pages/privacy' },
-  { path: '/agb', title: 'AGB', type: 'static', collection: 'static_pages/terms' },
-
-  // --- Dynamic Pages ---
-  { path: '/blog/:slug', title: 'Blog', type: 'dynamic', collection: 'dynamic_pages/blog/posts' },
-  { path: '/produkte/:slug', title: 'Produkte', type: 'dynamic', collection: 'dynamic_pages/products/items' }
+  ...APP_CONTENT_ROUTES,
+  ...SYSTEM_ROUTES
 ];
-

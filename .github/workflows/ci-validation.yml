@@ -5,64 +5,137 @@ on:
     branches: [main]
 
 jobs:
-  validate:
+  validate-keys:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci --legacy-peer-deps
+      - name: 'Phase 0: Validate Keys'
+        run: npx nx run @temp-nx/company-website:validate:keys
+
+  validate-firebase:
+    needs: validate-keys
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci --legacy-peer-deps
+      - name: 'Phase 1a: Validate Firebase'
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+        run: npx nx run @temp-nx/company-website:validate:firebase
+
+  validate-brevo:
+    needs: validate-keys
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci --legacy-peer-deps
+      - name: 'Phase 1b: Validate Brevo'
+        env:
+          VITE_BREVO_API_KEY: ${{ secrets.VITE_BREVO_API_KEY }}
+        run: npx nx run @temp-nx/company-website:validate:brevo
+
+  validate-imagekit:
+    needs: validate-keys
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci --legacy-peer-deps
+      - name: 'Phase 1c: Validate ImageKit'
+        env:
+          VITE_IMAGEKIT_PUBLIC_KEY: ${{ secrets.VITE_IMAGEKIT_PUBLIC_KEY }}
+          VITE_IMAGEKIT_PRIVATE_KEY: ${{ secrets.VITE_IMAGEKIT_PRIVATE_KEY }}
+        run: npx nx run @temp-nx/company-website:validate:imagekit
+
+  validate-recaptcha:
+    needs: validate-keys
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci --legacy-peer-deps
+      - name: 'Phase 1d: Validate reCAPTCHA'
+        env:
+          VITE_RECAPTCHA_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_SITE_KEY }}
+        run: npx nx run @temp-nx/company-website:validate:recaptcha
+
+  build-and-deploy:
+    needs:
+      [validate-firebase, validate-brevo, validate-imagekit, validate-recaptcha]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+      - run: npm ci --legacy-peer-deps
 
-      - name: Install Dependencies
-        run: npm ci --legacy-peer-deps
-        working-directory: .
-
-      - name: Validate Firestore Schema
+      - name: 'Phase 1e: Sync SEO Metadata'
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
-        run: npx tsx scripts/utils/validate-firestore-schema.ts
-        working-directory: .
+        run: npx nx run @temp-nx/company-website:sync:seo
 
-      - name: NX Report
-        run: npx nx report
-        working-directory: .
-
-      - name: Lint
+      - name: 'Lint'
         run: npx nx run @temp-nx/company-website:lint
-        working-directory: .
 
-      - name: Unit Tests
+      - name: 'Unit Tests'
         run: npx nx run @temp-nx/company-website:test
-        working-directory: .
 
-      - name: Config Validation
-        run: npx nx run @temp-nx/company-website:validate-config
-        working-directory: .
-
-      - name: Production Build
+      - name: 'Production Build'
         run: npx nx run @temp-nx/company-website:build --configuration=production
-        working-directory: .
 
-      - name: Generate SEO Files
-        run: npx nx run @temp-nx/company-website:generate-seo
-        working-directory: .
+      - name: 'Phase 2: Generate Sitemap & Robots'
+        run: npx nx run @temp-nx/company-website:generate-sitemap
 
-      # Deployment to Firebase Hosting (Preview)
-      # Wir nutzen hier Platzhalter-Secrets, die der User noch anlegen muss
-      - name: Deploy to Test Domain
+      - name: 'Deploy to Firebase Preview'
+        id: deploy_preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
+          projectId: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          channelId: 'ci-${{ github.event.number }}'
+
+      - name: 'Phase 3: Live Validation'
+        run: npx nx run @temp-nx/company-website:validate-deployed-app --url=${{ steps.deploy_preview.outputs.details_url }}
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: |
-          echo "Deploying to Firebase Test Domain..."
-          # npx firebase-tools deploy --only hosting --project ${{ secrets.FIREBASE_PROJECT_ID }} --token $FIREBASE_TOKEN
-        working-directory: .
+          VITE_PROJECT_URL: ${{ steps.deploy_preview.outputs.details_url }}
+          BASE_URL: ${{ steps.deploy_preview.outputs.details_url }}
 
-      - name: Validate Deployed App
-        run: npx nx run @temp-nx/company-website:validate-deployed-app --url=https://${{ secrets.FIREBASE_PROJECT_ID }}.web.app
-        working-directory: .
+      - name: 'Phase 4: Lighthouse Performance Audit'
+        run: npx tsx scripts/pipeline/06-run-lighthouse.ts ${{ steps.deploy_preview.outputs.details_url }}
+        env:
+          BASE_URL: ${{ steps.deploy_preview.outputs.details_url }}
+
+      - name: 'Generate Unified Quality Report'
+        run: npx tsx scripts/automation/generate-report.ts
+
+      - name: 'Upload CI Quality Reports'
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-reports-ci-${{ github.run_id }}
+          path: reports/
+          retention-days: 7

@@ -8,7 +8,7 @@ import * as path from 'path';
  * Automatically deploys Firestore security rules to Firebase
  */
 
-const projectRoot = path.resolve(__dirname, '..');
+const projectRoot = path.resolve(__dirname, '../../');
 const firebaseJson = path.join(projectRoot, 'firebase.json');
 const firestoreRules = path.join(projectRoot, 'firestore.rules');
 

@@ -3,7 +3,7 @@ import { nxE2EPreset } from '@nx/playwright/preset';
 import { workspaceRoot } from '@nx/devkit';
 
 // For CI, you may want to set BASE_URL to the deployed application.
-const baseURL = process.env['BASE_URL'] || 'http://localhost:4302';
+const baseURL = 'https://test-angular-automation--preview-96h2loeq.web.app';
 
 import * as path from 'path';
 
@@ -27,13 +27,8 @@ export default defineConfig({
     video: 'on',
   },
   reporter: [['list'], ['json', { outputFile: 'test-output/report.json' }]],
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npx nx run @temp-nx/company-website:preview --port 4302',
-    url: 'http://localhost:4302',
-    reuseExistingServer: true,
-    cwd: workspaceRoot,
-  },
+  /* Run your local dev server before starting the tests only if no BASE_URL is provided */
+  webServer: undefined, // Test against live URL
     // 4. Sequential Execution to prevent database interference
     workers: 1,
     projects: [
@@ -52,5 +47,5 @@ export default defineConfig({
     ],
     // CI/CD PIPELINE CONFIGURATION
     // Only run robust, structure-based tests. Exclude UI-heavy admin tests.
-    testMatch: ['cms-sync.spec.tsx', 'bot-validation.spec.ts', 'golden-scan.spec.ts'],
+    testMatch: ['cms-sync.spec.tsx', 'bot-validation.spec.ts', 'golden-scan.spec.ts', 'cookies.spec.ts', 'infrastructure.spec.ts'],
 });

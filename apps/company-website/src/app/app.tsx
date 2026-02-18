@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Home } from './routes/Home';
-import { NotFound } from './routes/NotFound';
-import { AdminLogin } from './routes/AdminLogin';
-import { AdminDashboard } from './routes/AdminDashboard';
-import { AdminEditPage } from './routes/AdminEditPage';
-import { AdminUsersPage } from './routes/AdminUsersPage';
-import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { NotFound } from './routes/system/infrastructure/NotFound';
+import { AdminLogin } from './routes/system/admin/AdminLogin';
+import { AdminDashboard } from './routes/system/admin/AdminDashboard';
+import { AdminEditPage } from './routes/system/admin/AdminEditPage';
+import { AdminUsersPage } from './routes/system/admin/AdminUsersPage';
+import { ProtectedRoute } from './routes/system/infrastructure/ProtectedRoute';
 import { initFirebase } from './services/firebase.service';
 import { APP_ROUTES } from './routes';
 
@@ -45,9 +44,6 @@ export function App() {
         path="/admin/users" 
         element={<ProtectedRoute requiredRole="owner"><AdminUsersPage /></ProtectedRoute>} 
       />
-
-      {/* Dynamic CMS Pages (Catch-all for known slugs) */}
-      <Route path="/:slug" element={<Home />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

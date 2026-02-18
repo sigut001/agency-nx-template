@@ -77,3 +77,32 @@ jobs:
           generate_release_notes: true
           repository: ${{ github.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Production Build'
+        run: npx nx build @temp-nx/company-website --configuration=production
+        working-directory: .
+
+      - name: 'Deploy to Firebase Production'
+        id: deploy_prod
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
+          projectId: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          channelId: live
+
+      - name: 'Phase 7: Lighthouse Final Audit'
+        run: npx tsx scripts/pipeline/06-run-lighthouse.ts ${{ steps.deploy_prod.outputs.details_url }}
+        env:
+          BASE_URL: ${{ steps.deploy_prod.outputs.details_url }}
+
+      - name: 'Generate Unified Quality Report'
+        run: npx tsx scripts/automation/generate-report.ts
+
+      - name: 'Upload Release Quality Reports'
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release-quality-reports-v${{ steps.bump.outputs.new_version }}
+          path: reports/
+          retention-days: 60

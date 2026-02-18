@@ -1,83 +1,42 @@
 🚀 Starting Prerender process...
 
+⚠️ No BASE_URL provided. Switching to LOCAL PRERENDERING mode.
+🚀 Starting local preview server on port 4300...
+⏳ Waiting for server at http://localhost:4300...
+✅ Local server ready.
 🌐 Crawling 11 routes from http://localhost:4300...
 
   📄 Rendering /...
-    🌐 Navigating to http://localhost:4300/...
-    ⚠️ [Network Failed]: http://localhost:4300/ - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/
-Call log:
-[2m  - navigating to "http://localhost:4300/", waiting until "domcontentloaded"[22m
-
+    ✨ Title detected: "Home | Qubits | Qubits Digital"
+    ✅ Saved to apps\company-website\dist\index.html
   📄 Rendering /kontakt...
-    🌐 Navigating to http://localhost:4300/kontakt...
-    ⚠️ [Network Failed]: http://localhost:4300/kontakt - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /kontakt: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/kontakt
-Call log:
-[2m  - navigating to "http://localhost:4300/kontakt", waiting until "domcontentloaded"[22m
-
+    ✨ Title detected: "Qubits Digital"
+    ✅ Saved to apps\company-website\dist\kontakt\index.html
   📄 Rendering /impressum...
-    🌐 Navigating to http://localhost:4300/impressum...
-    ⚠️ [Network Failed]: http://localhost:4300/impressum - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /impressum: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/impressum
-Call log:
-[2m  - navigating to "http://localhost:4300/impressum", waiting until "domcontentloaded"[22m
-
+    ✨ Title detected: "Qubits Digital"
+    ✅ Saved to apps\company-website\dist\impressum\index.html
   📄 Rendering /datenschutz...
-    🌐 Navigating to http://localhost:4300/datenschutz...
-    ⚠️ [Network Failed]: http://localhost:4300/datenschutz - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /datenschutz: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/datenschutz
-Call log:
-[2m  - navigating to "http://localhost:4300/datenschutz", waiting until "domcontentloaded"[22m
-
+    ✨ Title detected: "Qubits Digital"
+    ✅ Saved to apps\company-website\dist\datenschutz\index.html
   📄 Rendering /agb...
-    🌐 Navigating to http://localhost:4300/agb...
-    ⚠️ [Network Failed]: http://localhost:4300/agb - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /agb: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/agb
-Call log:
-[2m  - navigating to "http://localhost:4300/agb", waiting until "domcontentloaded"[22m
-
+    ✨ Title detected: "Qubits Digital"
+    ✅ Saved to apps\company-website\dist\agb\index.html
   📄 Rendering /blog/firebase-hosting...
-    🌐 Navigating to http://localhost:4300/blog/firebase-hosting...
-    ⚠️ [Network Failed]: http://localhost:4300/blog/firebase-hosting - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /blog/firebase-hosting: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/blog/firebase-hosting
-Call log:
-[2m  - navigating to "http://localhost:4300/blog/firebase-hosting", waiting until "domcontentloaded"[22m
-
+    ✨ Title detected: "Firebase Hosting | Qubits Digital"
+    ✅ Saved to apps\company-website\dist\blog\firebase-hosting\index.html
   📄 Rendering /blog/nx-monorepo-setup...
-    🌐 Navigating to http://localhost:4300/blog/nx-monorepo-setup...
-    ⚠️ [Network Failed]: http://localhost:4300/blog/nx-monorepo-setup - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /blog/nx-monorepo-setup: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/blog/nx-monorepo-setup
-Call log:
-[2m  - navigating to "http://localhost:4300/blog/nx-monorepo-setup", waiting until "domcontentloaded"[22m
-
+    ✨ Title detected: "Nx Setup | Qubits Digital"
+    ✅ Saved to apps\company-website\dist\blog\nx-monorepo-setup\index.html
   📄 Rendering /blog/seo-guide-2026...
-    🌐 Navigating to http://localhost:4300/blog/seo-guide-2026...
-    ⚠️ [Network Failed]: http://localhost:4300/blog/seo-guide-2026 - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /blog/seo-guide-2026: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/blog/seo-guide-2026
-Call log:
-[2m  - navigating to "http://localhost:4300/blog/seo-guide-2026", waiting until "domcontentloaded"[22m
-
+    ✨ Title detected: "SEO Guide 2026 | Qubits Digital"
+    ✅ Saved to apps\company-website\dist\blog\seo-guide-2026\index.html
   📄 Rendering /produkte/marketing-analytics...
-    🌐 Navigating to http://localhost:4300/produkte/marketing-analytics...
-    ⚠️ [Network Failed]: http://localhost:4300/produkte/marketing-analytics - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /produkte/marketing-analytics: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/produkte/marketing-analytics
-Call log:
-[2m  - navigating to "http://localhost:4300/produkte/marketing-analytics", waiting until "domcontentloaded"[22m
-
+    ✨ Title detected: "Analytics | Qubits Digital"
+    ✅ Saved to apps\company-website\dist\produkte\marketing-analytics\index.html
   📄 Rendering /produkte/process-automation...
-    🌐 Navigating to http://localhost:4300/produkte/process-automation...
-    ⚠️ [Network Failed]: http://localhost:4300/produkte/process-automation - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /produkte/process-automation: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/produkte/process-automation
-Call log:
-[2m  - navigating to "http://localhost:4300/produkte/process-automation", waiting until "domcontentloaded"[22m
-
+    ✨ Title detected: "Automatisierung | Qubits Digital"
+    ✅ Saved to apps\company-website\dist\produkte\process-automation\index.html
   📄 Rendering /produkte/web-development...
-    🌐 Navigating to http://localhost:4300/produkte/web-development...
-    ⚠️ [Network Failed]: http://localhost:4300/produkte/web-development - net::ERR_CONNECTION_REFUSED
-  ❌ Fatal error rendering /produkte/web-development: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4300/produkte/web-development
-Call log:
-[2m  - navigating to "http://localhost:4300/produkte/web-development", waiting until "domcontentloaded"[22m
-
-
-✅ Prerendering finished!
+    ✨ Title detected: "Webdev | Qubits Digital"
+    ✅ Saved to apps\company-website\dist\produkte\web-development\index.html
+🛑 Stopping local server...

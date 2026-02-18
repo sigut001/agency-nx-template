@@ -167,6 +167,19 @@ async function seed() {
       console.log(`   - Seeded dynamic_pages/products/items/${product.slug}`);
     }
 
+    // --- USERS COLLECTION ---
+    const testUser = {
+      uid: 'test-user-id',
+      email: 'test@qubits.agency',
+      role: 'owner',
+      displayName: 'Test User',
+      createdAt: admin.firestore.FieldValue.serverTimestamp()
+    };
+    
+    // Create the user document itself
+    await db.collection('users').doc(testUser.uid).set(testUser);
+    console.log(`   - Seeded users/${testUser.uid}`);
+
 
 
 

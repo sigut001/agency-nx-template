@@ -20,7 +20,8 @@ async function deploy() {
     process.exit(1);
   }
 
-  const channelId = `test-${Math.floor(Date.now() / 1000)}`;
+  const channelArg = process.argv.find(arg => arg.startsWith('--channel='));
+  const channelId = channelArg ? channelArg.split('=')[1] : `test-${Math.floor(Date.now() / 1000)}`;
   const tempOutputFile = path.join(rootDir, 'firebase-temp.log');
 
   try {
@@ -42,16 +43,26 @@ async function deploy() {
       
       // Output for the orchestrator to pick up
       console.log(`::SET_URL::${liveUrl}`); 
+
+      console.log('\n✨ SUMMARY: Preview Deployment PASSED');
+      console.log(`   - Channel: ${channelId}`);
+      console.log(`   - URL:     ${liveUrl}`);
+      console.log(`   - Expires: 1h`);
       process.exit(0);
     } else {
-      console.error('❌ Could not find Preview URL in Firebase output.');
-      console.error('Firebase Output:', deployOutput);
+      console.error('❌ Deployment Failed: URL not found in output');
+      console.error('   Expected: Output containing "Channel URL: https://..."');
+      console.error('   Found:    Full log below:\n');
+      console.log(deployOutput);
       process.exit(1);
     }
-  } catch (err: unknown) {
-    console.error('❌ Firebase Preview Deploy failed:', err);
+  } catch (err: any) {
+    console.error('❌ Firebase Preview Deploy Exception');
+    console.error(`   Error: ${err.message || err}`);
     if (fs.existsSync(tempOutputFile)) {
-      console.error('Firebase Output from log:', fs.readFileSync(tempOutputFile, 'utf8'));
+      console.log('\n--- Firebase Log Output ---');
+      console.log(fs.readFileSync(tempOutputFile, 'utf8'));
+      console.log('---------------------------\n');
     }
     process.exit(1);
   } finally {
