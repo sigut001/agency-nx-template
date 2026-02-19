@@ -1,0 +1,1478 @@
+﻿Ôä╣´©Å No dynamic routes found, testing static routes only.
+{
+  "config": {
+    "configFile": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\playwright.config.ts",
+    "rootDir": "C:/Users/Simon/Desktop/web-entwicklung/templates/agency-nx-template/apps/company-website-e2e/src",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Simon/Desktop/web-entwicklung/templates/agency-nx-template/apps/company-website-e2e/test-output/playwright/output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/Simon/Desktop/web-entwicklung/templates/agency-nx-template/apps/company-website-e2e/src",
+        "testIgnore": [],
+        "testMatch": [
+          "cms-sync.spec.tsx",
+          "bot-validation.spec.ts",
+          "golden-scan.spec.ts",
+          "infrastructure.spec.ts",
+          "deployment-health.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/Simon/Desktop/web-entwicklung/templates/agency-nx-template/apps/company-website-e2e/test-output/playwright/output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "C:/Users/Simon/Desktop/web-entwicklung/templates/agency-nx-template/apps/company-website-e2e/src",
+        "testIgnore": [],
+        "testMatch": [
+          "cms-sync.spec.tsx",
+          "bot-validation.spec.ts",
+          "golden-scan.spec.ts",
+          "infrastructure.spec.ts",
+          "deployment-health.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/Simon/Desktop/web-entwicklung/templates/agency-nx-template/apps/company-website-e2e/test-output/playwright/output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "C:/Users/Simon/Desktop/web-entwicklung/templates/agency-nx-template/apps/company-website-e2e/src",
+        "testIgnore": [],
+        "testMatch": [
+          "cms-sync.spec.tsx",
+          "bot-validation.spec.ts",
+          "golden-scan.spec.ts",
+          "infrastructure.spec.ts",
+          "deployment-health.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "bot-validation.spec.ts",
+      "file": "bot-validation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Bot / Crawler Validation",
+          "file": "bot-validation.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should have essential SEO meta tags on landing page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5981,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:43:34.946Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\bot-validation-Bot-Crawler-2bb2a-O-meta-tags-on-landing-page-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\bot-validation-Bot-Crawler-2bb2a-O-meta-tags-on-landing-page-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6602bbcafdd674af00d6-473d53f283ea44b1e55b",
+              "file": "bot-validation.spec.ts",
+              "line": 9,
+              "column": 7
+            },
+            {
+              "title": "should contain valid JSON-LD structured data",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 8059,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeAttached\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('script[type=\"application/ld+json\"]')\nExpected: attached\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeAttached\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('script[type=\"application/ld+json\"]')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeAttached\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('script[type=\"application/ld+json\"]')\nExpected: attached\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeAttached\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('script[type=\"application/ld+json\"]')\u001b[22m\n\n    at C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\bot-validation.spec.ts:29:26",
+                        "location": {
+                          "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\bot-validation.spec.ts",
+                          "column": 26,
+                          "line": 29
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 27 |\u001b[39m     \n \u001b[90m 28 |\u001b[39m     \u001b[36mconst\u001b[39m jsonLd \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'script[type=\"application/ld+json\"]'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m     \u001b[36mawait\u001b[39m expect(jsonLd)\u001b[33m.\u001b[39mtoBeAttached()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m     \n \u001b[90m 31 |\u001b[39m     \u001b[36mconst\u001b[39m content \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m jsonLd\u001b[33m.\u001b[39minnerHTML()\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m     \u001b[36mconst\u001b[39m data \u001b[33m=\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mparse(content)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\bot-validation.spec.ts",
+                            "column": 26,
+                            "line": 29
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeAttached\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('script[type=\"application/ld+json\"]')\nExpected: attached\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeAttached\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('script[type=\"application/ld+json\"]')\u001b[22m\n\n\n  27 |     \n  28 |     const jsonLd = page.locator('script[type=\"application/ld+json\"]');\n> 29 |     await expect(jsonLd).toBeAttached();\n     |                          ^\n  30 |     \n  31 |     const content = await jsonLd.innerHTML();\n  32 |     const data = JSON.parse(content);\n    at C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\bot-validation.spec.ts:29:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:43:42.567Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\bot-validation-Bot-Crawler-3ee44-lid-JSON-LD-structured-data-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\bot-validation-Bot-Crawler-3ee44-lid-JSON-LD-structured-data-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\bot-validation-Bot-Crawler-3ee44-lid-JSON-LD-structured-data-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\bot-validation.spec.ts",
+                        "column": 26,
+                        "line": 29
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "6602bbcafdd674af00d6-1e2b503d53983824cb38",
+              "file": "bot-validation.spec.ts",
+              "line": 25,
+              "column": 7
+            },
+            {
+              "title": "should have a discoverable sitemap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5216,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:43:52.747Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\bot-validation-Bot-Crawler-eeb53-have-a-discoverable-sitemap-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\bot-validation-Bot-Crawler-eeb53-have-a-discoverable-sitemap-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6602bbcafdd674af00d6-2b0dd2e3d256c32ff8e2",
+              "file": "bot-validation.spec.ts",
+              "line": 36,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "cms-sync.spec.tsx",
+      "file": "cms-sync.spec.tsx",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Route Availability & CMS Sync",
+          "file": "cms-sync.spec.tsx",
+          "line": 39,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load the / route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2669,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: /\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:00.217Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availability-CMS-Sync-should-load-the-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availability-CMS-Sync-should-load-the-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-50f587229a20c78eb94d",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "should load the /kontakt route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2191,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: /kontakt\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:02.905Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-7aef2-ould-load-the-kontakt-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-7aef2-ould-load-the-kontakt-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-6d89df945cfc24ea73f2",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "should load the /impressum route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3036,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: /impressum\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:05.110Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-0d6cd-ld-load-the-impressum-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-0d6cd-ld-load-the-impressum-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-a2e2559c2fb3395b36df",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "should load the /datenschutz route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2049,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: /datenschutz\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:08.160Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-e3d3d--load-the-datenschutz-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-e3d3d--load-the-datenschutz-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-2d0a99ac495ace4c2799",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "should load the /agb route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2387,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: /agb\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:10.221Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-13e75-c-should-load-the-agb-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-13e75-c-should-load-the-agb-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-6c6590bbf8bfa61015ab",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "should load the /lizenzen route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2097,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: /lizenzen\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:12.620Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-8476f-uld-load-the-lizenzen-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-8476f-uld-load-the-lizenzen-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-0f729d6609c82bd3eda3",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "should load the /admin/login route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2126,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: /admin/login\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:14.731Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-00feb--load-the-admin-login-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-00feb--load-the-admin-login-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-69dbc5c3fee7e2d65820",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "should load the /admin/dashboard route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2486,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: /admin/dashboard\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:16.875Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-4e08a-d-the-admin-dashboard-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-4e08a-d-the-admin-dashboard-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-625e16eccc8cb6e57d35",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "should load the /admin/users route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2027,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: /admin/users\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:19.377Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-40cee--load-the-admin-users-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-40cee--load-the-admin-users-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-62f953b11c1eb3e9be0f",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "should load the /404 route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2370,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: /404\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:21.418Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-35dc5-c-should-load-the-404-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availabilit-35dc5-c-should-load-the-404-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-dfa6efbe603d07ee9f37",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            },
+            {
+              "title": "should load the * route",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2268,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Testing route: *\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:23.800Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availability-CMS-Sync-should-load-the-route-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\cms-sync-Route-Availability-CMS-Sync-should-load-the-route-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "26d173707d65a50ed86e-1b7487851d02c1788eb3",
+              "file": "cms-sync.spec.tsx",
+              "line": 44,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "deployment-health.spec.ts",
+      "file": "deployment-health.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Deployment Health",
+          "file": "deployment-health.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Metadata: Title and Description should exist",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2200,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "      Ô£à Title found: \"Modernste Web-Entwicklung & Design | Qubits Digital\"\n"
+                        },
+                        {
+                          "text": "      Ô£à Meta Description found: \"Wir bauen Ihre digitale Zukunft mit modernsten Web...\"\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:26.083Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\deployment-health-Deployme-16794-nd-Description-should-exist-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\deployment-health-Deployme-16794-nd-Description-should-exist-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "562e80e22b789ffb9348-1e5dc8faea383f0cf113",
+              "file": "deployment-health.spec.ts",
+              "line": 12,
+              "column": 7
+            },
+            {
+              "title": "Hydration: App should be interactive and scripts loaded",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2536,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "      Ô£à JS Bundle scripts detected.\n"
+                        },
+                        {
+                          "text": "      Ô£à Body content populated (App rendered).\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:28.297Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\deployment-health-Deployme-c88b6-eractive-and-scripts-loaded-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\deployment-health-Deployme-c88b6-eractive-and-scripts-loaded-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "562e80e22b789ffb9348-e8890ce38de01bbc9d2a",
+              "file": "deployment-health.spec.ts",
+              "line": 28,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "golden-scan.spec.ts",
+      "file": "golden-scan.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Golden Scan: Quality Audit",
+          "file": "golden-scan.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "SEO: Meta tags should be present and valid",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2110,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:30.851Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-b7a1e-should-be-present-and-valid-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-b7a1e-should-be-present-and-valid-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "47328d3760274bbb9c1a-0ba24ba1652215c99ba2",
+              "file": "golden-scan.spec.ts",
+              "line": 15,
+              "column": 7
+            },
+            {
+              "title": "SEO: Sitemap and Robots should be accessible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2556,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:32.976Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-680c1-Robots-should-be-accessible-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-680c1-Robots-should-be-accessible-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "47328d3760274bbb9c1a-53f1142cbf8723ba6c5b",
+              "file": "golden-scan.spec.ts",
+              "line": 29,
+              "column": 7
+            },
+            {
+              "title": "Structured Data: JSON-LD should be valid and present",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 7529,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeAttached\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('script[type=\"application/ld+json\"]').first()\nExpected: attached\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeAttached\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('script[type=\"application/ld+json\"]').first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeAttached\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('script[type=\"application/ld+json\"]').first()\nExpected: attached\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeAttached\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('script[type=\"application/ld+json\"]').first()\u001b[22m\n\n    at C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\golden-scan.spec.ts:42:26",
+                        "location": {
+                          "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\golden-scan.spec.ts",
+                          "column": 26,
+                          "line": 42
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 40 |\u001b[39m     \u001b[90m// We look for the script tag. Note: It might be in head or body depending on React's hoisting.\u001b[39m\n \u001b[90m 41 |\u001b[39m     \u001b[36mconst\u001b[39m jsonLd \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'script[type=\"application/ld+json\"]'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 42 |\u001b[39m     \u001b[36mawait\u001b[39m expect(jsonLd)\u001b[33m.\u001b[39mtoBeAttached()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 43 |\u001b[39m     \n \u001b[90m 44 |\u001b[39m     \u001b[36mconst\u001b[39m content \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m jsonLd\u001b[33m.\u001b[39minnerText()\u001b[33m;\u001b[39m \u001b[90m// innerText works better for script content often\u001b[39m\n \u001b[90m 45 |\u001b[39m     \u001b[36mconst\u001b[39m data \u001b[33m=\u001b[39m \u001b[33mJSON\u001b[39m\u001b[33m.\u001b[39mparse(content)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\golden-scan.spec.ts",
+                            "column": 26,
+                            "line": 42
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeAttached\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('script[type=\"application/ld+json\"]').first()\nExpected: attached\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeAttached\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('script[type=\"application/ld+json\"]').first()\u001b[22m\n\n\n  40 |     // We look for the script tag. Note: It might be in head or body depending on React's hoisting.\n  41 |     const jsonLd = page.locator('script[type=\"application/ld+json\"]').first();\n> 42 |     await expect(jsonLd).toBeAttached();\n     |                          ^\n  43 |     \n  44 |     const content = await jsonLd.innerText(); // innerText works better for script content often\n  45 |     const data = JSON.parse(content);\n    at C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\golden-scan.spec.ts:42:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:35.550Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-451ed-should-be-valid-and-present-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-451ed-should-be-valid-and-present-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-451ed-should-be-valid-and-present-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\golden-scan.spec.ts",
+                        "column": 26,
+                        "line": 42
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "47328d3760274bbb9c1a-e68c0e7abb7cdd3dc89e",
+              "file": "golden-scan.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "Performance: Core Web Vitals basics (Console Check)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6069,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:45.102Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-6ba58-itals-basics-Console-Check--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-6ba58-itals-basics-Console-Check--chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "47328d3760274bbb9c1a-cf4faff9483ad67ac146",
+              "file": "golden-scan.spec.ts",
+              "line": 50,
+              "column": 7
+            },
+            {
+              "title": "SSG: Content should be available in the static markup",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2395,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:53.273Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-ccd17-ilable-in-the-static-markup-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\golden-scan-Golden-Scan-Qu-ccd17-ilable-in-the-static-markup-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "47328d3760274bbb9c1a-3ca11815194f57cb728d",
+              "file": "golden-scan.spec.ts",
+              "line": 67,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "infrastructure.spec.ts",
+      "file": "infrastructure.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Infrastructure: License and Error Routing",
+          "file": "infrastructure.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "License: Should be accessible and contain content",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 12996,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1').filter({ hasText: 'Drittanbieter-Lizenzen' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1').filter({ hasText: 'Drittanbieter-Lizenzen' })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1').filter({ hasText: 'Drittanbieter-Lizenzen' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1').filter({ hasText: 'Drittanbieter-Lizenzen' })\u001b[22m\n\n    at C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts:16:27",
+                        "location": {
+                          "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts",
+                          "column": 27,
+                          "line": 16
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 14 |\u001b[39m     \u001b[90m// Check for the heading which we know is in the Firestore content\u001b[39m\n \u001b[90m 15 |\u001b[39m     \u001b[36mconst\u001b[39m heading \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'h1'\u001b[39m\u001b[33m,\u001b[39m { hasText\u001b[33m:\u001b[39m \u001b[32m'Drittanbieter-Lizenzen'\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 16 |\u001b[39m     \u001b[36mawait\u001b[39m expect(heading)\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 17 |\u001b[39m     \n \u001b[90m 18 |\u001b[39m     \u001b[90m// Check for the timestamp which we just added\u001b[39m\n \u001b[90m 19 |\u001b[39m     \u001b[36mconst\u001b[39m timestamp \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'p'\u001b[39m\u001b[33m,\u001b[39m { hasText\u001b[33m:\u001b[39m \u001b[32m'Stand:'\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts",
+                            "column": 27,
+                            "line": 16
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1').filter({ hasText: 'Drittanbieter-Lizenzen' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1').filter({ hasText: 'Drittanbieter-Lizenzen' })\u001b[22m\n\n\n  14 |     // Check for the heading which we know is in the Firestore content\n  15 |     const heading = page.locator('h1', { hasText: 'Drittanbieter-Lizenzen' });\n> 16 |     await expect(heading).toBeVisible({ timeout: 10000 });\n     |                           ^\n  17 |     \n  18 |     // Check for the timestamp which we just added\n  19 |     const timestamp = page.locator('p', { hasText: 'Stand:' });\n    at C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts:16:27"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:44:55.696Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\infrastructure-Infrastruct-4f879-essible-and-contain-content-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\infrastructure-Infrastruct-4f879-essible-and-contain-content-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\infrastructure-Infrastruct-4f879-essible-and-contain-content-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts",
+                        "column": 27,
+                        "line": 16
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a5571fb372c0c91b6e8b-bf424f2c4e6be6cfd118",
+              "file": "infrastructure.spec.ts",
+              "line": 11,
+              "column": 7
+            },
+            {
+              "title": "404: Should show custom error page for non-existent routes",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 10078,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1').filter({ hasText: '404 - Seite nicht gefunden' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1').filter({ hasText: '404 - Seite nicht gefunden' })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1').filter({ hasText: '404 - Seite nicht gefunden' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1').filter({ hasText: '404 - Seite nicht gefunden' })\u001b[22m\n\n    at C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts:35:32",
+                        "location": {
+                          "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts",
+                          "column": 32,
+                          "line": 35
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 33 |\u001b[39m     \n \u001b[90m 34 |\u001b[39m     \u001b[36mconst\u001b[39m errorHeading \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'h1'\u001b[39m\u001b[33m,\u001b[39m { hasText\u001b[33m:\u001b[39m \u001b[32m'404 - Seite nicht gefunden'\u001b[39m })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 35 |\u001b[39m     \u001b[36mawait\u001b[39m expect(errorHeading)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 36 |\u001b[39m     \n \u001b[90m 37 |\u001b[39m     \u001b[36mconst\u001b[39m homeLink \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'a'\u001b[39m\u001b[33m,\u001b[39m { hasText\u001b[33m:\u001b[39m \u001b[32m'Zur├╝ck zur Startseite'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 38 |\u001b[39m     \u001b[36mawait\u001b[39m expect(homeLink)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts",
+                            "column": 32,
+                            "line": 35
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1').filter({ hasText: '404 - Seite nicht gefunden' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1').filter({ hasText: '404 - Seite nicht gefunden' })\u001b[22m\n\n\n  33 |     \n  34 |     const errorHeading = page.locator('h1', { hasText: '404 - Seite nicht gefunden' });\n> 35 |     await expect(errorHeading).toBeVisible();\n     |                                ^\n  36 |     \n  37 |     const homeLink = page.locator('a', { hasText: 'Zur├╝ck zur Startseite' });\n  38 |     await expect(homeLink).toBeVisible();\n    at C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts:35:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:45:10.647Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\infrastructure-Infrastruct-4aaef-age-for-non-existent-routes-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\infrastructure-Infrastruct-4aaef-age-for-non-existent-routes-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\infrastructure-Infrastruct-4aaef-age-for-non-existent-routes-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts",
+                        "column": 32,
+                        "line": 35
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a5571fb372c0c91b6e8b-53374e9ea9fd026f8fd3",
+              "file": "infrastructure.spec.ts",
+              "line": 30,
+              "column": 7
+            },
+            {
+              "title": "Footer: Should contain links to all legal pages including Lizenzen",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 10805,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('footer').locator('a:has-text(\"Lizenzen\")')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('footer').locator('a:has-text(\"Lizenzen\")')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('footer').locator('a:has-text(\"Lizenzen\")')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('footer').locator('a:has-text(\"Lizenzen\")')\u001b[22m\n\n    at C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts:57:29",
+                        "location": {
+                          "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts",
+                          "column": 29,
+                          "line": 57
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 55 |\u001b[39m     \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m link \u001b[36mof\u001b[39m links) {\n \u001b[90m 56 |\u001b[39m       \u001b[36mconst\u001b[39m locator \u001b[33m=\u001b[39m footer\u001b[33m.\u001b[39mlocator(\u001b[32m`a:has-text(\"${link.text}\")`\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 57 |\u001b[39m       \u001b[36mawait\u001b[39m expect(locator)\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 58 |\u001b[39m       \u001b[36mawait\u001b[39m expect(locator)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'href'\u001b[39m\u001b[33m,\u001b[39m link\u001b[33m.\u001b[39mhref)\u001b[33m;\u001b[39m\n \u001b[90m 59 |\u001b[39m     }\n \u001b[90m 60 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts",
+                            "column": 29,
+                            "line": 57
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('footer').locator('a:has-text(\"Lizenzen\")')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('footer').locator('a:has-text(\"Lizenzen\")')\u001b[22m\n\n\n  55 |     for (const link of links) {\n  56 |       const locator = footer.locator(`a:has-text(\"${link.text}\")`);\n> 57 |       await expect(locator).toBeVisible();\n     |                             ^\n  58 |       await expect(locator).toHaveAttribute('href', link.href);\n  59 |     }\n  60 |   });\n    at C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts:57:29"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-19T08:45:24.165Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\infrastructure-Infrastruct-3087c-al-pages-including-Lizenzen-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\infrastructure-Infrastruct-3087c-al-pages-including-Lizenzen-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\test-output\\playwright\\output\\infrastructure-Infrastruct-3087c-al-pages-including-Lizenzen-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\Simon\\Desktop\\web-entwicklung\\templates\\agency-nx-template\\apps\\company-website-e2e\\src\\infrastructure.spec.ts",
+                        "column": 29,
+                        "line": 57
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a5571fb372c0c91b6e8b-4e93665ae9e2b7931bae",
+              "file": "infrastructure.spec.ts",
+              "line": 42,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-02-19T08:43:33.200Z",
+    "duration": 123613.856,
+    "expected": 19,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}

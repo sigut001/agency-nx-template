@@ -2,8 +2,9 @@ import { defineConfig, devices } from '@playwright/test';
 import { nxE2EPreset } from '@nx/playwright/preset';
 import { workspaceRoot } from '@nx/devkit';
 
-// For CI, you may want to set BASE_URL to the deployed application.
-const baseURL = 'https://test-angular-automation--preview-96h2loeq.web.app';
+// For CI, BASE_URL is set by the pipeline script (04...c1-run-e2e-tests.ts).
+// Falls back to a known preview URL for manual runs.
+const baseURL = process.env['BASE_URL'] || 'https://test-angular-automation--preview-96h2loeq.web.app';
 
 import * as path from 'path';
 
@@ -47,5 +48,5 @@ export default defineConfig({
     ],
     // CI/CD PIPELINE CONFIGURATION
     // Only run robust, structure-based tests. Exclude UI-heavy admin tests.
-    testMatch: ['cms-sync.spec.tsx', 'bot-validation.spec.ts', 'golden-scan.spec.ts', 'cookies.spec.ts', 'infrastructure.spec.ts'],
+    testMatch: ['cms-sync.spec.tsx', 'bot-validation.spec.ts', 'golden-scan.spec.ts', 'infrastructure.spec.ts', 'deployment-health.spec.ts'],
 });

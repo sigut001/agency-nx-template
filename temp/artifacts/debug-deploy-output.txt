@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "result": {
+    "test-angular-automation": {
+      "site": "test-angular-automation",
+      "url": "https://test-angular-automation--preview-validation-49jlaicv.web.app",
+      "version": "",
+      "expireTime": "2026-02-19T09:24:14.029303524Z"
+    }
+  }
+}
