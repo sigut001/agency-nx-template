@@ -1,6 +1,6 @@
 /// <reference types='vitest' />
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { reactRouter } from '@react-router/dev/vite';
 
 export default defineConfig(() => ({
   root: import.meta.dirname,
@@ -14,7 +14,7 @@ export default defineConfig(() => ({
     port: 4300,
     host: 'localhost',
   },
-  plugins: [react()],
+  plugins: [reactRouter()],
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [],

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router';
 import { CMSService, PageContent } from '../../../services/cms.service';
 import { getFirebaseApp } from '../../../services/firebase.service';
 import { doc, updateDoc, getFirestore, serverTimestamp } from 'firebase/firestore';

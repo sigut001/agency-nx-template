@@ -4,7 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { getFirebaseApp } from '../../../services/firebase.service';
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 export const AdminUsersPage: React.FC = () => {
   const [users, setUsers] = useState<UserProfile[]>([]);

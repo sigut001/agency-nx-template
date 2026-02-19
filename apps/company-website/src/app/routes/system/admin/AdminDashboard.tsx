@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { AuthService } from '../../../services/auth.service';
 import { PageComponent } from '../../../shared/interfaces/cms.interfaces';
 import { UserService, UserRole } from '../../../services/user.service';

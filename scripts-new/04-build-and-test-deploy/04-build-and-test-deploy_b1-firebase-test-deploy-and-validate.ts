@@ -43,13 +43,23 @@ async function start() {
       env: { ...process.env, FIREBASE_TOKEN: process.env.FIREBASE_TOKEN }
     });
     
-    const json = JSON.parse(deployOutput);
-    previewUrl = json.result['@temp-nx/company-website'].siteUrl || json.result.companyWebsite.siteUrl; // Map depending on firebase project name
-    
+    console.log('DEBUG: Raw Firebase Output:', deployOutput);
+
+    interface FirebaseResult {
+      result: {
+        [key: string]: {
+          url: string;
+        }
+      }
+    }
+    const json = JSON.parse(deployOutput) as FirebaseResult;
+    const resultValues = Object.values(json.result);
+    if (resultValues.length > 0) {
+      previewUrl = resultValues[0].url;
+    }
+
     if (!previewUrl) {
-      // Robust mapping for different firebase configurations
-      const key = Object.keys(json.result)[0];
-      previewUrl = json.result[key].siteUrl;
+      throw new Error('Could not find url in Firebase response.');
     }
 
     console.log(`   ✅ Preview URL: ${previewUrl}`);

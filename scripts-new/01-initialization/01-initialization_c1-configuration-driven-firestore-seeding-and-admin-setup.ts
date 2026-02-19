@@ -71,7 +71,9 @@ async function seedInfrastructure() {
 
     for (const row of staticRows) {
       const { path: pathVal, title, collection: colRef } = row;
-      const parts = colRef!.split('/');
+      if (!colRef) continue; // Skip routes without collections (e.g. Admin, 404)
+      
+      const parts = colRef.split('/');
       
       const description = LEGAL_DESCRIPTIONS[pathVal] || `Willkommen bei Qubits Digital. ${title} - Ihre Experten für modernste Web-Lösungen.`;
       
@@ -97,7 +99,9 @@ async function seedInfrastructure() {
 
     for (const row of dynamicRows) {
       const { title, collection: colRef } = row;
-      const parts = colRef!.split('/');
+      if (!colRef) continue; // Skip dynamic routes without collections (e.g. Admin edit)
+      
+      const parts = colRef.split('/');
       const docIds = ['doc-1', 'doc-2', 'doc-3'];
       
       // Dynamic: parts[0]/parts[1]/parts[2] -> e.g. dynamic_pages/blog/documents

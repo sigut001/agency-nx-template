@@ -32,7 +32,7 @@ async function validate() {
   const db = admin.firestore();
 
   try {
-    const docRef = db.collection('static_pages').doc('lizenzen');
+    const docRef = db.collection('static_pages').doc('system').collection('legal').doc('lizenzen');
     const doc = await docRef.get();
 
     if (!doc.exists) {

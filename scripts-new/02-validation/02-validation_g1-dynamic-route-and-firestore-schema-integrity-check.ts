@@ -31,15 +31,10 @@ async function verifyIntegrity() {
 
   // 1. Load Config (Direct Import)
   const { APP_ROUTES_CONFIG } = await import('../../apps/company-website/src/app/app.routes.config');
-  const { SYSTEM_ROUTES } = await import('../../apps/company-website/src/app/app.routes.system');
-  const { APP_CONTENT_ROUTES } = await import('../../apps/company-website/src/app/app.routes.app');
+  // SYSTEM_ROUTES and APP_CONTENT_ROUTES are no longer separate files — filter from APP_ROUTES_CONFIG
+  const isSystemRoute = (r: any) => r.path.startsWith('/impressum') || r.path.startsWith('/datenschutz') || r.path.startsWith('/agb') || r.path.startsWith('/lizenzen');
 
   console.log(`   ℹ️  Loaded ${APP_ROUTES_CONFIG.length} routes from split configs.`);
-
-  // 2. Load Code (routes.tsx)
-  const routesPath = path.join(rootDir, 'apps/company-website/src/app/routes.tsx');
-  if (!fs.existsSync(routesPath)) throw new Error('❌ Routes file missing: routes.tsx');
-  const routesContent = fs.readFileSync(routesPath, 'utf8');
 
   // 3. Initialize Firebase
   if (!admin.apps.length) {
@@ -57,27 +52,19 @@ async function verifyIntegrity() {
   const report: any[] = [];
   let failed = false;
 
-  console.log('\n🔍 Phase A: Checking Code & Folder Consistency...');
+  console.log('\n🔍 Phase A: Checking Data Path Consistency...');
   
   for (const route of APP_ROUTES_CONFIG) {
-    const isSystem = SYSTEM_ROUTES.some(r => r.path === route.path);
+    if (!route.collection) continue;
+    
+    const isSystem = isSystemRoute(route);
     const expectedDir = isSystem ? 'system' : 'app';
     
-    // Check if path is in respective MAP in routes.tsx
-    const mapName = isSystem ? 'SYSTEM_MAP' : 'APP_MAP';
-    const mapKeyCheck = new RegExp(`${mapName}\\s*:\\s*Record<string,\\s*PageComponent>\\s*=\\s*\\{[^}]*['"]${route.path}['"]\\s*:`, 'g');
-    
-    if (!mapKeyCheck.test(routesContent)) {
-      console.error(`      ❌ Code Mismatch: Route "${route.path}" not found in ${mapName}.`);
-      report.push({ check: 'CODE', route: route.path, status: '❌ FAILED' });
-      failed = true;
-    }
-
     // Check directory mirroring in Firestore
     const colRef = route.collection;
     if (route.type === 'static') {
       const expectedPrefix = `static_pages/${expectedDir}/`;
-      if (!colRef?.startsWith(expectedPrefix)) {
+      if (!colRef.startsWith(expectedPrefix)) {
         console.error(`      ❌ Data Mismatch: Static route "${route.path}" collection "${colRef}" must start with "${expectedPrefix}".`);
         report.push({ check: 'DB-PATH', route: route.path, status: '❌ INVALID PREFIX' });
         failed = true;
@@ -88,8 +75,10 @@ async function verifyIntegrity() {
   console.log('\n🔍 Phase B: Checking Database Existence...');
 
   for (const route of APP_ROUTES_CONFIG) {
+    if (!route.collection) continue;
+    
     const colRef = route.collection;
-    const parts = colRef!.split('/');
+    const parts = colRef.split('/');
 
     if (route.type === 'static') {
         // Recursive resolution: start with db, then alternate coll/doc

@@ -96,7 +96,7 @@ async function run() {
 
     // 5. Upload to Firestore
     try {
-      await db.collection('static_pages').doc('lizenzen').set({
+      await db.collection('static_pages').doc('system').collection('legal').doc('lizenzen').set({
         slug: 'lizenzen',
         title: 'Lizenzen',
         content: html,
@@ -108,7 +108,7 @@ async function run() {
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
       }, { merge: true });
 
-      console.log('   🚀 License report successfully pushed to Firestore (static_pages/lizenzen).');
+      console.log('   🚀 License report successfully pushed to Firestore (static_pages/system/legal/lizenzen).');
       process.exit(0);
     } catch (dbError) {
       console.error('❌ Failed to upload to Firestore:', dbError);

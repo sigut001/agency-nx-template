@@ -13,7 +13,7 @@ import * as path from 'path';
 import { JSDOM } from 'jsdom';
 
 const rootDir = path.resolve(__dirname, '../../');
-const artifactDir = path.join(rootDir, 'temp/artifacts/pages');
+const artifactDir = path.join(rootDir, 'apps/company-website/build/client');
 const sitemapPath = path.join(rootDir, 'temp/artifacts/sitemap.xml');
 
 async function getRoutesFromSitemap(): Promise<string[]> {

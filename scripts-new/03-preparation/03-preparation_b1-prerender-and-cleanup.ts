@@ -141,14 +141,14 @@ async function start() {
 
   if (!fs.existsSync(artifactDir)) fs.mkdirSync(artifactDir, { recursive: true });
 
-  // Ensure APP_ROUTES_CONFIG is imported to understand the category of each route
   const { APP_ROUTES_CONFIG } = await import('../../apps/company-website/src/app/app.routes.config');
-  const { SYSTEM_ROUTES } = await import('../../apps/company-website/src/app/app.routes.system');
+  // Determine system routes by file path instead of separate import
+  const isSystemRoute = (routePath: string) => APP_ROUTES_CONFIG.some(r => r.path === routePath && r.file.includes('/system/'));
 
   // Parallel rendering function for a single route
   async function renderRoute(route: string) {
     const url = `${baseUrl}${route}`;
-    const isSystem = SYSTEM_ROUTES.some(r => r.path === route || (route === '/404' && r.path === '/404'));
+    const isSystem = isSystemRoute(route);
     
     let subPath = isSystem ? 'system' : 'app';
     

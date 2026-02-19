@@ -43,8 +43,9 @@ export const SEO: React.FC<SEOProps> = ({
         <script
           key="json-ld"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
+        >
+          {JSON.stringify(structuredData)}
+        </script>
       )}
     </>
   );

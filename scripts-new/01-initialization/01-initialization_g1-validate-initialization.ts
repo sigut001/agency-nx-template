@@ -65,16 +65,23 @@ async function validateInitialization() {
 
     // 2. FIRESTORE STRUCTURE & SCHEMA CHECK
     console.log('\n   📋 CHECK: Firestore Content Integrity...');
-    const configPath = path.join(rootDir, 'apps/company-website/src/app/app.routes.config.ts');
-    const configContent = fs.readFileSync(configPath, 'utf8');
     
-    const staticRows = Array.from(configContent.matchAll(/path:\s*['"]([^'"]+)['"],\s*title:\s*['"]([^'"]+)['"],\s*type:\s*['"]static['"],\s*collection:\s*['"]([^'"]+)['"]/g));
-    const dynamicRows = Array.from(configContent.matchAll(/path:\s*['"]([^'"]+)['"],\s*title:\s*['"]([^'"]+)['"],\s*type:\s*['"]dynamic['"],\s*collection:\s*['"]([^'"]+)['"]/g));
+    // Import config directly instead of regex
+    const { PUBLIC_ROUTES_CONFIG } = await import('../../apps/company-website/src/app/app.routes.config');
+    
+    const staticRows = PUBLIC_ROUTES_CONFIG.filter(r => r.type === 'static' && r.collection);
+    const dynamicRows = PUBLIC_ROUTES_CONFIG.filter(r => r.type === 'dynamic' && r.collection);
 
     async function validateDoc(fullPath: string, label: string) {
       const parts = fullPath.split('/');
-      const docRef = db.collection(parts[0]).doc(parts[1] || 'home');
-      const snap = await docRef.get();
+      
+      let current: any = db;
+      for (let i = 0; i < parts.length; i++) {
+        if (i % 2 === 0) current = current.collection(parts[i]);
+        else current = current.doc(parts[i]);
+      }
+      
+      const snap = await (current as admin.firestore.DocumentReference).get();
       
       if (!snap.exists) {
         console.error(`      ❌ Error: Document ${fullPath} is MISSING.`);
@@ -93,20 +100,20 @@ async function validateInitialization() {
     }
 
     for (const row of staticRows) {
-      const colRef = row[3];
+      const colRef = row.collection!;
       if (!(await validateDoc(colRef, 'Static Page'))) failed = true;
     }
 
     for (const row of dynamicRows) {
-      const colRef = row[3];
-      const parts = colRef.split('/');
+      const colRef = row.collection!;
       console.log(`      ℹ️  Verifying Dynamic Collection: ${colRef}`);
       
       const docIds = ['doc-1', 'doc-2', 'doc-3'];
       for (const id of docIds) {
         const fullPath = `${colRef}/${id}`;
-        const docRef = db.collection(parts[0]).doc(parts[1]).collection(parts[2]).doc(id);
-        const snap = await docRef.get();
+        const parts = colRef.split('/');
+        
+        const snap = await db.collection(parts[0]).doc(parts[1]).collection(parts[2]).doc(id).get();
         if (!snap.exists) {
           console.error(`      ❌ Error: Dynamic Document ${fullPath} is MISSING.`);
           failed = true;

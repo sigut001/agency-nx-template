@@ -48,10 +48,21 @@ async function getRoutes(): Promise<string[]> {
   const db = admin.firestore();
   
   // Directly use the config object (tsx allows importing TS files)
-  const { APP_ROUTES_CONFIG } = await import('../../apps/company-website/src/app/app.routes.config');
+  // Directly use the config object (tsx allows importing TS files)
+  const { PUBLIC_ROUTES_CONFIG } = await import('../../apps/company-website/src/app/app.routes.config');
   
-  const staticRows = APP_ROUTES_CONFIG.filter(r => r.type === 'static');
-  const dynamicRows = APP_ROUTES_CONFIG.filter(r => r.type === 'dynamic');
+  // Helper for nested path resolution (parallel to 02-validation_g1)
+  const resolveDoc = async (db: admin.firestore.Firestore, path: string) => {
+    const parts = path.split('/');
+    let ref: any = db;
+    for (let i = 0; i < parts.length; i++) {
+        ref = i % 2 === 0 ? ref.collection(parts[i]) : ref.doc(parts[i]);
+    }
+    return ref; // returns CollectionReference or DocumentReference
+  };
+  
+  const staticRows = PUBLIC_ROUTES_CONFIG.filter(r => r.type === 'static');
+  const dynamicRows = PUBLIC_ROUTES_CONFIG.filter(r => r.type === 'dynamic');
 
   const routes: string[] = [];
 
@@ -68,8 +79,15 @@ async function getRoutes(): Promise<string[]> {
     const parts = colRef.split('/');
     
     console.log(`   🔍 Fetching dynamic routes from: ${colRef}`);
-    // Extract collection path correctly (e.g. dynamic_pages/blog/documents)
-    const querySnapshot = await db.collection(parts[0]).doc(parts[1]).collection(parts[2]).get();
+    
+    // Resolve collection robustly
+    const colInstance = await resolveDoc(db, colRef);
+    if (!(colInstance instanceof admin.firestore.CollectionReference)) {
+        console.error(`      ❌ Error: "${colRef}" is not a collection path.`);
+        continue;
+    }
+    
+    const querySnapshot = await colInstance.get();
     
     querySnapshot.forEach((doc: admin.firestore.QueryDocumentSnapshot) => {
       const data = doc.data();

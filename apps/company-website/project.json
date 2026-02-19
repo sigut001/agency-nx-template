@@ -3,69 +3,85 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/company-website/src",
-  "tags": [],
   "targets": {
-    "validate:keys": {
-      "command": "npx tsx scripts/pipeline/00-validate-keys.ts"
-    },
-    "validate:firebase": {
-      "command": "npx tsx scripts/pipeline/01a-validate-firebase.ts"
-    },
-    "validate:brevo": {
-      "command": "npx tsx scripts/pipeline/01b-validate-brevo.ts"
-    },
-    "validate:imagekit": {
-      "command": "npx tsx scripts/pipeline/01c-validate-imagekit.ts"
-    },
-    "validate:recaptcha": {
-      "command": "npx tsx scripts/pipeline/01d-validate-recaptcha.ts"
-    },
-    "sync:seo": {
-      "command": "npx tsx scripts/pipeline/01e-sync-seo-metadata.ts"
-    },
-    "validate": {
-      "command": "npx nx run @temp-nx/company-website:validate:keys ; npx nx run @temp-nx/company-website:validate:firebase ; npx nx run @temp-nx/company-website:validate:brevo ; npx nx run @temp-nx/company-website:validate:imagekit ; npx nx run @temp-nx/company-website:validate:recaptcha"
-    },
-    "validate-config": {
-      "command": "echo 'Stub: Validating config...'"
-    },
-    "generate-sitemap": {
-      "command": "npx tsx scripts/pipeline/02-generate-sitemap.ts"
-    },
-    "prerender": {
-      "command": "npx tsx scripts/pipeline/03-prerender.ts"
-    },
-    "validate-deployed-app": {
-      "command": "echo 'Stub: Validating deployed app...'"
-    },
-    "validate-services": {
-      "command": "npx nx run @temp-nx/company-website:validate"
-    },
     "preview": {
       "command": "vite preview"
     },
-    "audit-core": {
-      "command": "npx nx lint @temp-nx/company-website ; npx nx run @temp-nx/company-website:generate-sitemap ; npx nx run @temp-nx/company-website:prerender ; npx nx e2e @temp-nx/company-website-e2e src/golden-scan.spec.ts ; npx jiti scripts/automation/generate-report.ts"
-    },
-    "generate-report": {
-      "command": "npx jiti scripts/automation/generate-report.ts"
-    },
-    "audit": {
-      "command": "npx nx lint @temp-nx/company-website ; npx nx run @temp-nx/company-website:generate-sitemap ; npx nx run @temp-nx/company-website:prerender ; npx nx e2e @temp-nx/company-website-e2e src/golden-scan.spec.ts ; npx jiti scripts/automation/generate-report.ts"
-    },
-    "quality": {
-      "command": "npx nx lint @temp-nx/company-website ; npx tsx scripts/automation/cleanup-test-data.ts ; npx nx run @temp-nx/company-website:generate-sitemap ; npx nx run @temp-nx/company-website:prerender ; npx nx e2e @temp-nx/company-website-e2e src/golden-scan.spec.ts ; npx nx e2e @temp-nx/company-website-e2e src/admin-rbac.spec.ts ; npx tsx scripts/automation/cleanup-test-data.ts ; npx tsx scripts/automation/generate-report.ts"
-    },
-    "v2:validate:env": {
+
+    "validate:env": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx tsx scripts-new/00-validation/00-validation_a1-validate-environment.ts {args.new-session}",
         "cache": false
       }
     },
-    "v2:init:validate:services": {
+    "00-validation": {
       "executor": "nx:run-commands",
-      "dependsOn": ["v2:init:sync-secrets:validate"],
+      "dependsOn": ["validate:env"],
+      "options": {
+        "command": "echo 'Phase 00: Environment Validation Complete'"
+      }
+    },
+
+    "reset": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["00-validation"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_a1-radical-infrastructure-wipe-firebase-and-github.ts --new-session {args.new-session}",
+        "cache": false
+      }
+    },
+    "reset:validate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["reset"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_b1-validate-radical-wipe.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "init:seeding": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["reset:validate"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_c1-configuration-driven-firestore-seeding-and-admin-setup.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "init:seeding:validate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["init:seeding"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_d1-validate-firebase-seeding.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "init:sync-secrets": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["init:seeding:validate"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_e1-environment-to-github-secret-synchronization.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "init:sync-secrets:validate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["init:sync-secrets"],
+      "options": {
+        "command": "npx tsx scripts-new/01-initialization/01-initialization_f1-validate-github-secrets.ts {args.new-session}",
+        "cache": false
+      }
+    },
+    "01-initialization": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["init:sync-secrets:validate"],
+      "options": {
+        "command": "echo 'Phase 01: Initialization Complete'"
+      }
+    },
+
+    "init:validate:services": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["01-initialization"],
       "options": {
         "commands": [
           "npx tsx scripts-new/02-validation/02-validation_a1-validate-brevo-health.ts {args.new-session}",
@@ -77,72 +93,25 @@
         "parallel": true
       }
     },
-    "v2:reset": {
+    "init:validate:report": {
       "executor": "nx:run-commands",
-      "dependsOn": ["v2:validate:env"],
-      "options": {
-        "command": "npx tsx scripts-new/01-initialization/01-initialization_a1-radical-infrastructure-wipe-firebase-and-github.ts --new-session {args.new-session}",
-        "cache": false
-      }
-    },
-    "v2:reset:validate": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["v2:reset"],
-      "options": {
-        "command": "npx tsx scripts-new/01-initialization/01-initialization_b1-validate-radical-wipe.ts {args.new-session}",
-        "cache": false
-      }
-    },
-    "v2:init:seeding": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["v2:reset:validate"],
-      "options": {
-        "command": "npx tsx scripts-new/01-initialization/01-initialization_c1-configuration-driven-firestore-seeding-and-admin-setup.ts {args.new-session}",
-        "cache": false
-      }
-    },
-    "v2:init:seeding:validate": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["v2:init:seeding"],
-      "options": {
-        "command": "npx tsx scripts-new/01-initialization/01-initialization_d1-validate-firebase-seeding.ts {args.new-session}",
-        "cache": false
-      }
-    },
-    "v2:init:sync-secrets": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["v2:init:seeding:validate"],
-      "options": {
-        "command": "npx tsx scripts-new/01-initialization/01-initialization_e1-environment-to-github-secret-synchronization.ts {args.new-session}",
-        "cache": false
-      }
-    },
-    "v2:init:sync-secrets:validate": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["v2:init:sync-secrets"],
-      "options": {
-        "command": "npx tsx scripts-new/01-initialization/01-initialization_f1-validate-github-secrets.ts {args.new-session}",
-        "cache": false
-      }
-    },
-    "v2:init:validate": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["v2:init:validate:services"],
+      "dependsOn": ["init:validate:services"],
       "options": {
         "command": "npx tsx scripts-new/02-validation/02-validation_e1-report-pipeline-success.ts {args.new-session}",
         "cache": false
       }
     },
-    "v2:pipeline": {
+    "02-validation": {
       "executor": "nx:run-commands",
-      "dependsOn": ["v2:init:validate"],
+      "dependsOn": ["init:validate:report"],
       "options": {
-        "command": "echo 'V2 Pipeline Action/Validation Cycle Complete' --new-session {args.new-session}",
-        "cache": false
+        "command": "echo 'Phase 02: Validation Complete'"
       }
     },
-    "v2:prep:sitemap": {
+
+    "prep:sitemap": {
       "executor": "nx:run-commands",
+      "dependsOn": ["02-validation"],
       "options": {
         "commands": [
           "npx tsx scripts-new/03-preparation/03-preparation_a1-generate-sitemap.ts",
@@ -151,39 +120,41 @@
         "parallel": false
       }
     },
-    "v2:prep:licenses": {
+    "prep:licenses": {
       "executor": "nx:run-commands",
+      "dependsOn": ["02-validation"],
       "options": {
         "command": "npx tsx scripts-new/03-preparation/03-preparation_c1-generate-license-report.ts",
         "cache": false
       }
     },
-    "v2:prep:licenses:validate": {
+    "prep:licenses:validate": {
       "executor": "nx:run-commands",
-      "dependsOn": ["v2:prep:licenses"],
+      "dependsOn": ["prep:licenses"],
       "options": {
         "command": "npx tsx scripts-new/03-preparation/03-preparation_c2-validate-license-report.ts",
         "cache": false
       }
     },
-    "v2:prep:prerender": {
+    "03-preparation": {
       "executor": "nx:run-commands",
-      "dependsOn": ["v2:prep:sitemap"],
+      "dependsOn": ["prep:sitemap", "prep:licenses:validate"],
       "options": {
-        "command": "npx tsx scripts-new/03-preparation/03-preparation_b1-prerender-and-cleanup.ts",
-        "cache": false
+        "command": "echo 'Phase 03: Preparation Complete'"
       }
     },
-    "v2:prep": {
+
+    "build": {
       "executor": "nx:run-commands",
-      "dependsOn": ["v2:prep:prerender", "v2:prep:licenses:validate"],
       "options": {
-        "command": "echo 'Phase 03 Preparation Complete'"
+        "command": "npx react-router build",
+        "cwd": "apps/company-website"
       }
     },
-    "v2:build:inject": {
+
+    "build:inject": {
       "executor": "nx:run-commands",
-      "dependsOn": ["v2:prep"],
+      "dependsOn": ["03-preparation"],
       "options": {
         "commands": [
           "npx nx build @temp-nx/company-website",
@@ -192,18 +163,41 @@
         "parallel": false
       }
     },
-    "v2:test-deploy:validate": {
+    "test-deploy:validate": {
       "executor": "nx:run-commands",
-      "dependsOn": ["v2:build:inject"],
+      "dependsOn": ["build:inject"],
       "options": {
         "command": "npx tsx scripts-new/04-build-and-test-deploy/04-build-and-test-deploy_b1-firebase-test-deploy-and-validate.ts"
       }
     },
-    "v2:audit": {
+    "04-build-and-test-deploy": {
       "executor": "nx:run-commands",
-      "dependsOn": ["v2:test-deploy:validate"],
+      "dependsOn": ["test-deploy:validate"],
+      "options": {
+        "command": "echo 'Phase 04: Build & Test-Deploy Complete'"
+      }
+    },
+
+    "audit": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["04-build-and-test-deploy"],
       "options": {
         "command": "npx tsx scripts-new/05-performance-audit-and-report/05-performance-audit-and-report_a1-run-performance-audit.ts"
+      }
+    },
+    "05-performance-audit-and-report": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["audit"],
+      "options": {
+        "command": "echo 'Phase 05: Performance Audit Complete'"
+      }
+    },
+
+    "pipeline:full": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["05-performance-audit-and-report"],
+      "options": {
+        "command": "echo '✨ Pipeline: Full Execution Complete!'"
       }
     }
   }

@@ -14,6 +14,7 @@ import { LogService } from '../utils/log-service';
 LogService.init('ACTION', 'SYNC');
 
 async function syncSecrets() {
+  process.setMaxListeners(0); // Prevent MaxListenersExceededWarning for parallel execSync
   console.log('🔐 STARTING GITHUB SECRET SYNCHRONIZATION...');
 
   const rootDir = path.resolve(__dirname, '../../');
@@ -28,17 +29,33 @@ async function syncSecrets() {
 
   // Parallel upload function for a single secret
   async function uploadSecret(key: string, value: string): Promise<void> {
+    // GitHub Secret Name rules: [A-Z, 0-9, _] and must not start with GITHUB_ or a number.
+    const isValidKey = /^[A-Z_][A-Z0-9_]*$/.test(key) && !key.startsWith('GITHUB_');
+    
+    if (!isValidKey) {
+      console.log(`   ⚠️  Skipping invalid key for GitHub Secrets: ${key}`);
+      return;
+    }
+
     console.log(`   ➡️  Syncing: ${key}`);
     return new Promise((resolve, reject) => {
-      try {
-        const escapedValue = value.replace(/"/g, '\\"');
-        execSync(`gh secret set ${key} --body "${escapedValue}"`, { stdio: 'ignore' });
-        console.log(`      ✅ Success: ${key}`);
-        resolve();
-      } catch (err) {
-        console.error(`      ❌ Failed to sync ${key}.`);
-        reject(new Error(`Failed to sync secret: ${key}`));
-      }
+      const { exec } = require('child_process');
+      const child = exec(`gh secret set ${key} --body -`, { 
+        encoding: 'utf8',
+        env: process.env 
+      }, (error: any) => {
+        if (error) {
+            console.error(`      ❌ Failed to sync ${key}: ${error.message}`);
+            reject(error);
+        } else {
+            console.log(`      ✅ Success: ${key}`);
+            resolve();
+        }
+      });
+      
+      // Write value to stdin and end the stream
+      child.stdin?.write(value);
+      child.stdin?.end();
     });
   }
 

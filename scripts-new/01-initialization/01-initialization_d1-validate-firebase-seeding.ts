@@ -15,6 +15,9 @@ import { LogService } from '../utils/log-service';
 
 LogService.init('VALIDATE', 'SEEDING');
 
+const rootDir = path.resolve(__dirname, '../../');
+dotenv.config({ path: path.join(rootDir, '.env') });
+
 // Reconstructed ServiceAccount for Firebase Admin
 const serviceAccount: admin.ServiceAccount = {
   projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
@@ -23,11 +26,8 @@ const serviceAccount: admin.ServiceAccount = {
 };
 
 async function validateFirebase() {
-  console.log('>>> STARTING VALIDATION: 02b-validate-firebase-seeding.ts');
+  console.log('>>> STARTING VALIDATION: 01-initialization_d1-validate-firebase-seeding.ts');
   
-  const rootDir = path.resolve(__dirname, '../../');
-  dotenv.config({ path: path.join(rootDir, '.env') });
-
   try {
     if (!admin.apps.length) {
       const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY || path.join(rootDir, 'firebase-service-account.json');
@@ -64,16 +64,25 @@ async function validateFirebase() {
 
     // 2. FIRESTORE CHECK
     console.log('\n   📋 CHECK: Firestore Content Integrity...');
-    const configPath = path.join(rootDir, 'apps/company-website/src/app/app.routes.config.ts');
-    const configContent = fs.readFileSync(configPath, 'utf8');
     
-    const staticRows = Array.from(configContent.matchAll(/path:\s*['"]([^'"]+)['"],\s*title:\s*['"]([^'"]+)['"],\s*type:\s*['"]static['"],\s*collection:\s*['"]([^'"]+)['"]/g));
-    const dynamicRows = Array.from(configContent.matchAll(/path:\s*['"]([^'"]+)['"],\s*title:\s*['"]([^'"]+)['"],\s*type:\s*['"]dynamic['"],\s*collection:\s*['"]([^'"]+)['"]/g));
+    // Import config directly (like in seeding) instead of regex
+    const { PUBLIC_ROUTES_CONFIG } = await import('../../apps/company-website/src/app/app.routes.config');
+    
+    const staticRows = PUBLIC_ROUTES_CONFIG.filter(r => r.type === 'static' && r.collection);
+    const dynamicRows = PUBLIC_ROUTES_CONFIG.filter(r => r.type === 'dynamic' && r.collection);
 
     for (const row of staticRows) {
-      const colRef = row[3];
+      const colRef = row.collection!;
       const parts = colRef.split('/');
-      const snap = await db.collection(parts[0]).doc(parts[1] || 'home').get();
+      
+      let current: any = db;
+      for (let i = 0; i < parts.length; i++) {
+        if (i % 2 === 0) current = current.collection(parts[i]);
+        else current = current.doc(parts[i]);
+      }
+      
+      const snap = await (current as admin.firestore.DocumentReference).get();
+
       if (!snap.exists) {
         console.error(`      ❌ Error: Static Document ${colRef} is MISSING.`);
         failed = true;
@@ -89,9 +98,10 @@ async function validateFirebase() {
     }
 
     for (const row of dynamicRows) {
-      const colRef = row[3];
+      const colRef = row.collection!;
       const parts = colRef.split('/');
       const docIds = ['doc-1', 'doc-2', 'doc-3'];
+      
       for (const id of docIds) {
         const snap = await db.collection(parts[0]).doc(parts[1]).collection(parts[2]).doc(id).get();
         if (!snap.exists) {

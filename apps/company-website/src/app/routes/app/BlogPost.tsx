@@ -1,44 +1,38 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLoaderData } from 'react-router';
+import type { LoaderFunctionArgs } from 'react-router';
 import { PageLayout } from '../../components/layout/PageLayout';
-import { PageComponent, BasePageDocument } from '../../shared/interfaces/cms.interfaces';
-import { CMSService } from '../../services/cms.service';
+import { getPageAtBuildTime } from '../../services/cms-build.service';
+import type { BasePageDocument } from '../../shared/interfaces/cms.interfaces';
 
-type BlogDocument = BasePageDocument;
+export async function loader({ params }: LoaderFunctionArgs) {
+  const { slug } = params;
+  if (!slug) throw new Response('Not Found', { status: 404 });
 
-export const BlogPost: PageComponent = ({ collection, configTitle }) => {
-  const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogDocument | null>(null);
+  const content = await getPageAtBuildTime(`dynamic_pages/blog/documents/${slug}`);
+  if (!content) throw new Response('Not Found', { status: 404 });
 
-  useEffect(() => {
-    if (slug && collection) {
-      CMSService.getPageBySlug<BlogDocument>(slug, collection)
-        .then(setPost);
-    }
-  }, [slug, collection]);
+  return { content: content as BasePageDocument };
+}
+
+export default function BlogPost() {
+  const { content } = useLoaderData<typeof loader>();
 
   return (
-    <PageLayout 
-      title={post?.seo?.title || post?.title || 'Blog'} 
-      description={post?.seo?.description}
-      structuredData={post?.seo?.structuredData}
+    <PageLayout
+      title={content.seo?.title || content.title}
+      description={content.seo?.description}
+      structuredData={content.seo?.structuredData}
     >
-      <article className="container mx-auto px-4 py-12 max-w-3xl" data-hydrated={post ? "true" : "false"}>
-        {post ? (
-          <>
-            <header className="mb-8">
-                <span className="text-sm text-indigo-600 font-semibold tracking-wide uppercase">Blog</span>
-                <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2">{post.title}</h1>
-            </header>
+      <article className="container mx-auto px-4 py-12 max-w-3xl">
+        <header className="mb-8">
+          <span className="text-sm text-indigo-600 font-semibold tracking-wide uppercase">Blog</span>
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2">{content.title}</h1>
+        </header>
 
-            <div className="prose prose-lg prose-indigo max-w-none text-slate-600">
-               <div dangerouslySetInnerHTML={{ __html: post.content }} />
-            </div>
-          </>
-        ) : (
-          <div style={{ display: 'none' }}>Loading...</div>
-        )}
+        <div className="prose prose-lg prose-indigo max-w-none text-slate-600">
+          <div style={{ whiteSpace: 'pre-wrap' }}>{String(content.content)}</div>
+        </div>
       </article>
     </PageLayout>
   );
-};
+}

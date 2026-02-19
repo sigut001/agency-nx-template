@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { getFirebaseAuth } from '../../../services/firebase.service';
 import { UserService, UserRole } from '../../../services/user.service';
 import { onAuthStateChanged } from 'firebase/auth';

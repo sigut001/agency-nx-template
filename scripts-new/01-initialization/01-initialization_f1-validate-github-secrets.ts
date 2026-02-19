@@ -25,7 +25,15 @@ function validateSecrets() {
     
     const envContent = fs.readFileSync(envPath, 'utf8');
     const envConfig = dotenv.parse(envContent);
-    const requiredKeys = Object.keys(envConfig).filter(k => envConfig[k] && envConfig[k].length > 0);
+    
+    // GitHub Secret Name rules: [A-Z, 0-9, _] and must not start with GITHUB_ or a number.
+    const isValidKey = (key: string) => /^[A-Z_][A-Z0-9_]*$/.test(key) && !key.startsWith('GITHUB_');
+    
+    const requiredKeys = Object.keys(envConfig).filter(k => 
+      envConfig[k] && 
+      envConfig[k].length > 0 && 
+      isValidKey(k)
+    );
 
     let failed = false;
     for (const key of requiredKeys) {

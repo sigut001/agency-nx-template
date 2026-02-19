@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 export const Header: React.FC = () => {
   return (
     <header className="agency-header">
       <nav>
         <div className="logo">
-          <Link to="/">Agency Blueprint</Link>
+          <Link to="/">Qubits Digital</Link>
         </div>
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
