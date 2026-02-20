@@ -11,6 +11,7 @@ import * as admin from 'firebase-admin';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
+import { LogService } from '../utils/log-service';
 
 const rootDir = path.resolve(__dirname, '../../');
 dotenv.config({ path: path.join(rootDir, '.env') });
@@ -23,6 +24,7 @@ const serviceAccount: admin.ServiceAccount = {
 };
 
 async function run() {
+  LogService.init('PREP', 'LICENSES');
   console.log('⚖️  Generating License Report & Uploading to Firestore...\n');
 
   // 1. Init Firebase Admin
@@ -56,20 +58,19 @@ async function run() {
     // 3. Sort packages alphabetically by name
     const sortedEntries = Object.entries(packages).sort((a, b) => a[0].localeCompare(b[0]));
 
-    // 4. Format as HTML for LegalPage component
-    let html = '<h1>Drittanbieter-Lizenzen</h1>';
-    html += `<p style="color: #666; font-size: 0.9em;">Stand: ${timestampStr} (Automatischer Build-Report)</p>`;
-    html += '<p>Diese Software nutzt folgende Open-Source-Komponenten:</p><table style="width:100%; border-collapse: collapse; margin-top: 20px;">';
-    html += '<thead><tr style="border-bottom: 2px solid #ddd; text-align: left;"><th>Paket</th><th>Version</th><th>Lizenz</th></tr></thead><tbody>';
+    // 4. Format as Plain Text for LegalPage component
+    let textReport = 'Drittanbieter-Lizenzen\n';
+    textReport += `Stand: ${timestampStr} (Automatischer Build-Report)\n\n`;
+    textReport += 'Diese Software nutzt folgende Open-Source-Komponenten:\n';
+    textReport += '--------------------------------------------------\n\n';
 
     for (const [fullName, info] of sortedEntries) {
-      // Extract name and version if info.version is missing (license-checker often puts it in the key)
+      // Extract name and version
       let name = fullName;
       let version = info.version;
       
       if (!version && fullName.includes('@')) {
         const parts = fullName.split('@');
-        // Handle scoped packages like @firebase/app@0.1.0
         if (fullName.startsWith('@')) {
           version = parts[2];
           name = `@${parts[1]}`;
@@ -79,27 +80,25 @@ async function run() {
         }
       }
 
-      html += `<tr style="border-bottom: 1px solid #eee;">
-        <td style="padding: 10px 0;"><strong>${name}</strong></td>
-        <td>${version || '---'}</td>
-        <td><span style="background: #f0f0f0; padding: 2px 6px; border-radius: 4px;">${info.licenses}</span></td>
-      </tr>`;
+      textReport += `Paket:   ${name}\n`;
+      textReport += `Version: ${version || '---'}\n`;
+      textReport += `Lizenz:  ${info.licenses}\n`;
+      textReport += '--------------------------------------------------\n';
     }
-    html += '</tbody></table>';
 
     // 4. Save as local artifact for review
     const artifactDir = path.join(rootDir, 'temp/artifacts');
     if (!fs.existsSync(artifactDir)) fs.mkdirSync(artifactDir, { recursive: true });
-    const localArtifactPath = path.join(artifactDir, 'license-report.html');
-    fs.writeFileSync(localArtifactPath, html);
-    console.log(`   📂 Local artifact saved: temp/artifacts/license-report.html`);
+    const localArtifactPath = path.join(artifactDir, 'license-report.txt');
+    fs.writeFileSync(localArtifactPath, textReport);
+    console.log(`   📂 Local artifact saved: temp/artifacts/license-report.txt`);
 
     // 5. Upload to Firestore
     try {
       await db.collection('static_pages').doc('system').collection('legal').doc('lizenzen').set({
         slug: 'lizenzen',
         title: 'Lizenzen',
-        content: html,
+        content: textReport,
         generatedAt: admin.firestore.FieldValue.serverTimestamp(),
         seo: {
           title: 'Lizenzen',

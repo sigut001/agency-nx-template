@@ -4,6 +4,13 @@
   "projectType": "application",
   "sourceRoot": "apps/company-website/src",
   "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx react-router dev",
+        "cwd": "apps/company-website"
+      }
+    },
     "preview": {
       "command": "vite preview"
     },
@@ -150,9 +157,21 @@
       }
     },
 
+    "validate:code-safety": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/04-build-and-test-deploy/04-build-and-test-deploy_a0-validate-code-safety.ts"
+      }
+    },
+    "validate:cookie-catalog": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/04-build-and-test-deploy/04-build-and-test-deploy_a0-validate-cookie-catalog.ts"
+      }
+    },
     "build:inject": {
       "executor": "nx:run-commands",
-      "dependsOn": ["03-preparation"],
+      "dependsOn": ["03-preparation", "validate:code-safety", "validate:cookie-catalog"],
       "options": {
         "commands": [
           "npx nx build @temp-nx/company-website",

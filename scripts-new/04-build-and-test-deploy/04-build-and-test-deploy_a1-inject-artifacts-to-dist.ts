@@ -8,12 +8,14 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { LogService } from '../utils/log-service';
 
 const rootDir = path.resolve(__dirname, '../../');
 const artifactDir = path.join(rootDir, 'temp/artifacts');
 const distDir = path.join(rootDir, 'apps/company-website/build/client');
 
 async function inject() {
+  LogService.init('DEPLOY', 'INJECTION');
   console.log('💉 Injecting static artifacts into RR7 build/client folder...\n');
 
   if (!fs.existsSync(distDir)) {
@@ -39,11 +41,13 @@ async function inject() {
   // 2. Firebase Hosting 404 Mapping
   // RR7 builds/prerenders /404 into 404/index.html. Firebase expects 404.html in the root.
   const src404 = path.join(distDir, '404/index.html');
+  const dest404 = path.join(distDir, '404.html');
+
   if (fs.existsSync(src404)) {
-    fs.copyFileSync(src404, path.join(distDir, '404.html'));
-    console.log('   ✅ Infrastructure: 404.html generated from RR7 snapshot.');
+    fs.copyFileSync(src404, dest404);
+    console.log('   ✅ Infrastructure: 404.html generated from RR7 snapshot (404/index.html).');
   } else {
-    console.warn('   ⚠️ Warning: No 404 snapshot found to map to 404.html.');
+    console.warn('   ⚠️ Warning: No 404 snapshot found at 404/index.html to map to 404.html.');
   }
 
   console.log('\n✨ Injection complete. Build folder is now fully optimized (RR7 SSG + Global SEO).');

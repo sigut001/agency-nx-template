@@ -1,8 +1,7 @@
-import { useLoaderData } from 'react-router';
-import type { LoaderFunctionArgs } from 'react-router';
-import { PageLayout } from '../../components/layout/PageLayout';
+import { type LoaderFunctionArgs } from 'react-router';
 import { getPageAtBuildTime } from '../../services/cms-build.service';
 import type { BasePageDocument } from '../../shared/interfaces/cms.interfaces';
+import { createPage } from '../../core/createPage';
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { slug } = params;
@@ -14,15 +13,19 @@ export async function loader({ params }: LoaderFunctionArgs) {
   return { content: content as BasePageDocument };
 }
 
-export default function BlogPost() {
-  const { content } = useLoaderData<typeof loader>();
-
-  return (
-    <PageLayout
-      title={content.seo?.title || content.title}
-      description={content.seo?.description}
-      structuredData={content.seo?.structuredData}
-    >
+export default createPage<Awaited<ReturnType<typeof loader>>>({
+  meta: ({ content }) => ({
+    title: content.seo?.title || content.title,
+    description: content.seo?.description,
+    structuredData: content.seo?.structuredData || {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": content.title,
+      "datePublished": content.createdAt // Fallback if available
+    }
+  }),
+  component: ({ data: { content } }) => {
+    return (
       <article className="container mx-auto px-4 py-12 max-w-3xl">
         <header className="mb-8">
           <span className="text-sm text-indigo-600 font-semibold tracking-wide uppercase">Blog</span>
@@ -33,6 +36,6 @@ export default function BlogPost() {
           <div style={{ whiteSpace: 'pre-wrap' }}>{String(content.content)}</div>
         </div>
       </article>
-    </PageLayout>
-  );
-}
+    );
+  }
+});

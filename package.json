@@ -3,22 +3,17 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-  
-    "infra:01-reset-and-init": "npx jiti scripts-new/master-reset-and-init-orchestrator.ts",
-    "infra:02-verify-project-state": "npx jiti scripts-new/master-pipeline-validation-orchestrator.ts",
-    "infra:03-deploy-test-pipeline": "npx jiti scripts-new/master-full-pipeline-test.ts",
-    "infra:04-final-quality-audit": "npx jiti scripts-new/04-audit/03-unified-quality-reporting.ts",
-    "assets:generate:new": "npx jiti scripts-new/assets/01-automated-sitemap-and-robots-generation.ts; npx jiti scripts-new/assets/02-static-asset-and-seo-metadata-fetcher.ts",
+       "assets:generate:new": "npx jiti scripts-new/assets/01-automated-sitemap-and-robots-generation.ts; npx jiti scripts-new/assets/02-static-asset-and-seo-metadata-fetcher.ts",
     "prepare": "husky"
   },
   "private": true,
   "dependencies": {
+    "@tailwindcss/vite": "^4.2.0",
     "firebase": "^10.8.0",
     "firebase-admin": "^13.6.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.13.0",
-    "react-router-dom": "^6.30.3",
     "vanilla-cookieconsent": "^3.1.0"
   },
   "devDependencies": {
@@ -47,6 +42,7 @@
     "@vitejs/plugin-react": "^4.2.0",
     "@vitest/coverage-v8": "^4.0.0",
     "@vitest/ui": "^4.0.0",
+    "autoprefixer": "^10.4.24",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-import": "2.31.0",
@@ -61,7 +57,9 @@
     "jsdom": "~22.1.0",
     "license-checker-rseidelsohn": "^4.4.2",
     "nx": "22.5.0",
+    "postcss": "^8.5.6",
     "prettier": "~3.6.2",
+    "tailwindcss": "^4.2.0",
     "tslib": "^2.3.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.40.0",

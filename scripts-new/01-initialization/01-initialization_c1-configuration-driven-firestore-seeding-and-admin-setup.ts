@@ -6,7 +6,7 @@
  */
 
 import * as admin from 'firebase-admin';
-import { execSync } from 'child_process';
+import { FieldValue } from 'firebase-admin/firestore';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
@@ -89,9 +89,18 @@ async function seedInfrastructure() {
       await (current as admin.firestore.DocumentReference).set({
         slug, 
         title, 
-        content: `<h1>${title}</h1><p>Inhalt für ${title} wird vorbereitet.</p>`, 
-        seo: { title, description },
-        updatedAt: admin.firestore.FieldValue.serverTimestamp()
+        content: `Inhalt für ${title} wird vorbereitet.`, 
+        seo: { 
+          title, 
+          description,
+          structuredData: {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": title,
+            "description": description
+          }
+        },
+        updatedAt: FieldValue.serverTimestamp()
       }, { merge: true });
       console.log(`     ➡️  Seeded Static: ${colRef}`);
     }
@@ -106,12 +115,25 @@ async function seedInfrastructure() {
       
       // Dynamic: parts[0]/parts[1]/parts[2] -> e.g. dynamic_pages/blog/documents
       for (const id of docIds) {
+        const isProduct = colRef.includes('produkte');
+        const schemaType = isProduct ? 'Product' : 'Article';
+        
         await db.collection(parts[0]).doc(parts[1]).collection(parts[2]).doc(id).set({
           slug: id, 
           title: `${title} - ${id.toUpperCase()}`, 
-          content: `<p>Example content for ${title} ${id}</p>`, 
-          seo: { title: `${title} | ${id}`, description: `This is the SEO description for ${title} ${id}` },
-          updatedAt: admin.firestore.FieldValue.serverTimestamp()
+          content: `Example content for ${title} ${id}`, 
+          seo: { 
+            title: `${title} | ${id}`, 
+            description: `This is the SEO description for ${title} ${id}`,
+            structuredData: {
+              "@context": "https://schema.org",
+              "@type": schemaType,
+              "headline": `${title} - ${id.toUpperCase()}`,
+              "description": `This is the SEO description for ${title} ${id}`,
+              ...(isProduct ? { "name": `${title} - ${id.toUpperCase()}` } : {})
+            }
+          },
+          updatedAt: FieldValue.serverTimestamp()
         }, { merge: true });
         console.log(`     ➡️  Seeded Dynamic: ${colRef}/${id}`);
       }
@@ -138,7 +160,7 @@ async function seedInfrastructure() {
       }
       
       if (uid) {
-        await db.collection('users').doc(uid).set({ email, role: 'owner', createdAt: admin.firestore.FieldValue.serverTimestamp() });
+        await db.collection('users').doc(uid).set({ email, role: 'owner', createdAt: FieldValue.serverTimestamp() });
         console.log('     ✅ Firestore role "owner" assigned.');
       }
     }
@@ -146,14 +168,14 @@ async function seedInfrastructure() {
     // --- STEP 3: CI/CD CONFIG ---
     await db.collection('config').doc('cicd').set({
       needsRebuild: false,
-      lastRebuildAt: admin.firestore.FieldValue.serverTimestamp(),
+      lastRebuildAt: FieldValue.serverTimestamp(),
       pendingSEOChanges: []
     });
     console.log('     ✅ CI/CD document initialized.');
 
     // --- STEP 4: RULES ---
     console.log('\n   📜 DEPLOYING SECURITY RULES...');
-    execSync('firebase deploy --only firestore:rules --non-interactive', { stdio: 'inherit', cwd: rootDir });
+    await LogService.execAndLog('firebase deploy --only firestore:rules --non-interactive', { cwd: rootDir });
 
     console.log('\n✨ SEEDING COMPLETED SUCCESSFULLY.');
     process.exit(0);

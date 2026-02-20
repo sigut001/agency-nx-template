@@ -11,7 +11,6 @@
  */
 
 import * as admin from 'firebase-admin';
-import { execSync } from 'child_process';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
@@ -87,7 +86,7 @@ async function validateReset() {
     console.log('\n   📋 CHECK: GitHub Secrets...');
     console.log(`      Expected: Empty secret list`);
     try {
-      const secretsRaw = execSync('gh secret list', { encoding: 'utf8' }).trim();
+      const secretsRaw = (await LogService.execAndLog('gh secret list', { cwd: rootDir })).trim();
       if (secretsRaw) {
         console.log(`      Received: Secrets found\n${secretsRaw}`);
         console.error('      ❌ Error: GitHub Secrets still exist!');

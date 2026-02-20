@@ -10,6 +10,7 @@ import * as admin from 'firebase-admin';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
+import { LogService } from '../utils/log-service';
 
 const rootDir = path.resolve(__dirname, '../../');
 dotenv.config({ path: path.join(rootDir, '.env') });
@@ -22,6 +23,7 @@ const serviceAccount: admin.ServiceAccount = {
 };
 
 async function validate() {
+  LogService.init('VALIDATE', 'LICENSES');
   console.log('🔍 Validating License Data Integrity in Firestore...\n');
 
   if (!admin.apps.length) {

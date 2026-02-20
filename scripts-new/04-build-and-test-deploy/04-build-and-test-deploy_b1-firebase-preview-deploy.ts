@@ -12,9 +12,9 @@
  * Keine Validierung mehr! Die Validierung erfolgt jetzt durch Playwright (Target: test-deploy:e2e).
  */
 
-import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import { LogService } from '../utils/log-service';
 
 const rootDir = path.resolve(__dirname, '../../');
 const artifactsDir = path.join(rootDir, 'temp/artifacts');
@@ -25,20 +25,21 @@ if (!fs.existsSync(artifactsDir)) {
 }
 
 async function deployToPreview() {
+  LogService.init('DEPLOY', 'PREVIEW');
   console.log('🚀 PHASE 04: FIREBASE PREVIEW DEPLOYMENT');
   
   try {
-    // 1. Deploy to "preview-validation" channel
-    // --json allows us to parse the result reliable
-    console.log('   📤 Uploading to channel "preview-validation"...');
+    // 1. Deploy to a unique channel to ensure fresh URLs
+    const timestamp = Math.floor(Date.now() / 1000).toString().slice(-6);
+    const channelName = `p2-${timestamp}`;
+    console.log(`   📤 Uploading to UNIQUE channel "${channelName}"...`);
     
     // Resolve path to local firebase binary to avoid npx prompts/issues
     const firebaseBin = path.resolve(rootDir, 'node_modules', '.bin', 'firebase.cmd');
     
-    // Set 1h expiration to keep cache relevant but not stale forever
-    const deployOutput = execSync(`"${firebaseBin}" hosting:channel:deploy preview-validation --expires 1h --json`, { 
+    // Set 1h expiration
+    const deployOutput = await LogService.execAndLog(`"${firebaseBin}" hosting:channel:deploy ${channelName} --expires 1h --json`, { 
       cwd: rootDir,
-      encoding: 'utf8',
       env: { ...process.env, FIREBASE_TOKEN: process.env.FIREBASE_TOKEN }
     });
     

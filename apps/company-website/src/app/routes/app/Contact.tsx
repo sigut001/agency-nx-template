@@ -1,23 +1,26 @@
-import { useLoaderData } from 'react-router';
-import type { LoaderFunctionArgs } from 'react-router';
-import { PageLayout } from '../../components/layout/PageLayout';
-import { ContactForm } from '../../components/molecules/ContactForm';
+import { useLoaderData, type LoaderFunctionArgs } from 'react-router';
 import { getPageAtBuildTime } from '../../services/cms-build.service';
+import { createPage } from '../../core/createPage';
 import type { BasePageDocument } from '../../shared/interfaces/cms.interfaces';
+import { ContactForm } from '../../components/molecules/ContactForm';
 
 export async function loader(_: LoaderFunctionArgs) {
   const content = await getPageAtBuildTime('static_pages/app/marketing/kontakt');
   return { content: content as BasePageDocument | null };
 }
 
-export default function Contact() {
-  const { content } = useLoaderData<typeof loader>();
-
-  return (
-    <PageLayout
-      title={content?.seo?.title || content?.title}
-      description={content?.seo?.description}
-    >
+export default createPage<Awaited<ReturnType<typeof loader>>>({
+  meta: ({ content }) => ({
+    title: content?.seo?.title || content?.title || 'Kontakt',
+    description: content?.seo?.description || 'Kontaktieren Sie uns.',
+    structuredData: content?.seo?.structuredData || {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Kontakt"
+    }
+  }),
+  component: ({ data: { content } }) => {
+    return (
       <section className="contact">
         {content && (
           <>
@@ -27,6 +30,6 @@ export default function Contact() {
         )}
         <ContactForm />
       </section>
-    </PageLayout>
-  );
-}
+    );
+  }
+});

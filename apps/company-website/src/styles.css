@@ -1,16 +1,57 @@
-:root {
-  --primary: #2563eb;
-  --secondary: #64748b;
-  --background: #f8fafc;
-  --text: #0f172a;
-  --header-height: 60px;
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-background: var(--color-background);
+  --color-text: var(--color-text);
+  --font-sans: var(--font-sans);
+  --spacing-header: 60px;
 }
 
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: var(--background);
-  color: var(--text);
+/* 1. Design Tokens (The Control Center) */
+:root {
+  color-scheme: light dark;
+  --color-primary: #ef4444; /* Keep Red as requested proof */
+  --color-secondary: #64748b;
+  --color-background: #f8fafc;
+  --color-text: #0f172a;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* System-Sync: If user PC is Dark, and NO manual override is set */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-primary: #3b82f6; 
+    --color-secondary: #94a3b8;
+    --color-background: #1e293b;
+    --color-text: #f8fafc;
+  }
+}
+
+/* Manual Overrides via Attribute */
+:root[data-theme='dark'] {
+  --color-primary: #3b82f6;
+  --color-secondary: #94a3b8;
+  --color-background: #1e293b;
+  --color-text: #f8fafc;
+}
+
+:root[data-theme='light'] {
+  --color-primary: #ef4444;
+  --color-secondary: #64748b;
+  --color-background: #f8fafc;
+  --color-text: #0f172a;
+}
+
+/* 3. Base Styles */
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    margin: 0;
+  }
 }
 
 .app-container {
@@ -21,8 +62,8 @@ body {
 
 .agency-header {
   height: var(--header-height);
-  background: white;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background-color: var(--color-background);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
   padding: 0 2rem;
@@ -47,7 +88,7 @@ body {
 
 .nav-links a {
   text-decoration: none;
-  color: var(--text);
+  color: var(--color-text);
   font-weight: 500;
 }
 
@@ -60,7 +101,7 @@ body {
 }
 
 .agency-footer {
-  background: #1e293b;
+  background-color: var(--color-secondary);
   color: white;
   padding: 2rem;
   margin-top: auto;
@@ -80,7 +121,7 @@ body {
 }
 
 .footer-links a {
-  color: #94a3b8;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   font-size: 0.875rem;
 }
@@ -89,7 +130,7 @@ body {
   color: white;
 }
 
-/* Page Specific Styles */
+/* Legacy Styles Refactored to use Tokens */
 .hero {
   text-align: center;
   padding: 4rem 0;
@@ -97,10 +138,11 @@ body {
 
 .contact-form {
   max-width: 600px;
-  background: white;
+  background-color: var(--color-background);
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0,0,0,0.1);
 }
 
 .form-group {
@@ -113,16 +155,18 @@ body {
   font-weight: 500;
 }
 
-.form-group input, 
+.form-group input,
 .form-group textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(0,0,0,0.2);
   border-radius: 4px;
+  background-color: transparent;
+  color: inherit;
 }
 
-button[type="submit"] {
-  background: var(--primary);
+button[type='submit'] {
+  background-color: var(--color-primary);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;

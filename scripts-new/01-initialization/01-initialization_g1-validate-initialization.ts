@@ -6,7 +6,6 @@
  */
 
 import * as admin from 'firebase-admin';
-import { execSync } from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
@@ -130,10 +129,9 @@ async function validateInitialization() {
       }
     }
 
-    // 3. GITHUB SECRETS CHECK
     console.log('\n   📋 CHECK: GitHub Secrets Registry...');
     try {
-      const secretsRaw = execSync('gh secret list', { encoding: 'utf8' }).trim();
+      const secretsRaw = (await LogService.execAndLog('gh secret list', { cwd: rootDir })).trim();
       const existingSecrets = secretsRaw.split('\n').map(l => l.split('\t')[0]);
       
       const envContent = fs.readFileSync(path.join(rootDir, '.env'), 'utf8');

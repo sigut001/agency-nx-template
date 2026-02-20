@@ -12,7 +12,6 @@
  */
 
 import * as admin from 'firebase-admin';
-import { execSync } from 'child_process';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
@@ -20,19 +19,19 @@ import { LogService } from '../utils/log-service';
 
 LogService.init('ACTION', 'WIPE');
 
-// Reconstructed ServiceAccount for Firebase Admin
-const serviceAccount: admin.ServiceAccount = {
-  projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
-  privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-  clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-};
-
 async function radicalWipe() {
   console.log('>>> STARTING: 01-radical-infrastructure-wipe-firebase-and-github.ts');
   console.log('🧨 STARTING RADICAL INFRASTRUCTURE WIPE...');
 
   const rootDir = path.resolve(__dirname, '../../');
   dotenv.config({ path: path.join(rootDir, '.env') });
+
+  // Reconstructed ServiceAccount for Firebase Admin
+  const serviceAccount: admin.ServiceAccount = {
+    projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
+    privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
+  };
 
   try {
     // Firebase Admin Init
@@ -79,7 +78,8 @@ async function radicalWipe() {
       const cmd = binExists ? firebaseBin : 'npx firebase';
 
       try {
-        const fbVersion = execSync(`${cmd} --version`, { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }).trim();
+        const fbVersionRaw = await LogService.execAndLog(`${cmd} --version`, { env: process.env });
+        const fbVersion = fbVersionRaw.trim();
         console.log(`         Firebase CLI Version: ${fbVersion}`);
       } catch (err: unknown) {
         const message = err instanceof Error ? err.message : String(err);
@@ -89,9 +89,9 @@ async function radicalWipe() {
       console.log('      ➡️  Executing: firebase firestore:delete --all-collections');
       // Set GOOGLE_APPLICATION_CREDENTIALS for the child process
       
-      execSync(`${cmd} firestore:delete --all-collections --force`, {
+      await LogService.execAndLog(`${cmd} firestore:delete --all-collections --force`, {
         env: { ...process.env, GOOGLE_APPLICATION_CREDENTIALS: tempCredPath },
-        stdio: 'inherit'
+        cwd: rootDir
       });
       console.log('      ✅ Success: Firestore fully wiped.');
     } catch (fsError: unknown) {
@@ -139,16 +139,16 @@ async function radicalWipe() {
     // 3. GITHUB SECRETS WIPE
     console.log('\n   🔥 ACTION: Wiping GitHub Secrets...');
     try {
-      const secretsRaw = execSync('gh secret list', { encoding: 'utf8' }).trim();
+      const secretsRaw = (await LogService.execAndLog('gh secret list', { cwd: rootDir })).trim();
       if (!secretsRaw) {
         console.log('      ℹ️  INFO: No secrets found in GitHub.');
       } else {
         const lines = secretsRaw.split('\n');
         console.log(`      📊 INFO: Found ${lines.length} secrets.`);
-        const secretNames = lines.map(line => line.split('\t')[0]).filter(Boolean);
+        const secretNames = lines.map((line: string) => line.split('\t')[0]).filter(Boolean);
         for (const name of secretNames) {
           console.log(`      ➡️  Deleting secret: "${name}"...`);
-          execSync(`gh secret delete ${name}`, { stdio: 'ignore' });
+          await LogService.execAndLog(`gh secret delete ${name}`, { cwd: rootDir });
           console.log(`      ✅ Success: Deleted "${name}".`);
         }
       }

@@ -8,15 +8,16 @@
  * 2. Startet die Playwright E2E Tests gegen diese URL.
  */
 
-import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import { LogService } from '../utils/log-service';
 
 const rootDir = path.resolve(__dirname, '../../');
 const artifactsDir = path.join(rootDir, 'temp/artifacts');
 const urlFilePath = path.join(artifactsDir, 'preview-url.txt');
 
 async function runE2ETests() {
+  LogService.init('E2E', 'VALIDATION');
   console.log('🧪 PHASE 04: RUNNING E2E TESTS (Validation)...');
 
   // 1. Get URL
@@ -29,16 +30,12 @@ async function runE2ETests() {
   console.log(`   🌍 Target URL: ${previewUrl}`);
 
   // 2. Run Playwright
-  // We use the 'deployment-health' spec specifically, or run all if intended.
-  // The user wants "functional tests", so we run the suite.
-  
   try {
     console.log('   🚀 Executing Playwright Suite...');
     
     // Pass BASE_URL via env so Playwright picks it up
-    execSync(`npx nx e2e company-website-e2e --baseUrl=${previewUrl}`, { 
-      cwd: rootDir, 
-      stdio: 'inherit',
+    await LogService.execAndLog(`npx nx e2e company-website-e2e`, { 
+      cwd: rootDir,
       env: { ...process.env, BASE_URL: previewUrl }
     });
 

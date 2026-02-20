@@ -5,7 +5,6 @@
  * Synchronisiert die lokale .env Datei mit den GitHub Secrets des Repositories.
  */
 
-import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
@@ -38,25 +37,11 @@ async function syncSecrets() {
     }
 
     console.log(`   ➡️  Syncing: ${key}`);
-    return new Promise((resolve, reject) => {
-      const { exec } = require('child_process');
-      const child = exec(`gh secret set ${key} --body -`, { 
-        encoding: 'utf8',
-        env: process.env 
-      }, (error: any) => {
-        if (error) {
-            console.error(`      ❌ Failed to sync ${key}: ${error.message}`);
-            reject(error);
-        } else {
-            console.log(`      ✅ Success: ${key}`);
-            resolve();
-        }
-      });
-      
-      // Write value to stdin and end the stream
-      child.stdin?.write(value);
-      child.stdin?.end();
-    });
+    console.log(`   ➡️  Syncing: ${key}`);
+    // Note: We need a way to pass stdin like before or we use body argument
+    // The previous implementation used stdin. For execAndLog we might need to adjust or use the --body flag differently.
+    // gh secret set key --body "value" is easier for execAndLog
+    await LogService.execAndLog(`gh secret set ${key} --body "${value.replace(/"/g, '\\"')}"`, { cwd: rootDir });
   }
 
   // Upload all secrets in parallel

@@ -8,12 +8,14 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { LogService } from '../utils/log-service';
 
 const rootDir = path.resolve(__dirname, '../../');
 const sitemapPath = path.join(rootDir, 'temp/artifacts/sitemap.xml');
 const robotsPath = path.join(rootDir, 'temp/artifacts/robots.txt');
 
 async function validate() {
+  LogService.init('VALIDATE', 'SITEMAP');
   console.log('🔍 Validating Sitemap & Robots artifacts...\n');
 
   // 1. Check existence

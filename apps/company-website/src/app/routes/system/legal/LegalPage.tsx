@@ -10,13 +10,11 @@
  * Der Pfad wird anhand der aktuellen URL automatisch bestimmt.
  */
 
-import { useLoaderData } from 'react-router';
-import type { LoaderFunctionArgs } from 'react-router';
-import { PageLayout } from '../../../components/layout/PageLayout';
+import { useLoaderData, type LoaderFunctionArgs } from 'react-router';
 import { getPageAtBuildTime } from '../../../services/cms-build.service';
 import type { BasePageDocument } from '../../../shared/interfaces/cms.interfaces';
+import { createPage } from '../../../core/createPage';
 
-// Map: URL-Pfad → Firestore-Pfad
 const LEGAL_PATHS: Record<string, string> = {
   '/impressum':   'static_pages/system/legal/impressum',
   '/datenschutz': 'static_pages/system/legal/datenschutz',
@@ -36,14 +34,18 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return { content: content as BasePageDocument | null };
 }
 
-export default function LegalPage() {
-  const { content } = useLoaderData<typeof loader>();
-
-  return (
-    <PageLayout
-      title={content?.seo?.title || content?.title}
-      description={content?.seo?.description}
-    >
+export default createPage<Awaited<ReturnType<typeof loader>>>({
+  meta: ({ content }) => ({
+    title: content?.seo?.title || content?.title || 'Rechtliches',
+    description: content?.seo?.description || 'Rechtliche Informationen der Qubits Digital.',
+    structuredData: content?.seo?.structuredData || {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": content?.title || "Rechtliches"
+    }
+  }),
+  component: ({ data: { content } }) => {
+    return (
       <section className="legal">
         {content && (
           <>
@@ -52,6 +54,6 @@ export default function LegalPage() {
           </>
         )}
       </section>
-    </PageLayout>
-  );
-}
+    );
+  }
+});

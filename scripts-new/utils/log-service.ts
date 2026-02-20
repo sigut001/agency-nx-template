@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { spawn } from 'child_process';
 
 /**
  * LogService: Managed sitzungsbasiertes Logging für die Nx-Pipeline.
@@ -10,6 +11,7 @@ export class LogService {
   private static debugDir: string;
   private static isInitialized = false;
   private static context = { topic: 'GLOBAL', subtopic: '' };
+  private static lineBuffers: Record<string, string> = { 'STDOUT': '', 'STDERR': '' };
 
   /**
    * Initialisiert den Logging-Service mit optionalem Kontext.
@@ -86,11 +88,11 @@ export class LogService {
       if (this.logFilePath) {
         try {
           const timestamp = new Date().toLocaleTimeString();
-          // Clean ANSI codes
+          // eslint-disable-next-line no-control-regex
           const cleanMessage = message.replace(/\x1B\[[0-9;]*m/g, '');
           const lines = cleanMessage.split('\n').filter(l => l.trim().length > 0);
           lines.forEach(line => {
-             fs.appendFileSync(this.logFilePath!, `[${timestamp}] [STDERR] ${line}\n`);
+             fs.appendFileSync(this.logFilePath!, `[${timestamp}] [STDERR] [PARENT] ${line}\n`);
           });
         } catch { /* Silent */ }
       }
@@ -122,11 +124,10 @@ export class LogService {
           const cleanMessage = rawMessage.replace(/\x1B\[[0-9;]*m/g, '');
           
           if (this.logFilePath) {
-            const path = this.logFilePath;
             const lines = cleanMessage.split('\n');
             lines.forEach(line => {
               const prefix = `[${timestamp}] [${level}] [${topic}]${subtopic}`;
-              fs.appendFileSync(path, `${prefix} ${line}\n`);
+              fs.appendFileSync(this.logFilePath!, `${prefix} ${line}\n`);
             });
           }
         } catch {
@@ -134,5 +135,89 @@ export class LogService {
         }
       }
     };
+  }
+
+  /**
+   * Führt einen Shell-Befehl aus und leitet den Output (stdout/stderr) 
+   * direkt in den LogService und die Konsole um.
+   * @param command Der auszuführende Befehl
+   * @param options Spawn-Optionen
+   */
+  public static async execAndLog(command: string, options: any = {}): Promise<string> {
+    let fullOutput = '';
+    this.lineBuffers['STDOUT'] = '';
+    this.lineBuffers['STDERR'] = '';
+    
+    return new Promise((resolve, reject) => {
+      console.log(`🚀 EXECUTING: ${command}`);
+      
+      const child = spawn(command, [], { 
+        shell: true, 
+        stdio: 'pipe', 
+        cwd: options.cwd || process.cwd(),
+        env: options.env || process.env
+      });
+
+      const processChunk = (chunk: Buffer, type: 'STDOUT' | 'STDERR') => {
+        const str = chunk.toString();
+        if (type === 'STDOUT') fullOutput += str;
+        
+        // Immediate terminal output
+        if (type === 'STDERR') process.stderr.write(chunk);
+        else process.stdout.write(chunk);
+
+        // Buffering for log file to avoid partial line prefixing
+        this.lineBuffers[type] += str;
+        const lastNewlineIndex = this.lineBuffers[type].lastIndexOf('\n');
+        
+        if (lastNewlineIndex !== -1) {
+          const completeLines = this.lineBuffers[type].substring(0, lastNewlineIndex);
+          this.lineBuffers[type] = this.lineBuffers[type].substring(lastNewlineIndex + 1);
+          
+          if (this.logFilePath) {
+            try {
+              const timestamp = new Date().toLocaleTimeString();
+              // eslint-disable-next-line no-control-regex
+              const cleanMessage = completeLines.replace(/\x1B\[[0-9;]*m/g, '');
+              const lines = cleanMessage.split('\n');
+              
+              lines.forEach(line => {
+                const prefix = `[${timestamp}] [${type}] [${this.context.topic}]${this.context.subtopic ? `[${this.context.subtopic}]` : ''}`;
+                fs.appendFileSync(this.logFilePath!, `${prefix} ${line}\n`);
+              });
+            } catch { /* Silent */ }
+          }
+        }
+      };
+
+      child.stdout.on('data', (data: Buffer) => processChunk(data, 'STDOUT'));
+      child.stderr.on('data', (data: Buffer) => processChunk(data, 'STDERR'));
+
+      child.on('close', (code: number) => {
+        // Flush remaining buffers
+        ['STDOUT', 'STDERR'].forEach((type: any) => {
+           if (this.lineBuffers[type]) {
+             const timestamp = new Date().toLocaleTimeString();
+             // eslint-disable-next-line no-control-regex
+             const clean = this.lineBuffers[type].replace(/\x1B\[[0-9;]*m/g, '');
+             const prefix = `[${timestamp}] [${type}] [${this.context.topic}]${this.context.subtopic ? `[${this.context.subtopic}]` : ''}`;
+             fs.appendFileSync(this.logFilePath!, `${prefix} ${clean}\n`);
+           }
+        });
+
+        if (code === 0) {
+          console.log(`✅ COMMAND SUCCESS (Code ${code})`);
+          resolve(fullOutput);
+        } else {
+          console.error(`❌ COMMAND FAILED (Code ${code}): ${command}`);
+          reject(new Error(`Exit Code ${code}`));
+        }
+      });
+
+      child.on('error', (err: Error) => {
+        console.error(`💥 EXECUTION ERROR: ${err.message}`);
+        reject(err);
+      });
+    });
   }
 }

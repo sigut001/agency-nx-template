@@ -7,9 +7,9 @@
  * 3. Erzeugt einen konsolidierten Qualitätsbericht (SUMMARY.md).
  */
 
-import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import { LogService } from '../utils/log-service';
 
 const rootDir = path.resolve(__dirname, '../../');
 const urlFilePath = path.join(rootDir, 'temp/artifacts/preview-url.txt');
@@ -17,6 +17,7 @@ const reportsDir = path.join(rootDir, 'reports');
 const lighthouseDir = path.join(reportsDir, 'lighthouse');
 
 async function runAudit() {
+  LogService.init('AUDIT', 'PERFORMANCE');
   console.log('🔦 Starting Phase 05: Performance Audit & Reporting...\n');
 
   // 1. Get URL
@@ -38,7 +39,7 @@ async function runAudit() {
   console.log('   🚀 Executing Lighthouse Audit...');
   try {
     const lighthouseCmd = `npx lighthouse ${previewUrl} --output html --output json --output-path ${reportPath} --chrome-flags="--no-sandbox --headless --disable-gpu" --only-categories=performance,accessibility,best-practices,seo`;
-    execSync(lighthouseCmd, { stdio: 'inherit' });
+    await LogService.execAndLog(lighthouseCmd, { cwd: rootDir });
     console.log('   ✅ Lighthouse Audit completed.');
   } catch (error) {
     console.warn('   ⚠️ Lighthouse Audit had issues (may be ignorable in some CI setups).');
@@ -70,6 +71,45 @@ async function runAudit() {
     report += `| **Best Practices** | ${scores.bp}% | ${scores.bp > 90 ? '🟢' : '🟡'} |\n`;
     report += `| **SEO** | ${scores.seo}% | ${scores.seo > 90 ? '🟢' : '🟡'} |\n\n`;
     report += `> [Detaillierter HTML-Bericht](./lighthouse/${reportBaseName}.report.html)\n\n`;
+
+    // --- NEW: Detailed Findings ---
+    report += `## 🔍 Detaillierte Prüfungsergebnisse\n`;
+    report += `Hier sind die spezifischen Punkte, die zur Abwertung geführt haben oder verbessert werden sollten:\n\n`;
+
+    const relevantCategories = ['performance', 'accessibility', 'best-practices', 'seo'];
+    relevantCategories.forEach(catKey => {
+      const category = data.categories[catKey];
+      if (!category) return;
+
+      const failedAudits = category.auditRefs
+        .map((ref: any) => data.audits[ref.id])
+        .filter((audit: any) => audit && audit.score !== null && audit.score < 0.9);
+
+      if (failedAudits.length > 0) {
+        report += `### 📁 Kategorie: ${category.title}\n`;
+        failedAudits.forEach((audit: any) => {
+          report += `#### 🔴 ${audit.title}\n`;
+          report += `**Problem:** ${audit.description.replace(/\[Learn more\]\(.*\)\.?/g, '').trim()}\n\n`;
+          
+          if (audit.displayValue) {
+            report += `**Wert:** \`${audit.displayValue}\`\n\n`;
+          }
+
+          // List details if available (e.g. failing URLs or elements)
+          if (audit.details && audit.details.items && audit.details.items.length > 0) {
+            report += `**Betroffene Elemente/Orte:**\n`;
+            audit.details.items.slice(0, 5).forEach((item: any) => {
+              const location = item.url || item.node?.snippet || item.label || 'Unbekannter Ort';
+              report += `- \`${location}\`\n`;
+            });
+            if (audit.details.items.length > 5) {
+                report += `- *...und ${audit.details.items.length - 5} weitere.*\n`;
+            }
+            report += `\n`;
+          }
+        });
+      }
+    });
   }
 
   report += `## 🚦 Pipeline-Status\n`;

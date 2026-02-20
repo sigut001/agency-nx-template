@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 // Cookie Consent
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import * as CookieConsent from 'vanilla-cookieconsent';
-import { generateConsentConfig } from './app/components/legal/CookieLogic';
+import { generateConsentConfig, runActiveServices } from './app/components/legal/CookieLogic';
 import { projectConfig } from './app/config/project-config';
 import { initFirebase } from './app/services/firebase.service';
 
@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-background text-text transition-colors duration-300">
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -46,6 +46,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function Root() {
   useEffect(() => {
+    console.log('%c[ROOT] BUNDLE EXECUTING ON CLIENT', 'background: #00ff00; color: #000; font-size: 20px;');
     // Firebase Client SDK initialisieren (nur im Browser)
     try {
       initFirebase();
@@ -53,34 +54,13 @@ export default function Root() {
       console.warn('Firebase initialization failed:', e);
     }
 
-    // Cookie Consent initialisieren
-    const manageAnalytics = () => {
-      if (CookieConsent.acceptedCategory('analytics')) {
-        if (!document.getElementById('gtag-script')) {
-          const script = document.createElement('script');
-          script.id = 'gtag-script';
-          script.src = `https://www.googletagmanager.com/gtag/js?id=${projectConfig.analyticsId}`;
-          script.async = true;
-          document.head.appendChild(script);
-
-          const inlineScript = document.createElement('script');
-          inlineScript.innerHTML = `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${projectConfig.analyticsId}');
-          `;
-          document.head.appendChild(inlineScript);
-        }
-      }
-    };
-
     const config = generateConsentConfig(projectConfig);
+    console.log('%c[Root] Initializing CookieConsent...', 'color: #00f');
     CookieConsent.run({
       ...config,
-      onFirstConsent: () => manageAnalytics(),
-      onConsent:      () => manageAnalytics(),
-      onChange:       () => manageAnalytics(),
+      onFirstConsent: () => runActiveServices(),
+      onConsent:      () => runActiveServices(),
+      onChange:       () => runActiveServices(),
     });
   }, []);
 

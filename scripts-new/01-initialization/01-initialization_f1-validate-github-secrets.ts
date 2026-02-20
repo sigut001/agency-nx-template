@@ -5,7 +5,6 @@
  * Validiert, ob alle Secrets aus der .env erfolgreich nach GitHub synchronisiert wurden.
  */
 
-import { execSync } from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
@@ -13,14 +12,14 @@ import { LogService } from '../utils/log-service';
 
 LogService.init('VALIDATE', 'SYNC');
 
-function validateSecrets() {
+async function validateSecrets() {
   console.log('>>> STARTING VALIDATION: 02c-validate-github-secrets.ts');
   
   const rootDir = path.resolve(__dirname, '../../');
   const envPath = path.join(rootDir, '.env');
   
   try {
-    const secretsRaw = execSync('gh secret list', { encoding: 'utf8' }).trim();
+    const secretsRaw = (await LogService.execAndLog('gh secret list', { cwd: rootDir })).trim();
     const existingSecrets = secretsRaw.split('\n').map(l => l.split('\t')[0]);
     
     const envContent = fs.readFileSync(envPath, 'utf8');

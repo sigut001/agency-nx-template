@@ -10,6 +10,7 @@ import * as admin from 'firebase-admin';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
+import { LogService } from '../utils/log-service';
 
 const rootDir = path.resolve(__dirname, '../../');
 const artifactDir = path.join(rootDir, 'temp/artifacts');
@@ -23,6 +24,7 @@ interface RouteConfig {
 
 // Reconstructed ServiceAccount for Firebase Admin (using new flattened env vars)
 async function getRoutes(): Promise<string[]> {
+  LogService.init('PREP', 'SITEMAP');
   console.log('🚀 Starting Sitemap Generation / Route Fetching...\n');
   dotenv.config({ path: path.join(rootDir, '.env') });
 

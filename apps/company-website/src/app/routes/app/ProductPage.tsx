@@ -1,8 +1,7 @@
-import { useLoaderData } from 'react-router';
-import type { LoaderFunctionArgs } from 'react-router';
-import { PageLayout } from '../../components/layout/PageLayout';
+import { type LoaderFunctionArgs } from 'react-router';
 import { getPageAtBuildTime } from '../../services/cms-build.service';
 import type { BasePageDocument } from '../../shared/interfaces/cms.interfaces';
+import { createPage } from '../../core/createPage';
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { slug } = params;
@@ -14,14 +13,18 @@ export async function loader({ params }: LoaderFunctionArgs) {
   return { content: content as BasePageDocument };
 }
 
-export default function ProductPage() {
-  const { content } = useLoaderData<typeof loader>();
-
-  return (
-    <PageLayout
-      title={content.seo?.title || content.title}
-      description={content.seo?.description}
-    >
+export default createPage<Awaited<ReturnType<typeof loader>>>({
+  meta: ({ content }) => ({
+    title: content.seo?.title || content.title,
+    description: content.seo?.description,
+    structuredData: content.seo?.structuredData || {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": content.title
+    }
+  }),
+  component: ({ data: { content } }) => {
+    return (
       <div>
         <div className="bg-slate-50 border-b border-slate-200">
           <div className="container mx-auto px-4 py-16">
@@ -38,6 +41,6 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
-    </PageLayout>
-  );
-}
+    );
+  }
+});

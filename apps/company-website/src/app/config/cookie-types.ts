@@ -44,6 +44,10 @@ export interface CookieDefinition {
    * Technical details for the Banner (optional, maybe links to policy)
    */
   privacyPolicyUrl?: string;
+  /**
+   * The actual JS snippet to execute (injected as <script>)
+   */
+  snippet: string;
 }
 
 export interface ProjectConfig {

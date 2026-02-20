@@ -1,6 +1,11 @@
 import type { CookieConsentConfig, Category, Service } from 'vanilla-cookieconsent';
-import { COOKIE_CATALOG } from '../../config/cookie-catalog';
-import { CookieCategory, ProjectConfig } from '../../config/cookie-types';
+import * as CookieConsent from 'vanilla-cookieconsent';
+import { CookieCategory, CookieDefinition, ProjectConfig } from '../../config/cookie-types';
+
+// Der generierte Katalog wird hier erwartet
+// Hinweis: Im echten Build-Prozess wird diese Datei von der Factory injiziert.
+import COOKIE_CATALOG_RAW from '../../config/legal/cookie-catalog.json';
+const COOKIE_CATALOG = (COOKIE_CATALOG_RAW || {}) as Record<string, CookieDefinition>;
 
 /**
  * Maps our internal categories to the plugin's category structure (German Labels).
@@ -21,48 +26,25 @@ const CATEGORY_DESCRIPTIONS_DE: Record<CookieCategory, string> = {
 
 export function generateConsentConfig(config: ProjectConfig): CookieConsentConfig {
   
-  // 1. Determine active services per category based on config
-  const activeServicesByCategory: Record<CookieCategory, Service[]> = {
-    essential: [],
-    analytics: [],
-    marketing: [],
-    personalization: []
-  };
-
-  // 1.5 Add a default essential service
-  activeServicesByCategory.essential.push({
-      label: 'Cookie Consent',
-      cookies: [{name: /^cc_/}]
-  });
-
-  Object.keys(config.features).forEach(featureKey => {
-    if (config.features[featureKey]) { // Only if enabled!
-      const definition = COOKIE_CATALOG[featureKey];
-      if (definition) {
-        activeServicesByCategory[definition.category].push({
-          label: definition.name,
-          cookies: definition.test.cookies.map(name => ({ name }))
-        });
-      }
-    }
-  });
-
-  // 2. Build Categories for the Plugin
+  // 2. Build Categories and Services for the Plugin
   const categories: Record<string, Category> = {};
 
-  categories['essential'] = {
-    enabled: true,
-    readOnly: true
-  };
+  (['essential', 'analytics', 'marketing', 'personalization'] as CookieCategory[]).forEach(cat => {
+    const servicesForCat: Record<string, Service> = {};
+    
+    Object.values(COOKIE_CATALOG).forEach(def => {
+      if (def.category === cat) {
+        servicesForCat[def.id] = {
+          label: def.name
+        };
+      }
+    });
 
-  (['analytics', 'marketing', 'personalization'] as CookieCategory[]).forEach(cat => {
-    if (activeServicesByCategory[cat].length > 0) {
+    if (Object.keys(servicesForCat).length > 0 || cat === 'essential') {
       categories[cat] = {
-        enabled: false, 
-        readOnly: false,
-        autoClear: {
-            cookies: activeServicesByCategory[cat].flatMap(s => s.cookies ? s.cookies : [])
-        }
+        enabled: cat === 'essential', 
+        readOnly: cat === 'essential',
+        services: servicesForCat
       };
     }
   });
@@ -70,12 +52,13 @@ export function generateConsentConfig(config: ProjectConfig): CookieConsentConfi
   // 3. Helper to generate category blocks
   const getCategoryBlocks = (lang: 'de' | 'en') => {
     const blocks: any[] = [];
-    (['analytics', 'marketing', 'personalization'] as CookieCategory[]).forEach(cat => {
-      if (categories[cat]) {
+    (['essential', 'analytics', 'marketing', 'personalization'] as CookieCategory[]).forEach(cat => {
+      const categoryConfig = categories[cat];
+      if (categoryConfig) {
         blocks.push({
           title: lang === 'de' ? CATEGORY_LABELS_DE[cat] : (cat.charAt(0).toUpperCase() + cat.slice(1)),
           description: lang === 'de' ? CATEGORY_DESCRIPTIONS_DE[cat] : `Manage your ${cat} cookies.`,
-          toggle: { value: cat, enabled: false, readonly: false }
+          linkedCategory: cat
         });
       }
     });
@@ -154,4 +137,69 @@ export function generateConsentConfig(config: ProjectConfig): CookieConsentConfi
       },
     }
   };
+}
+
+/**
+ * Executes the script snippets for all services that belong to an accepted category.
+ */
+export function runActiveServices() {
+  console.log('[CookieLogic] Checking for services to inject...');
+  
+  Object.values(COOKIE_CATALOG).forEach(service => {
+    // Check if the specific service is accepted (not just the category)
+    if (CookieConsent.acceptedService(service.id, service.category)) {
+      // Skip injection if snippet is empty (e.g. for essential consent cookie)
+      if (!service.snippet) return;
+
+      const scriptId = `cc-script-${service.id}`;
+      
+      if (!document.getElementById(scriptId)) {
+        console.log(`[CookieLogic] Injecting script for: ${service.name}`);
+        
+        // Snippet kann mehrere Tags enthalten, daher nutzen wir ein temporäres Element
+        const temp = document.createElement('div');
+        temp.innerHTML = service.snippet;
+        
+        Array.from(temp.childNodes).forEach(node => {
+          if (node.nodeName === 'SCRIPT') {
+            const script = document.createElement('script');
+            const original = node as HTMLScriptElement;
+            
+            // Attribute kopieren (async, src etc.)
+            Array.from(original.attributes).forEach(attr => {
+              script.setAttribute(attr.name, attr.value);
+            });
+            
+            // Content kopieren
+            script.innerHTML = original.innerHTML;
+            script.id = scriptId;
+            
+            document.head.appendChild(script);
+          }
+        });
+      }
+    } else {
+      // Opt-Out / Revoke Logic
+      const scriptId = `cc-script-${service.id}`;
+      const existingScript = document.getElementById(scriptId);
+      if (existingScript) {
+        console.warn(`[CookieLogic] Revoking service: ${service.name}. Triggering page reload to clear state...`);
+        
+        // Cookies löschen (Best Effort)
+        service.test.cookies.forEach(cookieName => {
+           CookieConsent.eraseCookies(cookieName);
+        });
+
+        // Hard Reload, um bereits geladenes JS aus dem Speicher zu werfen
+        window.location.reload();
+        return; // Stoppe weitere Verarbeitung
+      }
+    }
+  });
+}
+/**
+ * Utility to open the preferences modal from anywhere in the app.
+ */
+export function showCookiePreferences() {
+  CookieConsent.showPreferences();
 }

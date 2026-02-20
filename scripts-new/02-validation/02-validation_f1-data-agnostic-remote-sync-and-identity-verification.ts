@@ -5,12 +5,13 @@
  * Prüft, ob die lokale .env Konfiguration korrekt in den Remote-Systemen (GitHub & Firebase) gespiegelt ist.
  */
 
-import { execSync } from 'child_process';
 import * as admin from 'firebase-admin';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
-// dLogService.init('VALIDATE', 'REMOTE');
+import { LogService } from '../utils/log-service';
+
+LogService.init('VALIDATE', 'REMOTE');
 
 // Reconstructed ServiceAccount for Firebase Admin
 const serviceAccount: admin.ServiceAccount = {
@@ -48,7 +49,7 @@ async function validateRemoteSyncAndIdentity() {
 
     // 1. GitHub Secrets Check
     console.log('   📡 Checking GitHub Secrets...');
-    const secretsRaw = execSync('gh secret list', { encoding: 'utf8' });
+    const secretsRaw = await LogService.execAndLog('gh secret list', { cwd: rootDir });
     const secrets = secretsRaw.split('\n').filter(Boolean);
     const requiredSecrets = [
       'FIREBASE_ADMIN_TYPE', 'FIREBASE_ADMIN_PROJECT_ID', 'FIREBASE_ADMIN_PRIVATE_KEY_ID',

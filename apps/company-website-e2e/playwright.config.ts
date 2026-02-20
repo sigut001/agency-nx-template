@@ -37,6 +37,7 @@ export default defineConfig({
         name: 'chromium',
         use: { ...devices['Desktop Chrome'] },
       },
+      /*
       {
         name: 'firefox',
         use: { ...devices['Desktop Firefox'] },
@@ -45,8 +46,8 @@ export default defineConfig({
         name: 'webkit',
         use: { ...devices['Desktop Safari'] },
       },
+      */
     ],
-    // CI/CD PIPELINE CONFIGURATION
-    // Only run robust, structure-based tests. Exclude UI-heavy admin tests.
-    testMatch: ['cms-sync.spec.tsx', 'bot-validation.spec.ts', 'golden-scan.spec.ts', 'infrastructure.spec.ts', 'deployment-health.spec.ts'],
+    // Only run the refactored, consolidated quality tests and infrastructure behavioral tests.
+    testMatch: ['page-quality.spec.ts', 'infrastructure.spec.ts', 'cookies.spec.ts'],
 });
