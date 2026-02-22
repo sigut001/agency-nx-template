@@ -8,13 +8,17 @@ service cloud.firestore {
     }
     
     function isOwner() {
-      return isAuthenticated() && 
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'owner';
+      return isAuthenticated() && (
+        request.auth.token.role == 'owner' ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'owner'
+      );
     }
     
     function isEditor() {
-      return isAuthenticated() && 
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'editor';
+      return isAuthenticated() && (
+        request.auth.token.role == 'editor' ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'editor'
+      );
     }
     
     function isOwnerOrEditor() {
@@ -41,29 +45,24 @@ service cloud.firestore {
       allow delete: if isOwner();
     }
     
-    // Pages Collection - Owners and Editors can manage content
-    match /pages/{pageId} {
-      // Public read access for SSG/prerendering
+    // --- NEW SCHEMA RULES ---
+    
+    // Static Pages (Public Read)
+    match /static_pages/{pageId} {
       allow read: if true;
-      
-      // Owners and Editors can create/update pages
-      allow create, update: if isOwnerOrEditor();
-      
-      // Only Owners can delete pages
-      allow delete: if isOwner();
-      
-      // History Sub-Collection
-      match /history/{historyId} {
-        // Public read for content recovery
-        allow read: if true;
-        
-        // Owners and Editors can create history entries
-        allow create: if isOwnerOrEditor();
-        
-        // Only Owners can delete history
-        allow delete: if isOwner();
-      }
+      allow create, update, delete: if isOwnerOrEditor();
     }
+
+    // Dynamic Pages (Public Read)
+    // Supports nested collections like dynamic_pages/blog/posts/slug
+    match /dynamic_pages/{document=**} {
+      allow read: if true;
+      allow create, update, delete: if isOwnerOrEditor();
+    }
+
+    // --- DEPRECATED (Keep for migration safety if needed, or remove) ---
+    // match /pages/{pageId} { ... } 
+
     
     // Config Collection - System configuration
     match /config/{configId} {
@@ -75,6 +74,11 @@ service cloud.firestore {
       
       // Prevent deletion of config documents
       allow delete: if false;
+    }
+
+    // Validation Test Collection
+    match /_validation_test/{docId} {
+      allow read, write: if isOwner();
     }
     
     // Deny all other access by default

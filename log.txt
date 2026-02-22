@@ -1,0 +1,51 @@
+Standard PR Metadata Check	Set up job	﻿2026-02-22T03:05:53.5984854Z Current runner version: '2.331.0'
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6014595Z ##[group]Runner Image Provisioner
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6015424Z Hosted Compute Agent
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6016148Z Version: 20260123.484
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6016669Z Commit: 6bd6555ca37d84114959e1c76d2c01448ff61c5d
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6017312Z Build Date: 2026-01-23T19:41:17Z
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6017893Z Worker ID: {98d0ef37-733f-4d52-a26e-6c64200e6d1c}
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6018569Z Azure Region: westcentralus
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6019100Z ##[endgroup]
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6020477Z ##[group]Operating System
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6021032Z Ubuntu
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6021416Z 24.04.3
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6021840Z LTS
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6022255Z ##[endgroup]
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6022701Z ##[group]Runner Image
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6023153Z Image: ubuntu-24.04
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6023650Z Version: 20260201.15.1
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6024530Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260201.15/images/ubuntu/Ubuntu2404-Readme.md
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6026150Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260201.15
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6026956Z ##[endgroup]
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6027970Z ##[group]GITHUB_TOKEN Permissions
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6030246Z Contents: read
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6030749Z Metadata: read
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6031224Z Packages: read
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6031687Z ##[endgroup]
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6033869Z Secret source: Actions
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6034566Z Prepare workflow directory
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6381382Z Prepare all required actions
+Standard PR Metadata Check	Set up job	2026-02-22T03:05:53.6478130Z Complete job name: Standard PR Metadata Check
+Standard PR Metadata Check	Check PR for Versioning Tags	﻿2026-02-22T03:05:53.7176050Z ##[group]Run TITLE=$(gh pr view 3 --json title --jq '.title')
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7177065Z [36;1mTITLE=$(gh pr view 3 --json title --jq '.title')[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7177735Z [36;1mBODY=$(gh pr view 3 --json body --jq '.body')[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7178481Z [36;1mLABELS=$(gh pr view 3 --json labels --jq '.labels[].name')[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7179350Z [36;1m[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7179959Z [36;1mif [[ "$TITLE" =~ "#major" || "$TITLE" =~ "#minor" || "$TITLE" =~ "#patch" ]] || \[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7180831Z [36;1m   [[ "$BODY" =~ "#major" || "$BODY" =~ "#minor" || "$BODY" =~ "#patch" ]] || \[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7181593Z [36;1m   echo "$LABELS" | grep -qE 'major|minor|patch'; then[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7182298Z [36;1m  echo "✅ PR has valid versioning metadata"[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7182915Z [36;1m  exit 0[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7183311Z [36;1melse[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7183977Z [36;1m  echo "❌ PR must contain a versioning tag (#major, #minor, #patch) or label."[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7184804Z [36;1m  exit 1[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7185234Z [36;1mfi[0m
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7842346Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7844125Z env:
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7845387Z   GH_TOKEN: ***
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.7846345Z ##[endgroup]
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.9499794Z failed to run git: fatal: not a git repository (or any of the parent directories): .git
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.9500656Z 
+Standard PR Metadata Check	Check PR for Versioning Tags	2026-02-22T03:05:53.9517723Z ##[error]Process completed with exit code 1.
+Standard PR Metadata Check	Complete job	﻿2026-02-22T03:05:53.9638769Z Cleaning up orphan processes

@@ -1,0 +1,100 @@
+{
+  "cookie_consent": {
+    "id": "cookie_consent",
+    "name": "Cookie Consent Manager",
+    "category": "essential",
+    "provider": "Qubits Digital",
+    "description": "Dieser Cookie speichert Ihre Privatsphäre-Einstellungen für diese Website.",
+    "privacyPolicyUrl": "https://www.qubits.digital/datenschutz",
+    "snippet": "",
+    "test": {
+      "cookies": ["cc_cookie"],
+      "trigger": "page_load",
+      "blockedIfConsentMissing": false
+    }
+  },
+  "google_analytics": {
+    "id": "google_analytics",
+    "name": "Google Analytics 4",
+    "category": "analytics",
+    "provider": "Google Ireland Ltd.",
+    "description": "Analyse-Dienst für Nutzerstatistiken.",
+    "privacyPolicyUrl": "https://policies.google.com/privacy",
+    "snippet": "<script>console.log('%c[CONSENT] Google Analytics activated', 'color: #34a853; font-weight: bold');</script>",
+    "test": {
+      "cookies": ["_ga"],
+      "trigger": "page_load",
+      "blockedIfConsentMissing": true
+    }
+  },
+  "matomo": {
+    "id": "matomo",
+    "name": "Matomo Analytics",
+    "category": "analytics",
+    "provider": "InnoCraft Ltd.",
+    "description": "Datenschutzfreundliche Analyse-Alternative.",
+    "privacyPolicyUrl": "https://matomo.org/privacy-policy/",
+    "snippet": "<script>console.log('%c[CONSENT] Matomo activated', 'color: #34a853');</script>",
+    "test": {
+      "cookies": ["_pk_id"],
+      "trigger": "page_load",
+      "blockedIfConsentMissing": true
+    }
+  },
+  "meta_pixel": {
+    "id": "meta_pixel",
+    "name": "Meta Pixel",
+    "category": "marketing",
+    "provider": "Meta Platforms Ireland Ltd.",
+    "description": "Werbeerfolgs-Tracking und Retargeting.",
+    "privacyPolicyUrl": "https://www.facebook.com/about/privacy/",
+    "snippet": "<script>console.log('%c[CONSENT] Meta Pixel (Facebook) activated', 'color: #1877f2; font-weight: bold');</script>",
+    "test": {
+      "cookies": ["_fbp"],
+      "trigger": "page_load",
+      "blockedIfConsentMissing": true
+    }
+  },
+  "linkedin_insight": {
+    "id": "linkedin_insight",
+    "name": "LinkedIn Insight Tag",
+    "category": "marketing",
+    "provider": "LinkedIn Ireland Unlimited Company",
+    "description": "Conversion Tracking für B2B-Werbung.",
+    "privacyPolicyUrl": "https://www.linkedin.com/legal/privacy-policy",
+    "snippet": "<script>console.log('%c[CONSENT] LinkedIn Insight activated', 'color: #0077b5');</script>",
+    "test": {
+      "cookies": ["li_fat_id"],
+      "trigger": "page_load",
+      "blockedIfConsentMissing": true
+    }
+  },
+  "hubspot": {
+    "id": "hubspot",
+    "name": "HubSpot",
+    "category": "personalization",
+    "provider": "HubSpot, Inc.",
+    "description": "CRM-Integration und personalisierte Inhalte.",
+    "privacyPolicyUrl": "https://legal.hubspot.com/privacy-policy",
+    "snippet": "<script type=\"text/javascript\" id=\"hs-script-loader\" async defer src=\"//js-{{REGION}}.hs-scripts.com/{{PORTAL_ID}}.js\"></script>",
+    "test": {
+      "cookies": ["hubspotutk"],
+      "trigger": "page_load",
+      "blockedIfConsentMissing": true
+    }
+  },
+  "tawk_to": {
+    "id": "tawk_to",
+    "name": "Tawk.to Chat",
+    "category": "personalization",
+    "provider": "Tawk.to Inc.",
+    "description": "Live-Chat Support für Webseitenbesucher.",
+    "privacyPolicyUrl": "https://www.tawk.to/privacy-policy/",
+    "snippet": "<script>console.log('%c[CONSENT] Tawk.to Chat activated', 'color: #03a84e');</script>",
+    "test": {
+      "cookies": ["TawkConnectionTime"],
+      "trigger": "page_load",
+      "blockedIfConsentMissing": true
+    }
+  }
+}

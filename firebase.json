@@ -4,17 +4,26 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist/apps/agency-shell",
+    "public": "apps/company-website/build/client",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
     "rewrites": [
+      
+    ],
+    "headers": [
       {
-        "source": "**",
-        "destination": "/index.html"
+        "source": "**/*.@(js|css|html)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
       }
-    ]
+    ],
+    "cleanUrls": true
   }
 }

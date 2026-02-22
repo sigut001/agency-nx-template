@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://preview.qubits-digital.de/sitemap.xml

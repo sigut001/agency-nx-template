@@ -1,0 +1,1054 @@
+Drittanbieter-Lizenzen
+Stand: 22.2.2026, 03:46:27 (Automatischer Build-Report)
+
+Diese Software nutzt folgende Open-Source-Komponenten:
+--------------------------------------------------
+
+Paket:   @esbuild/win32-x64
+Version: 0.27.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @fastify/busboy
+Version: 3.2.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @firebase/analytics-compat
+Version: 0.2.14
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/analytics-types
+Version: 0.8.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/analytics
+Version: 0.10.8
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/app-check-compat
+Version: 0.3.15
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/app-check-interop-types
+Version: 0.3.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/app-check-interop-types
+Version: 0.3.3
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/app-check-types
+Version: 0.5.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/app-check
+Version: 0.8.8
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/app-compat
+Version: 0.2.43
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/app-types
+Version: 0.9.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/app-types
+Version: 0.9.3
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/app
+Version: 0.10.13
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/auth-compat
+Version: 0.5.14
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/auth-interop-types
+Version: 0.2.3
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/auth-interop-types
+Version: 0.2.4
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/auth-types
+Version: 0.12.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/auth
+Version: 1.7.9
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/component
+Version: 0.6.9
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/component
+Version: 0.7.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/data-connect
+Version: 0.1.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/database-compat
+Version: 1.0.8
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/database-compat
+Version: 2.1.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/database-types
+Version: 1.0.16
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/database-types
+Version: 1.0.5
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/database
+Version: 1.0.8
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/database
+Version: 1.1.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/firestore-compat
+Version: 0.3.38
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/firestore-types
+Version: 3.0.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/firestore
+Version: 4.7.3
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/functions-compat
+Version: 0.3.14
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/functions-types
+Version: 0.6.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/functions
+Version: 0.11.8
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/installations-compat
+Version: 0.2.9
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/installations-types
+Version: 0.5.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/installations
+Version: 0.6.9
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/logger
+Version: 0.4.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/logger
+Version: 0.5.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/messaging-compat
+Version: 0.2.12
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/messaging-interop-types
+Version: 0.2.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/messaging
+Version: 0.12.12
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/performance-compat
+Version: 0.2.9
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/performance-types
+Version: 0.2.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/performance
+Version: 0.6.9
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/remote-config-compat
+Version: 0.2.9
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/remote-config-types
+Version: 0.3.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/remote-config
+Version: 0.4.9
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/storage-compat
+Version: 0.3.12
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/storage-types
+Version: 0.8.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/storage
+Version: 0.13.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/util
+Version: 1.10.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/util
+Version: 1.13.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/vertexai-preview
+Version: 0.0.4
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @firebase/webchannel-wrapper
+Version: 1.0.1
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @google-cloud/firestore
+Version: 7.11.6
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @google-cloud/paginator
+Version: 5.0.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @google-cloud/projectify
+Version: 4.0.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @google-cloud/promisify
+Version: 4.0.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @google-cloud/storage
+Version: 7.19.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @grpc/grpc-js
+Version: 1.14.3
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @grpc/grpc-js
+Version: 1.9.15
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @grpc/proto-loader
+Version: 0.7.15
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @grpc/proto-loader
+Version: 0.8.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @jridgewell/gen-mapping
+Version: 0.3.13
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @jridgewell/remapping
+Version: 2.3.5
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @jridgewell/resolve-uri
+Version: 3.1.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @jridgewell/source-map
+Version: 0.3.11
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @jridgewell/sourcemap-codec
+Version: 1.5.5
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @jridgewell/trace-mapping
+Version: 0.3.31
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @js-sdsl/ordered-map
+Version: 4.4.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @opentelemetry/api
+Version: 1.9.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   @protobufjs/aspromise
+Version: 1.1.2
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   @protobufjs/base64
+Version: 1.1.2
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   @protobufjs/codegen
+Version: 2.0.4
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   @protobufjs/eventemitter
+Version: 1.1.0
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   @protobufjs/fetch
+Version: 1.1.0
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   @protobufjs/float
+Version: 1.0.2
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   @protobufjs/inquire
+Version: 1.1.0
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   @protobufjs/path
+Version: 1.1.2
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   @protobufjs/pool
+Version: 1.1.0
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   @protobufjs/utf8
+Version: 1.1.0
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   @rollup/rollup-win32-x64-gnu
+Version: 4.57.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @rollup/rollup-win32-x64-msvc
+Version: 4.57.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @tailwindcss/node
+Version: 4.2.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @tailwindcss/oxide-win32-x64-msvc
+Version: 4.2.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @tailwindcss/oxide
+Version: 4.2.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @tailwindcss/vite
+Version: 4.2.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @temp-nx/source
+Version: 0.0.0
+Lizenz:  UNLICENSED
+--------------------------------------------------
+Paket:   @tootallnate/once
+Version: 2.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @types/caseless
+Version: 0.12.5
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @types/estree
+Version: 1.0.8
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @types/jsonwebtoken
+Version: 9.0.10
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @types/long
+Version: 4.0.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @types/ms
+Version: 2.1.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @types/node
+Version: 20.19.9
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @types/node
+Version: 22.19.11
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @types/request
+Version: 2.48.13
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   @types/tough-cookie
+Version: 4.0.5
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   abort-controller
+Version: 3.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   acorn
+Version: 8.16.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   agent-base
+Version: 6.0.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   agent-base
+Version: 7.1.4
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   ansi-regex
+Version: 5.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   ansi-styles
+Version: 4.3.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   arrify
+Version: 2.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   async-retry
+Version: 1.3.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   asynckit
+Version: 0.4.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   base64-js
+Version: 1.5.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   bignumber.js
+Version: 9.3.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   buffer-equal-constant-time
+Version: 1.0.1
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   buffer-from
+Version: 1.1.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   call-bind-apply-helpers
+Version: 1.0.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   cliui
+Version: 8.0.1
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   color-convert
+Version: 2.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   color-name
+Version: 1.1.4
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   combined-stream
+Version: 1.0.8
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   commander
+Version: 2.20.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   cookie
+Version: 1.1.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   debug
+Version: 4.4.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   delayed-stream
+Version: 1.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   detect-libc
+Version: 2.1.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   dunder-proto
+Version: 1.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   duplexify
+Version: 4.1.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   ecdsa-sig-formatter
+Version: 1.0.11
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   emoji-regex
+Version: 8.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   encoding
+Version: 0.1.13
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   end-of-stream
+Version: 1.4.5
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   enhanced-resolve
+Version: 5.19.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   es-define-property
+Version: 1.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   es-errors
+Version: 1.3.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   es-object-atoms
+Version: 1.1.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   es-set-tostringtag
+Version: 2.1.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   esbuild
+Version: 0.27.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   escalade
+Version: 3.2.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   event-target-shim
+Version: 5.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   extend
+Version: 3.0.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   farmhash-modern
+Version: 1.1.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   fast-deep-equal
+Version: 3.1.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   fast-xml-parser
+Version: 5.3.6
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   faye-websocket
+Version: 0.11.4
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   fdir
+Version: 6.5.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   firebase-admin
+Version: 13.6.1
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   firebase
+Version: 10.14.1
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   form-data
+Version: 2.5.5
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   function-bind
+Version: 1.1.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   functional-red-black-tree
+Version: 1.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   gaxios
+Version: 6.7.1
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   gcp-metadata
+Version: 6.1.1
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   get-caller-file
+Version: 2.0.5
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   get-intrinsic
+Version: 1.3.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   get-proto
+Version: 1.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   google-auth-library
+Version: 9.15.1
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   google-gax
+Version: 4.6.1
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   google-logging-utils
+Version: 0.0.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   gopd
+Version: 1.2.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   graceful-fs
+Version: 4.2.11
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   gtoken
+Version: 7.1.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   has-symbols
+Version: 1.1.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   has-tostringtag
+Version: 1.0.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   hasown
+Version: 2.0.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   html-entities
+Version: 2.6.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   http-parser-js
+Version: 0.5.10
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   http-proxy-agent
+Version: 5.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   https-proxy-agent
+Version: 5.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   https-proxy-agent
+Version: 7.0.6
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   iconv-lite
+Version: 0.6.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   idb
+Version: 7.1.1
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   inherits
+Version: 2.0.4
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   is-fullwidth-code-point
+Version: 3.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   is-stream
+Version: 2.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   jiti
+Version: 2.4.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   jiti
+Version: 2.6.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   jose
+Version: 4.15.9
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   json-bigint
+Version: 1.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   jsonwebtoken
+Version: 9.0.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   jwa
+Version: 2.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   jwks-rsa
+Version: 3.2.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   jws
+Version: 4.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   lightningcss-win32-x64-msvc
+Version: 1.31.1
+Lizenz:  MPL-2.0
+--------------------------------------------------
+Paket:   lightningcss
+Version: 1.31.1
+Lizenz:  MPL-2.0
+--------------------------------------------------
+Paket:   limiter
+Version: 1.1.5
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   lodash.camelcase
+Version: 4.3.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   lodash.clonedeep
+Version: 4.5.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   lodash.includes
+Version: 4.3.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   lodash.isboolean
+Version: 3.0.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   lodash.isinteger
+Version: 4.0.4
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   lodash.isnumber
+Version: 3.0.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   lodash.isplainobject
+Version: 4.0.6
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   lodash.isstring
+Version: 4.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   lodash.once
+Version: 4.1.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   long
+Version: 5.3.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   lru-cache
+Version: 6.0.0
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   lru-memoizer
+Version: 2.3.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   magic-string
+Version: 0.30.21
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   math-intrinsics
+Version: 1.1.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   mime-db
+Version: 1.52.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   mime-types
+Version: 2.1.35
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   mime
+Version: 3.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   ms
+Version: 2.1.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   nanoid
+Version: 3.3.11
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   node-fetch
+Version: 2.7.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   node-forge
+Version: 1.3.3
+Lizenz:  (BSD-3-Clause OR GPL-2.0)
+--------------------------------------------------
+Paket:   object-hash
+Version: 3.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   once
+Version: 1.4.0
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   p-limit
+Version: 3.1.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   picocolors
+Version: 1.1.1
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   picomatch
+Version: 4.0.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   picomatch
+Version: 4.0.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   postcss
+Version: 8.5.6
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   proto3-json-serializer
+Version: 2.0.2
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   protobufjs
+Version: 7.5.4
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   react-dom
+Version: 19.2.4
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   react-router
+Version: 7.13.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   react
+Version: 19.2.4
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   readable-stream
+Version: 3.6.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   require-directory
+Version: 2.1.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   retry-request
+Version: 7.0.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   retry
+Version: 0.13.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   rollup
+Version: 4.57.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   safe-buffer
+Version: 5.2.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   safer-buffer
+Version: 2.1.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   scheduler
+Version: 0.27.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   semver
+Version: 7.7.4
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   set-cookie-parser
+Version: 2.7.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   source-map-js
+Version: 1.2.1
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   source-map-support
+Version: 0.5.21
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   source-map
+Version: 0.6.1
+Lizenz:  BSD-3-Clause
+--------------------------------------------------
+Paket:   stream-events
+Version: 1.0.5
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   stream-shift
+Version: 1.0.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   string_decoder
+Version: 1.3.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   string-width
+Version: 4.2.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   strip-ansi
+Version: 6.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   strnum
+Version: 2.1.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   stubs
+Version: 3.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   tailwindcss
+Version: 4.2.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   tapable
+Version: 2.3.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   teeny-request
+Version: 9.0.0
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   terser
+Version: 5.46.0
+Lizenz:  BSD-2-Clause
+--------------------------------------------------
+Paket:   tinyglobby
+Version: 0.2.15
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   tr46
+Version: 0.0.3
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   tslib
+Version: 2.8.1
+Lizenz:  0BSD
+--------------------------------------------------
+Paket:   undici-types
+Version: 6.21.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   undici
+Version: 6.19.7
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   util-deprecate
+Version: 1.0.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   uuid
+Version: 11.1.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   uuid
+Version: 8.3.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   uuid
+Version: 9.0.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   vanilla-cookieconsent
+Version: 3.1.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   vite
+Version: 7.3.1
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   webidl-conversions
+Version: 3.0.1
+Lizenz:  BSD-2-Clause
+--------------------------------------------------
+Paket:   websocket-driver
+Version: 0.7.4
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   websocket-extensions
+Version: 0.1.4
+Lizenz:  Apache-2.0
+--------------------------------------------------
+Paket:   whatwg-url
+Version: 5.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   wrap-ansi
+Version: 7.0.0
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   wrappy
+Version: 1.0.2
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   y18n
+Version: 5.0.8
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   yallist
+Version: 4.0.0
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   yaml
+Version: 2.8.2
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   yargs-parser
+Version: 21.1.1
+Lizenz:  ISC
+--------------------------------------------------
+Paket:   yargs
+Version: 17.7.2
+Lizenz:  MIT
+--------------------------------------------------
+Paket:   yocto-queue
+Version: 0.1.0
+Lizenz:  MIT
+--------------------------------------------------

@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-background: var(--color-background);
+  --color-text: var(--color-text);
+  --font-sans: var(--font-sans);
+  --spacing-header: 60px;
+}
+
+/* 1. Design Tokens (The Control Center) */
+:root {
+  color-scheme: light dark;
+  --color-primary: #ef4444; /* Keep Red as requested proof */
+  --color-secondary: #64748b;
+  --color-background: #f8fafc;
+  --color-text: #0f172a;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* System-Sync: If user PC is Dark, and NO manual override is set */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-primary: #3b82f6; 
+    --color-secondary: #94a3b8;
+    --color-background: #1e293b;
+    --color-text: #f8fafc;
+  }
+}
+
+/* Manual Overrides via Attribute */
+:root[data-theme='dark'] {
+  --color-primary: #3b82f6;
+  --color-secondary: #94a3b8;
+  --color-background: #1e293b;
+  --color-text: #f8fafc;
+}
+
+:root[data-theme='light'] {
+  --color-primary: #ef4444;
+  --color-secondary: #64748b;
+  --color-background: #f8fafc;
+  --color-text: #0f172a;
+}
+
+/* 3. Base Styles */
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    margin: 0;
+  }
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.agency-header {
+  height: var(--header-height);
+  background-color: var(--color-background);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.agency-header nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.agency-footer {
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 2rem;
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.footer-links a:hover {
+  color: white;
+}
+
+/* Legacy Styles Refactored to use Tokens */
+.hero {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.contact-form {
+  max-width: 600px;
+  background-color: var(--color-background);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  background-color: transparent;
+  color: inherit;
+}
+
+button[type='submit'] {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}

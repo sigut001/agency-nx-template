@@ -1,0 +1,79 @@
+{
+  "name": "@temp-nx/company-website",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/company-website/src",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx react-router dev",
+        "cwd": "apps/company-website"
+      }
+    },
+    "preview": {
+      "command": "vite preview"
+    },
+    "validate:env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/phase-00.ts"
+      }
+    },
+    "phase-00": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/phase-00.ts"
+      }
+    },
+    "phase-01": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/phase-01.ts"
+      }
+    },
+    "phase-02": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/phase-02.ts"
+      }
+    },
+    "phase-03": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/phase-03.ts"
+      }
+    },
+    "phase-04": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/phase-04.ts"
+      }
+    },
+    "phase-05": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/phase-05.ts"
+      }
+    },
+    "bootstrap": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/wf-1-template-bootstrap.ts"
+      }
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts-new/wf-2-project-validation.ts"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx react-router build",
+        "cwd": "apps/company-website"
+      }
+    }
+  }
+}
