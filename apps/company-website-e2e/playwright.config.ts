@@ -4,7 +4,7 @@ import { workspaceRoot } from '@nx/devkit';
 
 // For CI, BASE_URL is set by the pipeline script (04...c1-run-e2e-tests.ts).
 // Falls back to a known preview URL for manual runs.
-const baseURL = process.env['BASE_URL'] || 'https://test-angular-automation--preview-96h2loeq.web.app';
+const baseURL = process.env['BASE_URL'] || 'http://localhost:4200/';
 
 import * as path from 'path';
 

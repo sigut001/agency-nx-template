@@ -48,12 +48,16 @@ async function deployToPreview() {
     // The result object has keys based on the site name, e.g. { "test-angular-automation": { "url": "..." } }
     // We iterate to find the first valid entry with a URL.
     let channelUrl = '';
+    let expireTime = '';
     if (result.result) {
       const siteKeys = Object.keys(result.result);
       if (siteKeys.length > 0) {
         const firstSiteKey = siteKeys[0];
-        channelUrl = result.result[firstSiteKey]?.url;
+        const siteData = result.result[firstSiteKey];
+        channelUrl = siteData?.url;
+        expireTime = siteData?.expireTime; // This is an ISO string from Firebase
         console.log(`   ℹ️  Detected Site: ${firstSiteKey}`);
+        console.log(`   ⏱️  Channel expires at: ${expireTime}`);
       }
     }
 
@@ -69,6 +73,12 @@ async function deployToPreview() {
     const urlFilePath = path.join(artifactsDir, 'preview-url.txt');
     fs.writeFileSync(urlFilePath, channelUrl);
     console.log(`   💾 URL saved to: ${urlFilePath}`);
+
+    if (expireTime) {
+      const expireFilePath = path.join(artifactsDir, 'preview-expire.txt');
+      fs.writeFileSync(expireFilePath, expireTime);
+      console.log(`   💾 Expiration time saved to: ${expireFilePath}`);
+    }
 
     process.exit(0);
 

@@ -158,7 +158,17 @@ export function runActiveServices() {
         
         // Snippet kann mehrere Tags enthalten, daher nutzen wir ein temporäres Element
         const temp = document.createElement('div');
-        temp.innerHTML = service.snippet;
+        
+        let snippetRaw = service.snippet;
+        // Dynamisch Platzhalter ersetzen, falls vorhanden (z. B. für HubSpot)
+        if (snippetRaw.includes('{{PORTAL_ID}}')) {
+          snippetRaw = snippetRaw.replace('{{PORTAL_ID}}', import.meta.env.VITE_HUBSPOT_PORTAL_ID || '');
+        }
+        if (snippetRaw.includes('{{REGION}}')) {
+          snippetRaw = snippetRaw.replace('{{REGION}}', import.meta.env.VITE_HUBSPOT_REGION || 'eu1');
+        }
+
+        temp.innerHTML = snippetRaw;
         
         Array.from(temp.childNodes).forEach(node => {
           if (node.nodeName === 'SCRIPT') {

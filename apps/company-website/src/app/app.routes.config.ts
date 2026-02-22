@@ -50,14 +50,8 @@ const SYSTEM_ROUTES: RouteConfig[] = [
   { path: '/lizenzen',      title: 'Lizenzen',                     type: 'static',  collection: 'static_pages/system/legal/lizenzen',     file: './app/routes/system/legal/LegalPage.tsx' },
 ];
 
-// ─── Admin-Routen (kein Prerendering) ───────────────────
-
-const ADMIN_ROUTES: RouteConfig[] = [
-  { path: '/admin/login',       title: 'Admin Login',              type: 'static',  file: './app/routes/system/admin/AdminLogin.tsx' },
-  { path: '/admin/dashboard',   title: 'Admin Dashboard',          type: 'static',  file: './app/routes/system/admin/AdminDashboard.tsx' },
-  { path: '/admin/edit/:slug',  title: 'Seite bearbeiten',         type: 'dynamic', file: './app/routes/system/admin/AdminEditPage.tsx' },
-  { path: '/admin/users',       title: 'Benutzerverwaltung',       type: 'static',  file: './app/routes/system/admin/AdminUsersPage.tsx' },
-];
+// ─── Admin-Routen (ausgelagert in separate Anwendung) ─────
+const ADMIN_ROUTES: RouteConfig[] = [];
 
 // ─── Infrastruktur ──────────────────────────────────────
 
@@ -68,11 +62,9 @@ const INFRA_ROUTES: RouteConfig[] = [
 
 // ─── Kombinierter Export ────────────────────────────────
 
-/** Alle Routen (für RR7 Routing) */
 export const APP_ROUTES_CONFIG: RouteConfig[] = [
   ...APP_CONTENT_ROUTES,
   ...SYSTEM_ROUTES,
-  ...ADMIN_ROUTES,
   ...INFRA_ROUTES,
 ];
 

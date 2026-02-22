@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { sendMail } from '../../services/mail.service';
+import { submitToHubspot } from '../../services/hubspot.service';
 
 export const ContactForm: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
@@ -18,17 +18,11 @@ export const ContactForm: React.FC = () => {
         throw new Error('reCAPTCHA verification failed');
       }
 
-      // 2. Mail senden via Brevo API
-      const result = await sendMail({
-        to: [{ email: 'vertrieb@qubits-digital.de', name: 'Sales Team' }],
-        subject: `Anfrage von ${formData.name}`,
-        htmlContent: `
-          <h3>Neue Kontaktanfrage</h3>
-          <p><strong>Name:</strong> ${formData.name}</p>
-          <p><strong>E-Mail:</strong> ${formData.email}</p>
-          <p><strong>Nachricht:</strong><br/>${formData.message}</p>
-        `,
-        sender: { email: 'vertrieb@qubits-digital.de', name: 'Website Contact' }
+      // 2. HubSpot Submission
+      const result = await submitToHubspot({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message
       });
 
       if (result.success) {

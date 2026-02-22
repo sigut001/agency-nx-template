@@ -52,6 +52,42 @@ async function runAudit() {
   report += `*Generiert am: ${new Date().toLocaleString()}*\n`;
   report += `*Test-URL: [${previewUrl}](${previewUrl})*\n\n`;
 
+  // --- NEW: E2E Section ---
+  const e2eReportPath = path.join(rootDir, 'apps/company-website-e2e/test-output/report.json');
+  if (fs.existsSync(e2eReportPath)) {
+    try {
+      const e2eData = JSON.parse(fs.readFileSync(e2eReportPath, 'utf8'));
+      const testResults: { title: string; status: string }[] = [];
+
+      function walkSuites(suite: any) {
+        if (suite.specs) {
+          suite.specs.forEach((spec: any) => {
+            testResults.push({
+              title: spec.title,
+              status: spec.tests[0]?.results[0]?.status || 'unknown'
+            });
+          });
+        }
+        if (suite.suites) {
+          suite.suites.forEach(walkSuites);
+        }
+      }
+      walkSuites(e2eData);
+
+      report += `## 🧪 Funktionale Abnahme (E2E Tests)\n`;
+      report += `| Testfall | Status | Details |\n`;
+      report += `| :--- | :---: | :--- |\n`;
+      
+      testResults.forEach(res => {
+        const icon = res.status === 'passed' ? '✅' : '❌';
+        report += `| ${res.title} | ${icon} | ${res.status.toUpperCase()} |\n`;
+      });
+      report += `\n`;
+    } catch (e) {
+      console.warn('   ⚠️ Could not parse E2E report.json for summary.');
+    }
+  }
+
   // Parse Scores if JSON exists
   const jsonPath = `${reportPath}.report.json`;
   if (fs.existsSync(jsonPath)) {
@@ -73,8 +109,8 @@ async function runAudit() {
     report += `> [Detaillierter HTML-Bericht](./lighthouse/${reportBaseName}.report.html)\n\n`;
 
     // --- NEW: Detailed Findings ---
-    report += `## 🔍 Detaillierte Prüfungsergebnisse\n`;
-    report += `Hier sind die spezifischen Punkte, die zur Abwertung geführt haben oder verbessert werden sollten:\n\n`;
+    report += `## 🔍 Detaillierte Qualitäts-Findings (Lighthouse)\n`;
+    report += `Spezifische Punkte aus der Lighthouse-Analyse:\n\n`;
 
     const relevantCategories = ['performance', 'accessibility', 'best-practices', 'seo'];
     relevantCategories.forEach(catKey => {
@@ -88,7 +124,8 @@ async function runAudit() {
       if (failedAudits.length > 0) {
         report += `### 📁 Kategorie: ${category.title}\n`;
         failedAudits.forEach((audit: any) => {
-          report += `#### 🔴 ${audit.title}\n`;
+          const auditTitle = audit.title.replace(/[|]/g, '\\|');
+          report += `#### 🔴 ${auditTitle}\n`;
           report += `**Problem:** ${audit.description.replace(/\[Learn more\]\(.*\)\.?/g, '').trim()}\n\n`;
           
           if (audit.displayValue) {
@@ -99,7 +136,7 @@ async function runAudit() {
           if (audit.details && audit.details.items && audit.details.items.length > 0) {
             report += `**Betroffene Elemente/Orte:**\n`;
             audit.details.items.slice(0, 5).forEach((item: any) => {
-              const location = item.url || item.node?.snippet || item.label || 'Unbekannter Ort';
+              const location = (item.url || item.node?.snippet || item.label || 'Unbekannter Ort').replace(/[|]/g, '\\|');
               report += `- \`${location}\`\n`;
             });
             if (audit.details.items.length > 5) {

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-       "assets:generate:new": "npx jiti scripts-new/assets/01-automated-sitemap-and-robots-generation.ts; npx jiti scripts-new/assets/02-static-asset-and-seo-metadata-fetcher.ts",
+       "assets:generate:new": "npx tsx scripts-new/assets/01-automated-sitemap-and-robots-generation.ts; npx tsx scripts-new/assets/02-static-asset-and-seo-metadata-fetcher.ts",
     "prepare": "husky"
   },
   "private": true,

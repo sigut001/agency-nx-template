@@ -39,6 +39,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        {/* Explicit Root for Cookie Consent to avoid body injection issues */}
+        <div id="cc-root"></div>
       </body>
     </html>
   );
@@ -46,22 +48,45 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function Root() {
   useEffect(() => {
-    console.log('%c[ROOT] BUNDLE EXECUTING ON CLIENT', 'background: #00ff00; color: #000; font-size: 20px;');
+    console.error('🔥 [ROOT] useEffect EXECUTING ON CLIENT!');
     // Firebase Client SDK initialisieren (nur im Browser)
     try {
+      console.error('🔥 [ROOT] Initializing Firebase...');
       initFirebase();
     } catch (e) {
-      console.warn('Firebase initialization failed:', e);
+      console.error('❌ [ROOT] Firebase initialization failed:', e);
     }
 
-    const config = generateConsentConfig(projectConfig);
-    console.log('%c[Root] Initializing CookieConsent...', 'color: #00f');
-    CookieConsent.run({
-      ...config,
-      onFirstConsent: () => runActiveServices(),
-      onConsent:      () => runActiveServices(),
-      onChange:       () => runActiveServices(),
-    });
+    try {
+      const config = generateConsentConfig(projectConfig);
+      
+      console.error('🔥 [ROOT] Initializing CookieConsent');
+      
+      if (typeof window !== 'undefined') {
+        (window as any).CookieConsent = CookieConsent;
+        (window as any).CC_CONFIG = config;
+      }
+      
+      CookieConsent.run({
+        ...config,
+        // Explicit Root to avoid React Body Hydration conflicts
+        root: '#cc-root',
+        onFirstConsent: () => runActiveServices(),
+        onConsent: () => runActiveServices(),
+        onChange: () => runActiveServices(),
+      }).then(() => {
+        console.error('🔥 [ROOT] CookieConsent.run() promise RESOLVED');
+        
+        if (!CookieConsent.getCookie().consentId) {
+          console.error('🔥 [ROOT] No consent found, showing banner...');
+          CookieConsent.show();
+        }
+      }).catch(err => {
+        console.error('❌ [ROOT] CookieConsent REJECTED:', err);
+      });
+    } catch (e) {
+      console.error('❌ [ROOT] CookieConsent CRASHED:', e);
+    }
   }, []);
 
   return <Outlet />;

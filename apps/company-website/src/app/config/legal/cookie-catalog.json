@@ -76,7 +76,7 @@
     "provider": "HubSpot, Inc.",
     "description": "CRM-Integration und personalisierte Inhalte.",
     "privacyPolicyUrl": "https://legal.hubspot.com/privacy-policy",
-    "snippet": "<script>console.log('%c[CONSENT] HubSpot activated', 'color: #ff7a59; font-weight: bold');</script>",
+    "snippet": "<script type=\"text/javascript\" id=\"hs-script-loader\" async defer src=\"//js-{{REGION}}.hs-scripts.com/{{PORTAL_ID}}.js\"></script>",
     "test": {
       "cookies": ["hubspotutk"],
       "trigger": "page_load",

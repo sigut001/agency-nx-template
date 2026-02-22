@@ -42,20 +42,6 @@ type Pages = {
   "/lizenzen": {
     params: {};
   };
-  "/admin/login": {
-    params: {};
-  };
-  "/admin/dashboard": {
-    params: {};
-  };
-  "/admin/edit/:slug": {
-    params: {
-      "slug": string;
-    };
-  };
-  "/admin/users": {
-    params: {};
-  };
   "/*": {
     params: {
       "*": string;
@@ -73,7 +59,7 @@ type RouteFiles = {
   };
   "root.tsx": {
     id: "root";
-    page: "/404" | "/" | "/kontakt" | "/blog/:slug" | "/produkte/:slug" | "/impressum" | "/datenschutz" | "/agb" | "/lizenzen" | "/admin/login" | "/admin/dashboard" | "/admin/edit/:slug" | "/admin/users" | "/*";
+    page: "/404" | "/" | "/kontakt" | "/blog/:slug" | "/produkte/:slug" | "/impressum" | "/datenschutz" | "/agb" | "/lizenzen" | "/*";
   };
   "./app/routes/app/Home.tsx": {
     id: "app/routes/app/Home";
@@ -104,22 +90,6 @@ type RouteFiles = {
     id: "lizenzen";
     page: "/lizenzen";
   };
-  "./app/routes/system/admin/AdminLogin.tsx": {
-    id: "admin-login";
-    page: "/admin/login";
-  };
-  "./app/routes/system/admin/AdminDashboard.tsx": {
-    id: "admin-dashboard";
-    page: "/admin/dashboard";
-  };
-  "./app/routes/system/admin/AdminEditPage.tsx": {
-    id: "admin-edit--slug";
-    page: "/admin/edit/:slug";
-  };
-  "./app/routes/system/admin/AdminUsersPage.tsx": {
-    id: "admin-users";
-    page: "/admin/users";
-  };
 };
 
 type RouteModules = {
@@ -133,9 +103,5 @@ type RouteModules = {
   "datenschutz": typeof import("./src/./app/routes/system/legal/LegalPage.tsx");
   "agb": typeof import("./src/./app/routes/system/legal/LegalPage.tsx");
   "lizenzen": typeof import("./src/./app/routes/system/legal/LegalPage.tsx");
-  "admin-login": typeof import("./src/./app/routes/system/admin/AdminLogin.tsx");
-  "admin-dashboard": typeof import("./src/./app/routes/system/admin/AdminDashboard.tsx");
-  "admin-edit--slug": typeof import("./src/./app/routes/system/admin/AdminEditPage.tsx");
-  "admin-users": typeof import("./src/./app/routes/system/admin/AdminUsersPage.tsx");
   "*": typeof import("./src/./app/routes/system/infrastructure/NotFound.tsx");
 };

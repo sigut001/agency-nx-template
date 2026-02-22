@@ -1,0 +1,9 @@
+node_modules
+dist
+temp
+reports
+.env
+firebase-service-account.json
+.git
+.nx
+.vscode

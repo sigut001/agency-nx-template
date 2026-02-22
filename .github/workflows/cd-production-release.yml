@@ -1,0 +1,127 @@
+name: 'CD: Production Release (WF-3) 🚀'
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  orchestration-check:
+    name: 'Standard Versioning Logic'
+    runs-on: ubuntu-latest
+    outputs:
+      bump_type: ${{ steps.version_type.outputs.bump }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Determine Version Bump
+        id: version_type
+        shell: bash
+        run: |
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+
+          if [[ "$COMMIT_MSG" == *"#major"* ]]; then
+            echo "bump=major" >> $GITHUB_OUTPUT
+          elif [[ "$COMMIT_MSG" == *"#minor"* ]]; then
+            echo "bump=minor" >> $GITHUB_OUTPUT
+          else
+            echo "bump=patch" >> $GITHUB_OUTPUT
+          fi
+
+  business-logic-deploy:
+    name: 'Production Deployment'
+    needs: orchestration-check
+    runs-on: ubuntu-latest
+    outputs:
+      details_url: ${{ steps.deploy_prod.outputs.details_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+
+      - name: 'Phase 04: Build & Deploy'
+        run: npx nx run @temp-nx/company-website:phase-04
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: 'Deploy to Firebase Hosting (Live)'
+        id: deploy_prod
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
+          projectId: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          channelId: live
+
+  smoke-test:
+    name: 'Production Smoke Test'
+    needs: business-logic-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: 'Install Playwright Browsers'
+        run: npx playwright install --with-deps chromium
+      - name: 'Phase 05: Performance & Final Validation'
+        run: npx nx run @temp-nx/company-website:phase-05
+        env:
+          BASE_URL: ${{ needs.business-logic-deploy.outputs.details_url }}
+
+  standard-finalize:
+    name: 'Versioning & Release (Shell)'
+    needs: [orchestration-check, business-logic-deploy, smoke-test]
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: 'Bump Version & Tag'
+        id: bump
+        run: |
+          npx tsx scripts-new/utils/bump-version.ts ${{ needs.orchestration-check.outputs.bump_type }}
+          NEW_VERSION=$(node -p "require('./package.json').version")
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json
+          git commit -m "chore: release v$NEW_VERSION [skip ci]"
+          git tag "v$NEW_VERSION"
+          git push origin main --tags
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: 'v${{ steps.bump.outputs.new_version }}'
+          generate_release_notes: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'Upload Production Build & Reports'
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-release-v${{ steps.bump.outputs.new_version }}
+          path: |
+            templates/agency-nx-template/apps/company-website/build/
+            templates/agency-nx-template/reports/
+
+  rollback:
+    name: 'Standard Rollback'
+    needs: [business-logic-deploy, smoke-test]
+    runs-on: ubuntu-latest
+    if: failure() && needs.business-logic-deploy.result == 'success'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Firebase Hosting Rollback'
+        run: npx firebase hosting:rollback --project ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

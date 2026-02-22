@@ -84,9 +84,14 @@ async function getRoutes(): Promise<string[]> {
     
     // Resolve collection robustly
     const colInstance = await resolveDoc(db, colRef);
-    if (!(colInstance instanceof admin.firestore.CollectionReference)) {
-        console.error(`      ❌ Error: "${colRef}" is not a collection path.`);
-        continue;
+    if (!colInstance || typeof colInstance.get !== 'function' || !('parent' in colInstance) || colInstance.path !== colRef) {
+        // A minimal duck-typing check to see if it's a CollectionReference. 
+        // DocumentReferences also have .get() and .path, but a valid query result here expects a collection query snapshot capable.
+        // Actually, just checking if it's a collection or doc using the path length is more reliable:
+        if (colRef.split('/').length % 2 === 0) {
+           console.error(`      ❌ Error: "${colRef}" is not a collection path (even number of segments).`);
+           continue;
+        }
     }
     
     const querySnapshot = await colInstance.get();

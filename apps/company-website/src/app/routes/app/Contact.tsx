@@ -2,7 +2,8 @@ import { useLoaderData, type LoaderFunctionArgs } from 'react-router';
 import { getPageAtBuildTime } from '../../services/cms-build.service';
 import { createPage } from '../../core/createPage';
 import type { BasePageDocument } from '../../shared/interfaces/cms.interfaces';
-import { ContactForm } from '../../components/molecules/ContactForm';
+import { HubspotContactForm } from '../../components/molecules/HubspotContactForm';
+import { HubspotNewsletterForm } from '../../components/molecules/HubspotNewsletterForm';
 
 export async function loader(_: LoaderFunctionArgs) {
   const content = await getPageAtBuildTime('static_pages/app/marketing/kontakt');
@@ -28,8 +29,12 @@ export default createPage<Awaited<ReturnType<typeof loader>>>({
             <div style={{ whiteSpace: 'pre-wrap' }}>{String(content.content)}</div>
           </>
         )}
-        <ContactForm />
+        <HubspotContactForm />
+        <hr style={{ margin: '40px 0' }} />
+        <h2>Newsletter Abonnieren</h2>
+        <HubspotNewsletterForm />
       </section>
+
     );
   }
 });

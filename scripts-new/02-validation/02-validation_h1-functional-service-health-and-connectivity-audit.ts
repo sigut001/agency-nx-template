@@ -18,21 +18,27 @@ async function healthAudit() {
   dotenv.config({ path: path.join(rootDir, '.env') });
   const env = process.env;
 
-  const results = { brevo: false, imagekit: false };
+  const results = { imagekit: false, hubspot: false };
 
   try {
-    // 1. Brevo
-    console.log('   📡 Testing Brevo API Connectivity...');
+    // 1. HubSpot
+    console.log('   📡 Testing HubSpot Connectivity...');
     try {
-      const resp = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: { 'api-key': env.BREVO_API_KEY || '', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sender: { email: 'test@example.com' }, to: [{ email: 'test@example.com' }], subject: 'Ping', htmlContent: 'Ping' })
-      });
-      results.brevo = (resp.status === 201 || resp.status === 401); // 401 means key is okay but IP might be restricted
-      console.log(`   ✅ Brevo: ${results.brevo ? 'Validated (Status ' + resp.status + ')' : 'FAILED'}`);
-    } catch (e: any) { 
-      console.error('   ❌ Brevo connection error:', e.message || e); 
+      const portalId = env.VITE_HUBSPOT_PORTAL_ID;
+      const region = env.VITE_HUBSPOT_REGION || 'eu1';
+      if (!portalId) throw new Error('VITE_HUBSPOT_PORTAL_ID is not set.');
+      
+      const hsUrl = `https://js-${region}.hs-scripts.com/${portalId}.js`;
+      const hsResp = await fetch(hsUrl, { method: 'HEAD' });
+      
+      if (hsResp.ok) {
+        results.hubspot = true;
+        console.log(`   ✅ HubSpot: Reachable (Status ${hsResp.status})`);
+      } else {
+        throw new Error(`HTTP ${hsResp.status} - Script not found at ${hsUrl}`);
+      }
+    } catch (e: any) {
+      console.error('   ❌ HubSpot connection error:', e.message || e);
     }
 
     // 2. ImageKit

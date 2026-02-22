@@ -1,1 +1,0 @@
-const c="6LcXbGcsAAAAAGBa_JR5r16q3gh2ByzP2rEbxdXx",a=()=>{},o=()=>c,i={async execute(t){return new Promise(e=>{typeof window<"u"&&window.grecaptcha?window.grecaptcha.ready(()=>{window.grecaptcha.execute(c,{action:t}).then(n=>{e(n)})}):(console.warn("grecaptcha not loaded"),e(null))})}};export{i as RecaptchaService,o as getSiteKey,a as initRecaptcha};

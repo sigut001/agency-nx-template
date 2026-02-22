@@ -29,6 +29,21 @@ async function runE2ETests() {
   const previewUrl = fs.readFileSync(urlFilePath, 'utf8').trim();
   console.log(`   🌍 Target URL: ${previewUrl}`);
 
+  // 1.b Validate Expiration
+  const expireFilePath = path.join(artifactsDir, 'preview-expire.txt');
+  if (fs.existsSync(expireFilePath)) {
+    const expireTimeStr = fs.readFileSync(expireFilePath, 'utf8').trim();
+    const expireDate = new Date(expireTimeStr);
+    
+    if (expireDate.getTime() < Date.now()) {
+      console.error(`❌ E2E FAILED: The preview URL expired at ${expireDate.toLocaleString()}.`);
+      console.error(`   Please run the Bootstrap (Phase 04) workflow again to generate a fresh preview channel.`);
+      process.exit(1);
+    } else {
+      console.log(`   ⏳ URL remains valid until: ${expireDate.toLocaleString()}`);
+    }
+  }
+
   // 2. Run Playwright
   try {
     console.log('   🚀 Executing Playwright Suite...');

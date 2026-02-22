@@ -1,5 +1,5 @@
 Drittanbieter-Lizenzen
-Stand: 20.2.2026, 06:39:47 (Automatischer Build-Report)
+Stand: 22.2.2026, 03:46:27 (Automatischer Build-Report)
 
 Diese Software nutzt folgende Open-Source-Komponenten:
 --------------------------------------------------

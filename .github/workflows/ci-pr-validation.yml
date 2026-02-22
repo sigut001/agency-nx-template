@@ -1,0 +1,60 @@
+name: 'CI: PR Validation (WF-2) 🛡️'
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  metadata-check:
+    name: 'Standard PR Metadata Check'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Check PR for Versioning Tags'
+        shell: bash
+        run: |
+          TITLE=$(gh pr view ${{ github.event.pull_request.number }} --json title --jq '.title')
+          BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body --jq '.body')
+          LABELS=$(gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name')
+
+          if [[ "$TITLE" =~ "#major" || "$TITLE" =~ "#minor" || "$TITLE" =~ "#patch" ]] || \
+             [[ "$BODY" =~ "#major" || "$BODY" =~ "#minor" || "$BODY" =~ "#patch" ]] || \
+             echo "$LABELS" | grep -qE 'major|minor|patch'; then
+            echo "✅ PR has valid versioning metadata"
+            exit 0
+          else
+            echo "❌ PR must contain a versioning tag (#major, #minor, #patch) or label."
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  validation-core:
+    name: 'Business Logic Validation'
+    needs: metadata-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: 'NX Validation (Phases 02-05)'
+        run: npx nx run @temp-nx/company-website:validate
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_BREVO_API_KEY: ${{ secrets.VITE_BREVO_API_KEY }}
+          VITE_IMAGEKIT_PUBLIC_KEY: ${{ secrets.VITE_IMAGEKIT_PUBLIC_KEY }}
+          VITE_IMAGEKIT_PRIVATE_KEY: ${{ secrets.VITE_IMAGEKIT_PRIVATE_KEY }}
+          VITE_RECAPTCHA_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_SITE_KEY }}
+
+      - name: 'Upload Validation Reports'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-reports
+          path: templates/agency-nx-template/reports/

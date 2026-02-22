@@ -57,6 +57,9 @@ async function validateEnvironment() {
     { key: 'VITE_RECAPTCHA_SITE_KEY', description: 'reCAPTCHA Site Key', pattern: /^6L[a-zA-Z0-9_-]{38}$/, required: true },
     { key: 'VITE_IMAGEKIT_URL_ENDPOINT', description: 'ImageKit URL Endpoint', pattern: /^https:\/\/ik\.imagekit\.io\/.+$/, required: true },
     { key: 'VITE_IMAGEKIT_PUBLIC_KEY', description: 'ImageKit Public Key', required: true },
+    { key: 'VITE_HUBSPOT_PORTAL_ID', description: 'HubSpot Portal ID', required: true },
+    { key: 'VITE_HUBSPOT_REGION', description: 'HubSpot Region (e.g. eu1)', required: true },
+    { key: 'VITE_HUBSPOT_CONTACT_FORM_GUID', description: 'HubSpot Contact Form GUID', required: true },
 
     // === 3. PRIVATE CONFIGURATION (Security) ===
     { key: 'FIREBASE_ADMIN_TYPE', description: 'Firebase Admin Type', required: true },
