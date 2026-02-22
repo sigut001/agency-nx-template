@@ -116,7 +116,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_RELEASER_TOKEN }}
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
@@ -140,7 +140,7 @@ jobs:
         with:
           tag_name: 'v${{ steps.bump.outputs.new_version }}'
           generate_release_notes: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_RELEASER_TOKEN }}
 
       - name: 'Upload Production Build & Reports'
         uses: actions/upload-artifact@v4
@@ -160,7 +160,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_RELEASER_TOKEN }}
           fetch-depth: 0
 
       - name: Create Firebase Service Account
