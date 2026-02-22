@@ -17,9 +17,9 @@ jobs:
           BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body --jq '.body')
           LABELS=$(gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name')
 
-          if [[ "$TITLE" =~ "#major" || "$TITLE" =~ "#minor" || "$TITLE" =~ "#patch" ]] || \
-             [[ "$BODY" =~ "#major" || "$BODY" =~ "#minor" || "$BODY" =~ "#patch" ]] || \
-             echo "$LABELS" | grep -qE 'major|minor|patch'; then
+          if echo "$TITLE" | grep -iqE "#major|#minor|#patch" || \
+             echo "$BODY" | grep -iqE "#major|#minor|#patch" || \
+             echo "$LABELS" | grep -iqE "major|minor|patch"; then
             echo "✅ PR has valid versioning metadata"
             exit 0
           else
