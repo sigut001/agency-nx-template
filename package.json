@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-       "assets:generate:new": "npx tsx scripts-new/assets/01-automated-sitemap-and-robots-generation.ts; npx tsx scripts-new/assets/02-static-asset-and-seo-metadata-fetcher.ts",
+    "assets:generate:new": "npx tsx scripts-new/assets/01-automated-sitemap-and-robots-generation.ts; npx tsx scripts-new/assets/02-static-asset-and-seo-metadata-fetcher.ts",
     "prepare": "husky"
   },
   "private": true,
@@ -56,11 +56,13 @@
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
     "license-checker-rseidelsohn": "^4.4.2",
+    "lighthouse": "^12.8.2",
     "nx": "22.5.0",
     "postcss": "^8.5.6",
     "prettier": "~3.6.2",
     "tailwindcss": "^4.2.0",
     "tslib": "^2.3.0",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.40.0",
     "vite": "^7.0.0",

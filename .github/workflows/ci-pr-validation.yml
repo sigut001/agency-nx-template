@@ -50,6 +50,8 @@ jobs:
           PROJECT_ID: ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }}
           PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
           CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
 
       - name: 'NX Validation (Phases 02-05)'
         run: npx nx run @temp-nx/company-website:validate
