@@ -48,25 +48,10 @@ jobs:
           PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
           CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
 
-      - name: 'Install Playwright Browsers'
-        run: npx playwright install chromium --with-deps
-
       - name: 'Phase 04: Build & Deploy'
         run: npx nx run @temp-nx/company-website:phase-04
         env:
           GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
-          FIREBASE_ADMIN_PROJECT_ID: ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }}
-          FIREBASE_ADMIN_PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
-          FIREBASE_ADMIN_CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
-          VITE_HUBSPOT_PORTAL_ID: ${{ secrets.VITE_HUBSPOT_PORTAL_ID }}
-          VITE_HUBSPOT_REGION: ${{ secrets.VITE_HUBSPOT_REGION }}
-          VITE_IMAGEKIT_PUBLIC_KEY: ${{ secrets.VITE_IMAGEKIT_PUBLIC_KEY }}
-          VITE_IMAGEKIT_PRIVATE_KEY: ${{ secrets.VITE_IMAGEKIT_PRIVATE_KEY }}
-          VITE_IMAGEKIT_URL_ENDPOINT: ${{ secrets.VITE_IMAGEKIT_URL_ENDPOINT }}
-          VITE_RECAPTCHA_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_SITE_KEY }}
 
       - name: 'Deploy to Firebase Hosting (Live)'
         id: deploy_prod
@@ -95,18 +80,6 @@ jobs:
         run: npx nx run @temp-nx/company-website:phase-05
         env:
           BASE_URL: ${{ needs.business-logic-deploy.outputs.details_url }}
-          FIREBASE_ADMIN_PROJECT_ID: ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }}
-          FIREBASE_ADMIN_PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
-          FIREBASE_ADMIN_CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
-          VITE_HUBSPOT_PORTAL_ID: ${{ secrets.VITE_HUBSPOT_PORTAL_ID }}
-          VITE_HUBSPOT_REGION: ${{ secrets.VITE_HUBSPOT_REGION }}
-          VITE_IMAGEKIT_PUBLIC_KEY: ${{ secrets.VITE_IMAGEKIT_PUBLIC_KEY }}
-          VITE_IMAGEKIT_PRIVATE_KEY: ${{ secrets.VITE_IMAGEKIT_PRIVATE_KEY }}
-          VITE_IMAGEKIT_URL_ENDPOINT: ${{ secrets.VITE_IMAGEKIT_URL_ENDPOINT }}
-          VITE_RECAPTCHA_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_SITE_KEY }}
 
   standard-finalize:
     name: 'Versioning & Release (Shell)'
@@ -154,7 +127,7 @@ jobs:
     name: 'Platform Recovery & Double-Rollback'
     needs: [business-logic-deploy, smoke-test]
     runs-on: ubuntu-latest
-    if: failure()
+    if: failure() && needs.business-logic-deploy.result == 'success'
     permissions:
       contents: write
     steps:
@@ -172,7 +145,6 @@ jobs:
           CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
 
       - name: 'Business Rollback: Firebase Hosting'
-        if: needs.business-logic-deploy.result == 'success'
         run: npx firebase hosting:rollback --project ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
         env:
           GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
@@ -184,12 +156,6 @@ jobs:
 
           # Get the last merge commit ID
           LAST_MERGE=$(git log --merges -n 1 --format="%H")
-
-          if [ -z "$LAST_MERGE" ]; then
-            echo "No merge commit found. Skipping revert."
-            exit 0
-          fi
-
           echo "Reverting Merge Commit: $LAST_MERGE"
 
           # Perform revert (m 1 indicates we want the first parent, which is 'main')
