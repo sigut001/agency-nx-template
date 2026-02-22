@@ -34,8 +34,9 @@ async function deployToPreview() {
     const channelName = `p2-${timestamp}`;
     console.log(`   📤 Uploading to UNIQUE channel "${channelName}"...`);
     
-    // Resolve path to local firebase binary to avoid npx prompts/issues
-    const firebaseBin = path.resolve(rootDir, 'node_modules', '.bin', 'firebase.cmd');
+    // Resolve path to local firebase binary to avoid npx prompts/issues. Make it cross-platform.
+    const isWin = process.platform === 'win32';
+    const firebaseBin = path.resolve(rootDir, 'node_modules', '.bin', isWin ? 'firebase.cmd' : 'firebase');
     
     // Set 1h expiration
     const deployOutput = await LogService.execAndLog(`"${firebaseBin}" hosting:channel:deploy ${channelName} --expires 1h --json`, { 
