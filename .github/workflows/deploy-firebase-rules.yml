@@ -27,15 +27,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Create Service Account File
-        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > firebase-service-account.json
-
-      - name: Deploy Firestore Rules
-        env:
-          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
-          FIREBASE_SERVICE_ACCOUNT_KEY: ./firebase-service-account.json
+      - name: Create Firebase Service Account
         run: |
-          npx firebase deploy --only firestore:rules --project $VITE_FIREBASE_PROJECT_ID
+          node -e "require('fs').writeFileSync('firebase-service-account.json', JSON.stringify({type: 'service_account', project_id: process.env.PROJECT_ID, private_key: process.env.PRIVATE_KEY.replace(/\\\\n/g, '\\n'), client_email: process.env.CLIENT_EMAIL}))"
+        env:
+          PROJECT_ID: ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }}
+          PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
+          CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
+
+      - name: Deploy Firebase Rules (Direct CLI)
+        run: npx firebase deploy --only firestore:rules --project ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
 
       - name: Cleanup
         if: always()
