@@ -9,6 +9,7 @@ jobs:
     name: 'Standard PR Metadata Check'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: 'Check PR for Versioning Tags'
         shell: bash
         run: |
