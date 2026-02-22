@@ -49,28 +49,32 @@ async function validateRemoteSyncAndIdentity() {
 
     // 1. GitHub Secrets Check
     console.log('   📡 Checking GitHub Secrets...');
-    try {
-      const secretsRaw = await LogService.execAndLog('gh secret list', { cwd: rootDir });
-      const secrets = secretsRaw.split('\n').filter(Boolean);
-      const requiredSecrets = [
-        'FIREBASE_ADMIN_TYPE', 'FIREBASE_ADMIN_PROJECT_ID', 'FIREBASE_ADMIN_PRIVATE_KEY_ID',
-        'FIREBASE_ADMIN_PRIVATE_KEY', 'FIREBASE_ADMIN_CLIENT_EMAIL', 'FIREBASE_ADMIN_CLIENT_ID',
-        'FIREBASE_ADMIN_AUTH_URI', 'FIREBASE_ADMIN_TOKEN_URI', 'FIREBASE_ADMIN_AUTH_PROVIDER_X509_CERT_URL',
-        'FIREBASE_ADMIN_CLIENT_X509_CERT_URL', 'FIREBASE_ADMIN_UNIVERSE_DOMAIN',
-        'VITE_FIREBASE_API_KEY'
-      ];
-      
-      for (const secret of requiredSecrets) {
-        if (secrets.some(s => s.startsWith(secret))) {
-          console.log(`      ✅ Secret ${secret} verified on GitHub.`);
-        } else {
-          console.warn(`      ⚠️  Secret ${secret} MISSING on GitHub.`);
-          failed = true;
+    if (process.env.CI) {
+      console.log('      ⏭️  Skipping GitHub API secret check inside CI/CD runner.');
+    } else {
+      try {
+        const secretsRaw = await LogService.execAndLog('gh secret list', { cwd: rootDir });
+        const secrets = secretsRaw.split('\n').filter(Boolean);
+        const requiredSecrets = [
+          'FIREBASE_ADMIN_TYPE', 'FIREBASE_ADMIN_PROJECT_ID', 'FIREBASE_ADMIN_PRIVATE_KEY_ID',
+          'FIREBASE_ADMIN_PRIVATE_KEY', 'FIREBASE_ADMIN_CLIENT_EMAIL', 'FIREBASE_ADMIN_CLIENT_ID',
+          'FIREBASE_ADMIN_AUTH_URI', 'FIREBASE_ADMIN_TOKEN_URI', 'FIREBASE_ADMIN_AUTH_PROVIDER_X509_CERT_URL',
+          'FIREBASE_ADMIN_CLIENT_X509_CERT_URL', 'FIREBASE_ADMIN_UNIVERSE_DOMAIN',
+          'VITE_FIREBASE_API_KEY'
+        ];
+        
+        for (const secret of requiredSecrets) {
+          if (secrets.some(s => s.startsWith(secret))) {
+            console.log(`      ✅ Secret ${secret} verified on GitHub.`);
+          } else {
+            console.warn(`      ⚠️  Secret ${secret} MISSING on GitHub.`);
+            failed = true;
+          }
         }
+      } catch (err) {
+        console.error('      ❌ Failed to fetch GitHub secrets. Ensure GITHUB_TOKEN is valid.');
+        failed = true;
       }
-    } catch (err) {
-      console.error('      ❌ Failed to fetch GitHub secrets. Ensure GITHUB_TOKEN is valid.');
-      failed = true;
     }
 
     // 2. Auth Identity Check
