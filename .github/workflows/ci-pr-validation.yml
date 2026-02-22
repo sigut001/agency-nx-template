@@ -70,9 +70,18 @@ jobs:
           VITE_IMAGEKIT_URL_ENDPOINT: ${{ secrets.VITE_IMAGEKIT_URL_ENDPOINT }}
           VITE_RECAPTCHA_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_SITE_KEY }}
 
+      - name: 'Generate Job Summary'
+        if: always()
+        run: |
+          if [ -f "reports/FINAL_SUMMARY.md" ]; then
+            cat reports/FINAL_SUMMARY.md >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ⚠️ Validation Summary not found" >> $GITHUB_STEP_SUMMARY
+          fi
+
       - name: 'Upload Validation Reports'
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: validation-reports
-          path: templates/agency-nx-template/reports/
+          path: reports/
