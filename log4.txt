@@ -1,0 +1,89 @@
+Business Logic Validation	NX Validation (Phases 02-05)	﻿2026-02-22T03:24:50.9104613Z ##[group]Run npx nx run @temp-nx/company-website:validate
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9105035Z [36;1mnpx nx run @temp-nx/company-website:validate[0m
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9135211Z shell: /usr/bin/bash -e {0}
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9135459Z env:
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9135741Z   GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9136250Z   FIREBASE_ADMIN_PROJECT_ID: ***
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9143476Z   FIREBASE_ADMIN_PRIVATE_KEY: ***
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9144016Z   FIREBASE_ADMIN_CLIENT_EMAIL: ***
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9144297Z   ADMIN_EMAIL: ***
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9144585Z   GH_TOKEN: ***
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9144875Z   VITE_FIREBASE_PROJECT_ID: ***
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9145138Z   VITE_HUBSPOT_PORTAL_ID: ***
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9145389Z   VITE_HUBSPOT_REGION: ***
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9145705Z   VITE_IMAGEKIT_PUBLIC_KEY: ***
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9145944Z   VITE_IMAGEKIT_PRIVATE_KEY: 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9146298Z   VITE_RECAPTCHA_SITE_KEY: ***
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:50.9146528Z ##[endgroup]
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:54.3647429Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:54.3648612Z [2m> [22m[2mnx run[22m @temp-nx/company-website:validate
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:54.3648980Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:54.3666218Z [2m> [22mnpx tsx scripts-new/wf-2-project-validation.ts
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:54.3666614Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:56.1770447Z npm warn exec The following package was not found and will be installed: tsx@4.21.0
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:57.4589380Z 🏁 STARTING WORKFLOW 2: PROJECT VALIDATION...
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:57.4589887Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:57.4724734Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:57.4725454Z >>> EXECUTING phase-02.ts <<<
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:57.4729797Z 🚀 EXECUTING: npx tsx scripts-new/phase-02.ts
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:24:59.5216217Z 🚀 EXECUTING: npx tsx scripts-new/02-validation/02-validation_f1-data-agnostic-remote-sync-and-identity-verification.ts
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:01.6296828Z 🛡️  STARTING REMOTE SYNC & IDENTITY VERIFICATION...
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:01.6430751Z    🔐 Using individual FIREBASE_ADMIN_* credentials
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:01.8297780Z    📡 Checking GitHub Secrets...
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:01.8301175Z       ⏭️  Skipping GitHub API secret check inside CI/CD runner.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:01.8301757Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:01.8302152Z    👤 Checking Identity Consistency...
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:02.1066509Z       ✅ Admin User verified.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:03.3298399Z       ✅ Firestore Role is "owner".
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:03.3299046Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:03.3299425Z ✨ REMOTE SYNC VERIFIED.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:03.3601734Z ✅ COMMAND SUCCESS (Code 0)
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:03.3604147Z 🚀 EXECUTING: npx tsx scripts-new/02-validation/02-validation_g1-dynamic-route-and-firestore-schema-integrity-check.ts
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:05.4735388Z 🛡️  STARTING INTEGRITY AUDIT (Single Source of Truth Check)...
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:05.4867666Z    ℹ️  Loaded 10 routes from split configs.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:05.5843105Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:05.5844044Z 🔍 Phase A: Checking Data Path Consistency...
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:05.5844487Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:05.5844860Z 🔍 Phase B: Checking Database Existence...
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:06.8350074Z       ✅ Static: / -> static_pages/app/marketing/home exists.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:07.0345204Z       ✅ Static: /kontakt -> static_pages/app/marketing/kontakt exists.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:07.7524235Z       ✅ Dynamic: /blog/:slug -> dynamic_pages/blog/documents (Collection exists & has data).
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:07.9685020Z       ✅ Dynamic: /produkte/:slug -> dynamic_pages/produkte/documents (Collection exists & has data).
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:08.6581617Z       ✅ Static: /impressum -> static_pages/system/legal/impressum exists.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:08.8703046Z       ✅ Static: /datenschutz -> static_pages/system/legal/datenschutz exists.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:09.5803923Z       ✅ Static: /agb -> static_pages/system/legal/agb exists.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:09.9339198Z       ✅ Static: /lizenzen -> static_pages/system/legal/lizenzen exists.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:09.9340093Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:09.9340870Z ✨ INTEGRITY AUDIT PASSED: Split hierarchy verified.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:09.9645196Z ✅ COMMAND SUCCESS (Code 0)
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:09.9646311Z 🚀 EXECUTING: npx tsx scripts-new/02-validation/02-validation_h1-functional-service-health-and-connectivity-audit.ts
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.0075999Z 🩺 STARTING FUNCTIONAL SERVICE HEALTH AUDIT...
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.0214575Z    📡 Testing HubSpot Connectivity...
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7629326Z    ✅ HubSpot: Reachable (Status 200)
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7630843Z    📡 Testing ImageKit Metadata Endpoint...
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7640172Z    ❌ ImageKit connection error: VITE_IMAGEKIT_URL_ENDPOINT is not set.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7640687Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7640935Z    📊 SERVICE HEALTH SUMMARY:
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7649684Z ┌──────────┬────────┐
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7650557Z │ (index)  │ Values │
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7652463Z ├──────────┼────────┤
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7653677Z │ imagekit │ [33mfalse[39m  │
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7654489Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7654864Z │ hubspot  │ [33mtrue[39m   │
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7655741Z 🛑 ONE OR MORE SERVICES FAILED HEALTH AUDIT.
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.7656364Z └──────────┴────────┘
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.8577255Z ❌ COMMAND FAILED (Code 1): npx tsx scripts-new/02-validation/02-validation_h1-functional-service-health-and-connectivity-audit.ts
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.8847086Z ❌ COMMAND FAILED (Code 1): npx tsx scripts-new/phase-02.ts
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9100153Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9100949Z [2m[31m[39m[22m
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9101645Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9103901Z [7m[1m[31m NX [39m[22m[27m  [31mRunning target [1mvalidate[22m for project @temp-nx/company-website failed[39m
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9104660Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9104895Z [2mFailed tasks:[22m
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9105084Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9105324Z [2m-[22m @temp-nx/company-website:validate
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9105560Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9105925Z [2mHint: run the command with[22m --verbose [2mfor more details.[22m
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9106246Z 
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9374354Z Warning: command "npx tsx scripts-new/wf-2-project-validation.ts" exited with non-zero status code
+Business Logic Validation	NX Validation (Phases 02-05)	2026-02-22T03:25:12.9385148Z ##[error]Process completed with exit code 1.

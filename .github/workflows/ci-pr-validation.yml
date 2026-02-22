@@ -65,6 +65,7 @@ jobs:
           VITE_HUBSPOT_REGION: ${{ secrets.VITE_HUBSPOT_REGION }}
           VITE_IMAGEKIT_PUBLIC_KEY: ${{ secrets.VITE_IMAGEKIT_PUBLIC_KEY }}
           VITE_IMAGEKIT_PRIVATE_KEY: ${{ secrets.VITE_IMAGEKIT_PRIVATE_KEY }}
+          VITE_IMAGEKIT_URL_ENDPOINT: ${{ secrets.VITE_IMAGEKIT_URL_ENDPOINT }}
           VITE_RECAPTCHA_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_SITE_KEY }}
 
       - name: 'Upload Validation Reports'
