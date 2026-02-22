@@ -43,10 +43,23 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Create Firebase Service Account
+        run: |
+          node -e "require('fs').writeFileSync('firebase-service-account.json', JSON.stringify({type: 'service_account', project_id: process.env.PROJECT_ID, private_key: process.env.PRIVATE_KEY.replace(/\\\\n/g, '\\n'), client_email: process.env.CLIENT_EMAIL}))"
+        env:
+          PROJECT_ID: ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }}
+          PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
+          CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
+
       - name: 'NX Validation (Phases 02-05)'
         run: npx nx run @temp-nx/company-website:validate
         env:
-          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+          GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
+          FIREBASE_ADMIN_PROJECT_ID: ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }}
+          FIREBASE_ADMIN_PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
+          FIREBASE_ADMIN_CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
           VITE_HUBSPOT_PORTAL_ID: ${{ secrets.VITE_HUBSPOT_PORTAL_ID }}
           VITE_HUBSPOT_REGION: ${{ secrets.VITE_HUBSPOT_REGION }}

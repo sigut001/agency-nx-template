@@ -40,17 +40,26 @@ jobs:
           cache: 'npm'
       - run: npm ci
 
+      - name: Create Firebase Service Account
+        run: |
+          node -e "require('fs').writeFileSync('firebase-service-account.json', JSON.stringify({type: 'service_account', project_id: process.env.PROJECT_ID, private_key: process.env.PRIVATE_KEY.replace(/\\\\n/g, '\\n'), client_email: process.env.CLIENT_EMAIL}))"
+        env:
+          PROJECT_ID: ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }}
+          PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
+          CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
+
       - name: 'Phase 04: Build & Deploy'
         run: npx nx run @temp-nx/company-website:phase-04
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
 
       - name: 'Deploy to Firebase Hosting (Live)'
         id: deploy_prod
         uses: FirebaseExtended/action-hosting-deploy@v0
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
           projectId: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
           channelId: live
 
@@ -121,7 +130,15 @@ jobs:
     if: failure() && needs.business-logic-deploy.result == 'success'
     steps:
       - uses: actions/checkout@v4
+      - name: Create Firebase Service Account
+        run: |
+          node -e "require('fs').writeFileSync('firebase-service-account.json', JSON.stringify({type: 'service_account', project_id: process.env.PROJECT_ID, private_key: process.env.PRIVATE_KEY.replace(/\\\\n/g, '\\n'), client_email: process.env.CLIENT_EMAIL}))"
+        env:
+          PROJECT_ID: ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }}
+          PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
+          CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
+
       - name: 'Firebase Hosting Rollback'
         run: npx firebase hosting:rollback --project ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
