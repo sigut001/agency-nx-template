@@ -124,12 +124,18 @@ jobs:
             templates/agency-nx-template/reports/
 
   rollback:
-    name: 'Standard Rollback'
+    name: 'Platform Recovery & Double-Rollback'
     needs: [business-logic-deploy, smoke-test]
     runs-on: ubuntu-latest
     if: failure() && needs.business-logic-deploy.result == 'success'
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
       - name: Create Firebase Service Account
         run: |
           node -e "require('fs').writeFileSync('firebase-service-account.json', JSON.stringify({type: 'service_account', project_id: process.env.PROJECT_ID, private_key: process.env.PRIVATE_KEY.replace(/\\\\n/g, '\\n'), client_email: process.env.CLIENT_EMAIL}))"
@@ -138,7 +144,22 @@ jobs:
           PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
           CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
 
-      - name: 'Firebase Hosting Rollback'
+      - name: 'Business Rollback: Firebase Hosting'
         run: npx firebase hosting:rollback --project ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
         env:
           GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
+
+      - name: 'Platform Rollback: Git Revert Main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Get the last merge commit ID
+          LAST_MERGE=$(git log --merges -n 1 --format="%H")
+          echo "Reverting Merge Commit: $LAST_MERGE"
+
+          # Perform revert (m 1 indicates we want the first parent, which is 'main')
+          git revert -m 1 $LAST_MERGE --no-edit
+
+          # Push to main to restore state
+          git push origin main
